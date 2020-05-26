@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_boost/flutter_boost.dart';
+import 'package:flutter_module/pages/calendar_page.dart';
 import 'test.dart';
 
 void main() {
@@ -28,7 +29,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         title: 'Flutter Boost example',
         builder: FlutterBoost.init(postPush: _onRoutePushed),
-        home: Container(color: Colors.white));
+        home: CalendarPage()
+    );
   }
 
   void _onRoutePushed(

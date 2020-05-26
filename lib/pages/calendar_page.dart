@@ -5,17 +5,17 @@
  **/
 import 'package:flutter/material.dart';
 
-class TemplatePage extends StatefulWidget {
+class CalendarPage extends StatefulWidget {
   @override
-  TemplatePageState createState() => TemplatePageState();
+  CalendarPageState createState() => CalendarPageState();
 }
 
-class TemplatePageState extends State<TemplatePage> {
+class CalendarPageState extends State<CalendarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('模板'),
+        title: Text('日历'),
         elevation: 0,
       ),
       body: ListView(),
