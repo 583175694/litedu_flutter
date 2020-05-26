@@ -143,8 +143,6 @@ class CalendarContainerState extends State<CalendarContainer>
             CalendarConstants.MODE_SHOW_MONTH_AND_WEEK) {
       calendarProvider.expandStatus.addListener(() {
         setState(() {
-          print(
-              "calendarProvider.expandStatus.value:${calendarProvider.expandStatus.value}");
           expand = calendarProvider.expandStatus.value;
           if (expand) {
             index = 0;

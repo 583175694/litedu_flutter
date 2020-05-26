@@ -66,8 +66,6 @@ class _WeekViewState extends State<WeekView> {
 
     CalendarConfiguration configuration =
         calendarProvider.calendarConfiguration;
-    print(
-        "WeekView Consumer:calendarProvider.selectDateModel:${calendarProvider.selectDateModel}");
     return new GridView.builder(
         physics: NeverScrollableScrollPhysics(),
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
@@ -83,11 +81,12 @@ class _WeekViewState extends State<WeekView> {
               dateModel.isSelected = false;
             }
           } else {
-            if (calendarProvider.selectDateModel == dateModel) {
-              dateModel.isSelected = true;
-            } else {
-              dateModel.isSelected = false;
-            }
+//            if (calendarProvider.selectDateModel == dateModel) {
+//              dateModel.isSelected = true;
+//            } else {
+//              dateModel.isSelected = false;
+//            }
+            dateModel.isSelected = false;
           }
 
           return ItemContainer(

@@ -47,7 +47,6 @@ class CalendarProvider extends ChangeNotifier {
 
   set lastClickDateModel(DateModel value) {
     _lastClickDateModel = value;
-    print("lastClickDateModel:$lastClickDateModel");
   }
 
   DateModel get selectDateModel => _selectDateModel;
@@ -77,7 +76,6 @@ class CalendarProvider extends ChangeNotifier {
       }
     }
 
-    print("lastClickDateModel:$lastClickDateModel,weekPageIndex:$index");
     return index;
   }
 
@@ -97,8 +95,6 @@ class CalendarProvider extends ChangeNotifier {
         index++;
       }
     }
-
-    print("lastClickDateModel:$lastClickDateModel,monthPageIndex:$index");
     return index + 1;
   }
 
@@ -120,8 +116,6 @@ class CalendarProvider extends ChangeNotifier {
   }) {
     LogUtil.log(TAG: this.runtimeType, message: "CalendarProvider initData");
     this.calendarConfiguration = calendarConfiguration;
-    print(
-        "calendarConfiguration.defaultSelectedDateList:${calendarConfiguration.defaultSelectedDateList}");
     this
         .selectedDateList
         .addAll(this.calendarConfiguration.defaultSelectedDateList);
