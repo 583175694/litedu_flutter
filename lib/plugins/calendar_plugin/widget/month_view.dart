@@ -116,12 +116,12 @@ class _MonthViewState extends State<MonthView>
               dateModel.isSelected = false;
             }
           } else {
-//            if (calendarProvider.selectDateModel == dateModel) {
-//              dateModel.isSelected = true;
-//            } else {
-//              dateModel.isSelected = false;
-//            }
-            dateModel.isSelected = false;
+            if (calendarProvider.selectDateModel == dateModel) {
+              dateModel.isSelected = true;
+            } else {
+              dateModel.isSelected = false;
+            }
+//            dateModel.isSelected = false;
           }
 
           return ItemContainer(

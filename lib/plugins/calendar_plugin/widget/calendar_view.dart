@@ -43,7 +43,7 @@ class CalendarViewWidget extends StatefulWidget {
         this.boxDecoration,
         this.padding = EdgeInsets.zero,
         this.margin = EdgeInsets.zero,
-        this.verticalSpacing = 10,
+        this.verticalSpacing = 0,
         this.itemSize})
       : super(key: key);
 
@@ -79,11 +79,11 @@ class _CalendarViewWidgetState extends State<CalendarViewWidget> {
       value: widget.calendarController.calendarProvider,
       child: Container(
         //外部可以自定义背景设置
-          decoration: widget.boxDecoration,
-          padding: widget.padding,
-          margin: widget.margin,
-          //使用const，保证外界的setState不会刷新日历这个widget
-          child: CalendarContainer(widget.calendarController)
+        decoration: widget.boxDecoration,
+        padding: widget.padding,
+        margin: widget.margin,
+        //使用const，保证外界的setState不会刷新日历这个widget
+        child: CalendarContainer(widget.calendarController)
       ),
     );
   }
