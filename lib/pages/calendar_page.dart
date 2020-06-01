@@ -23,14 +23,18 @@ class CalendarPage extends StatefulWidget {
 class CalendarPageState extends State<CalendarPage> {
   bool floating = false;
   bool pinned = true;
+  //  日历控制
   CalendarController _calendarController;
-  String currentView = 'month';   //  切换周、月视图
-
-  ValueNotifier<String> text;
-  ValueNotifier<String> selectText;
-
+  //  滚动控制
   ScrollController _scrollController;
-
+  //  切换周、月视图
+  String currentView = 'month';  
+  //  初始日期
+  ValueNotifier<String> text;
+  //  选择日期
+  ValueNotifier<String> selectText;
+  //  编辑状态
+  bool isEdit = false;
 
   @override
   void initState() {
@@ -86,10 +90,15 @@ class CalendarPageState extends State<CalendarPage> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Container(
-                width: 24,
-                height: 24,
-                child: Image.asset('lib/assets/icon_list.png'),
+              GestureDetector(
+                child: Container(
+                  height: 24,
+                  child: isEdit ? Text('取消', style: TextStyle(fontSize: 14, color: Color(0xff6D7993))) : Image.asset('lib/assets/icon_list.png'),
+                ),
+                onTap: () {
+                  isEdit = !isEdit;
+                  setState(() { });
+                },
               ),
               Text('课程安排', style: TextStyle(color: Color(0xff6D7993), fontSize: 20),),
               GestureDetector(
@@ -105,37 +114,45 @@ class CalendarPageState extends State<CalendarPage> {
             ],
           ),
           backgroundColor: Colors.white,
-          elevation: 0,
+          elevation: isEdit ? 0.30 : 0,
         ),
         body: Stack(
           children: <Widget>[
-            CustomScrollView(
+            isEdit ? CustomScrollView(
+              slivers: <Widget>[
+                ScheduleList(selectText: selectText)
+              ],
+            ) : CustomScrollView(
               controller: _scrollController,
               slivers: <Widget>[
-                SliverAppBar(
-                  bottom: PreferredSize(
-                      preferredSize: Size(200, 83),
-                      child: Container()
-                  ),
-                  backgroundColor: Colors.white,
-                  expandedHeight: 352.0,
-                  flexibleSpace: Stack(
-                    overflow: Overflow.clip,
-                    children: <Widget>[
-                      Positioned(
-                          top: 0,
-                          child: calendarContent()
-                      ),
-                    ],
-                  ),
-                  elevation: 0,
-                  pinned: pinned,
-                ),
+                buildSliverAppBar(),
                 ScheduleList(selectText: selectText)
               ],
             ),
           ],
         )
+    );
+  }
+
+  SliverAppBar buildSliverAppBar() {
+    return SliverAppBar(
+      bottom: PreferredSize(
+          preferredSize: Size(200, 83),
+          child: Container()
+      ),
+      backgroundColor: Colors.white,
+      expandedHeight: 352.0,
+      flexibleSpace: Stack(
+        overflow: Overflow.clip,
+        children: <Widget>[
+          Positioned(
+              top: 0,
+              child: calendarContent()
+          ),
+        ],
+      ),
+      elevation: 0,
+      pinned: pinned,
     );
   }
 
