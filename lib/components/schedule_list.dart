@@ -4,6 +4,7 @@
  * @Date 2019-12-14
  **/
 import 'package:flutter/material.dart';
+import 'package:flutter_module/components/screen_fit.dart';
 
 class ScheduleList extends StatefulWidget {
   ScheduleList({Key key, this.selectText}) : super(key: key);
@@ -61,7 +62,7 @@ class ScheduleListState extends State<ScheduleList> {
   Widget build(BuildContext context) {
     //  日程列表
     List<Widget> scheduleList() {
-      TextStyle timeFont = TextStyle(fontSize: 11, color: Color(0xffB6BCC9));
+      TextStyle timeFont = TextStyle(fontSize: ScreenUtil().setSp(22), color: Color(0xffB6BCC9));
 
       List<Widget> tiles = [];
       tiles.add(
@@ -71,7 +72,7 @@ class ScheduleListState extends State<ScheduleList> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text(widget.selectText.value, style: TextStyle(color: Color(0xff6D7993), fontSize: 20),)
+                Text(widget.selectText.value, style: TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(44)))
               ],
             ),
             margin: EdgeInsets.only(left: 15.0),
@@ -87,7 +88,7 @@ class ScheduleListState extends State<ScheduleList> {
                     child: Row(
                       children: <Widget>[
                         Container(
-                          width: 62,
+                          width: ScreenUtil().setWidth(124),
                           child: Column(
                             children: <Widget>[
                               Text(timeItems[i]["class"], style: timeFont),
@@ -148,7 +149,7 @@ class ScheduleListState extends State<ScheduleList> {
                 child: Row(
                   children: <Widget>[
                     Container(
-                      width: 62,
+                      width: ScreenUtil().setWidth(124),
                       child: Column(
                         children: <Widget>[
                           Text(timeItems[i]["class"], style: timeFont),
@@ -170,7 +171,7 @@ class ScheduleListState extends State<ScheduleList> {
     }
     
     return SliverFixedExtentList(
-      itemExtent: 72.0,
+      itemExtent: ScreenUtil().setWidth(144),
       delegate: SliverChildListDelegate(
           scheduleList()
       ),
@@ -179,11 +180,14 @@ class ScheduleListState extends State<ScheduleList> {
 
   //  课程项
   Widget courseItem(int i) {
+    TextStyle courseFont = TextStyle(fontSize: ScreenUtil().setSp(28), color: Color(0xff6D7993), fontWeight: FontWeight.normal, decoration: TextDecoration.none);
+    TextStyle evaluateFont = TextStyle(fontSize: ScreenUtil().setSp(28), color: Color(0xff29D9D6), fontWeight: FontWeight.normal, decoration: TextDecoration.none);
+
     return Opacity(
       opacity: willAcceptIndex == i && accepted ? 0.6 : 1,
       child: Container(
-        width: 313,
-        height: 64,
+        width: ScreenUtil().setWidth(626),
+        height: ScreenUtil().setWidth(128),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -194,21 +198,21 @@ class ScheduleListState extends State<ScheduleList> {
                   children: <Widget>[
                     Container(
                       child: Text(timeItems[i]["class"],
-                          style: TextStyle(fontSize: 14, color: Color(0xff6D7993), fontWeight: FontWeight.normal, decoration: TextDecoration.none)
+                          style: courseFont
                       ),
                       margin: EdgeInsets.only(left: 12, right: 6),
                     ),
-                    Text(titleItems[i] == null ? '' : "|  ${titleItems[i]}",
-                        style: TextStyle(fontSize: 14, color: Color(0xff6D7993), decoration: TextDecoration.none, fontWeight: FontWeight.normal)
+                    Text(titleItems[i] == null ? '' : "-  ${titleItems[i]}",
+                        style: courseFont
                     ),
                   ],
                 ),
                 i == 5 ? Container() : Container(
-                  width: 64,
-                  height: 28,
+                  width: ScreenUtil().setWidth(128),
+                  height: ScreenUtil().setWidth(56),
                   alignment: Alignment.centerRight,
                   child: Center(
-                    child: Text('评估', style: TextStyle(fontSize: 14, color: Color(0xff29D9D6), fontWeight: FontWeight.normal, decoration: TextDecoration.none)),
+                    child: Text('评估', style: evaluateFont),
                   ),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(14)),
@@ -231,7 +235,7 @@ class ScheduleListState extends State<ScheduleList> {
                 ),
                 Text(
                   timeItems[i]["interval"],
-                  style: TextStyle(fontSize: 14, color: Color(0xff6D7993), decoration: TextDecoration.none, fontWeight: FontWeight.normal),
+                  style: courseFont,
                 ),
               ],
             ),
@@ -248,10 +252,10 @@ class ScheduleListState extends State<ScheduleList> {
   //  午休的情况
   Widget lunchBreakItem(int i) {
     return Container(
-      width: 313,
-      height: 64,
+      width: ScreenUtil().setWidth(626),
+      height: ScreenUtil().setWidth(138),
       padding: EdgeInsets.only(top: i == 5 ? 20 : 0),
-      margin: EdgeInsets.only(top: i == 5 ? 8 : 0, bottom: i == 6 ? 8 : 0),
+      margin: EdgeInsets.only(top: i == 5 ? 6 : 0, bottom: i == 6 ? 6 : 0),
       child: i == 6 ? Container() : Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -263,7 +267,7 @@ class ScheduleListState extends State<ScheduleList> {
                 ),
                 margin: EdgeInsets.only(left: 12, right: 6),
               ),
-              Text(titleItems[i] == null ? '' : "|  ${titleItems[i]}",
+              Text(titleItems[i] == null ? '' : "-  ${titleItems[i]}",
                   style: TextStyle(fontSize: 14, color: Color(0xff6D7993), decoration: TextDecoration.none, fontWeight: FontWeight.normal)
               ),
             ],

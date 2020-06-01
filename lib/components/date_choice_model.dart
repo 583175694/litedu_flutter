@@ -5,61 +5,19 @@
  **/
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/screen_fit.dart';
+import 'package:flutter_module/plugins/calendar_dialog/fullscreen_demo.dart';
 
-class GradeChoiceModel extends StatefulWidget {
+class DateChoiceModel extends StatefulWidget {
   @override
-  GradeChoiceModelState createState() => GradeChoiceModelState();
+  DateChoiceModelState createState() => DateChoiceModelState();
 }
 
-class GradeChoiceModelState extends State<GradeChoiceModel> {
-  List<String> _className = new List();
-  int currentSelect = 0;
+class DateChoiceModelState extends State<DateChoiceModel> {
+  DateTime _selectedDate = DateTime.now();
 
   @override
   void initState() {
     super.initState();
-
-    _className = ['三年1班', '三年2班', '四年1班', '四年2班', '五年1班'];
-  }
-
-  Widget classList() {
-    List<Widget> tiles = [];
-    Widget content;
-    TextStyle defaultStyle = TextStyle(fontSize: ScreenUtil().setWidth(32), color: Color(0xff6D7993), fontWeight: FontWeight.normal, decoration: TextDecoration.none);
-    TextStyle selectStyle = TextStyle(fontSize: ScreenUtil().setWidth(32), color: Color(0xffffffff), fontWeight: FontWeight.normal, decoration: TextDecoration.none);
-
-    for(int i = 0; i < _className.length; i++) {
-      tiles.add(
-        new Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            GestureDetector(
-              child: Container(
-                width: 196,
-                height: 40,
-                child: Center(
-                  child: new Text(_className[i], style: currentSelect == i ? selectStyle : defaultStyle)
-                ),
-                margin: EdgeInsets.only(top: 13, bottom: 13),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  color: currentSelect == i ? Color(0xff29D9D6) : Colors.white
-                ),
-              ),
-              onTap: () {
-                setState(() {
-                  currentSelect = i;
-                });
-              },
-            ),
-          ]
-        )
-      );
-    }
-    content = new ListView(
-        children: tiles
-    );
-    return content;
   }
 
   @override
@@ -67,7 +25,7 @@ class GradeChoiceModelState extends State<GradeChoiceModel> {
     return Center(
       child: Container(
         width: ScreenUtil().setWidth(670),
-        height: ScreenUtil().setHeight(662),
+        height: ScreenUtil().setWidth(806),
         child: Column(
           children: <Widget>[
             Container(
@@ -80,8 +38,9 @@ class GradeChoiceModelState extends State<GradeChoiceModel> {
               ),
             ),
             Container(
-              height: ScreenUtil().setHeight(438),
-              child: classList(),
+              width: ScreenUtil().setWidth(670),
+              height: ScreenUtil().setWidth(582),
+              child: FullScreenDemo(),
               decoration: BoxDecoration(
                   border: Border(bottom: BorderSide(color: Color.fromRGBO(0, 0, 0, 0.06)))
               ),

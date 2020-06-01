@@ -4,6 +4,7 @@
  * @Date 2019-12-14
  **/
 import 'package:flutter/material.dart';
+import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/plugins/calendar_plugin/model/date_model.dart';
 import 'package:flutter_module/plugins/calendar_plugin/widget/base_day_view.dart';
 import 'package:flutter_module/plugins/calendar_plugin/widget/base_week_bar.dart';
@@ -35,7 +36,7 @@ class CustomStyleWeekBarItem extends BaseWeekBar {
         ValueListenableBuilder(
             valueListenable: text,
             builder: (context, value, child) {
-              return new Text(text.value, style: TextStyle(fontSize: 14, color: Color(0xff6D7993)),);
+              return new Text(text.value, style: TextStyle(fontSize: ScreenUtil().setWidth(28), color: Color(0xff6D7993)),);
             }),
       ],
     ));
@@ -55,7 +56,7 @@ class CustomStyleWeekBarItem extends BaseWeekBar {
         children: <Widget>[
           new Center(
             child: new Text(
-              weekList[index], style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Color(0xffB6BCC9)),
+              weekList[index], style: TextStyle(fontSize: ScreenUtil().setWidth(28), fontWeight: FontWeight.normal, color: Color(0xffB6BCC9)),
             ),
           ),
         ],
@@ -67,9 +68,9 @@ class CustomStyleWeekBarItem extends BaseWeekBar {
 class CustomStyleDayWidget extends BaseCombineDayWidget {
   CustomStyleDayWidget(DateModel dateModel) : super(dateModel);
 
-  final TextStyle normalTextStyle = TextStyle(fontSize: 14, color: Color(0xff6D7993));
-  final TextStyle selectTextStyle = TextStyle(fontSize: 14, color: Colors.white);
-  final TextStyle noIsCurrentMonthTextStyle = TextStyle(fontSize: 14, color: Colors.white);
+  final TextStyle normalTextStyle = TextStyle(fontSize: ScreenUtil().setWidth(28), color: Color(0xff6D7993));
+  final TextStyle selectTextStyle = TextStyle(fontSize: ScreenUtil().setWidth(28), color: Colors.white);
+  final TextStyle noIsCurrentMonthTextStyle = TextStyle(fontSize: ScreenUtil().setWidth(28), color: Colors.white);
 
   @override
   Widget getNormalWidget(DateModel dateModel) {

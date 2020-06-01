@@ -7,8 +7,11 @@ import 'dart:math';
  **/
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/custom_style.dart';
+import 'package:flutter_module/components/date_choice_model.dart';
 import 'package:flutter_module/components/grade_choice_model.dart';
 import 'package:flutter_module/components/schedule_list.dart';
+import 'package:flutter_module/components/screen_fit.dart';
+import 'package:flutter_module/plugins/calendar_dialog/fullscreen_demo.dart';
 import 'package:flutter_module/plugins/calendar_plugin/constants/constants.dart';
 import 'package:flutter_module/plugins/calendar_plugin/controller.dart';
 import 'package:flutter_module/plugins/calendar_plugin/widget/calendar_view.dart';
@@ -35,6 +38,7 @@ class CalendarPageState extends State<CalendarPage> {
   ValueNotifier<String> selectText;
   //  编辑状态
   bool isEdit = false;
+  List<DateTime> selectResult2 = <DateTime>[];
 
   @override
   void initState() {
@@ -78,13 +82,44 @@ class CalendarPageState extends State<CalendarPage> {
     });
   }
 
+  Future<DateTime> _showDatePicker() {
+    var date = DateTime.now();
+    return showDatePicker(
+      context: context,
+      initialDate: date,
+      firstDate: date,
+      lastDate: date.add( //未来30天可选
+        Duration(days: 365),
+      ),
+    );
+  }
+
+  // Dialog方式
+  _navigateDialogDemo() {
+//    showDialog(
+//      context: context,
+//      builder: (BuildContext context) {
+//        return Container(
+//          width: ScreenUtil().setWidth(670),
+//          height: ScreenUtil().setWidth(806),
+//          child: FullScreenDemo(),
+//        );
+//      },
+//    );
+    showDialog(context: context, builder: (context) => DateChoiceModel());
+  }
+
   //  选择班级
-  void selectClass() {
-    showDialog(context: context, builder: (context) => GradeChoiceModel());
+  void _selectClass() {
+    _navigateDialogDemo();
+//    showDialog(context: context, builder: (context) => GradeChoiceModel());
   }
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.instance = ScreenUtil(width: 750, height: 1624)
+      ..init(context);
+
     return Scaffold(
         appBar: AppBar(
           title: Row(
@@ -92,8 +127,9 @@ class CalendarPageState extends State<CalendarPage> {
             children: <Widget>[
               GestureDetector(
                 child: Container(
-                  height: 24,
-                  child: isEdit ? Text('取消', style: TextStyle(fontSize: 14, color: Color(0xff6D7993))) : Image.asset('lib/assets/icon_list.png'),
+                  width: ScreenUtil().setWidth(64),
+                  height: ScreenUtil().setWidth(48),
+                  child: isEdit ? Text('取消', style: TextStyle(fontSize: ScreenUtil().setSp(28), color: Color(0xff6D7993))) : Image.asset('lib/assets/icon_list.png', width: ScreenUtil().setWidth(48),),
                 ),
                 onTap: () {
                   isEdit = !isEdit;
@@ -103,18 +139,18 @@ class CalendarPageState extends State<CalendarPage> {
               Text('课程安排', style: TextStyle(color: Color(0xff6D7993), fontSize: 20),),
               GestureDetector(
                 child: Container(
-                  width: 24,
-                  height: 24,
+                  width: ScreenUtil().setWidth(48),
+                  height: ScreenUtil().setWidth(48),
                   child: Image.asset('lib/assets/icon_setting.png'),
                 ),
                 onTap: () {
-                  selectClass();
+                  _selectClass();
                 },
               ),
             ],
           ),
           backgroundColor: Colors.white,
-          elevation: isEdit ? 0.30 : 0,
+          elevation: isEdit ? 0.3 : 0.0,
         ),
         body: Stack(
           children: <Widget>[
@@ -137,11 +173,11 @@ class CalendarPageState extends State<CalendarPage> {
   SliverAppBar buildSliverAppBar() {
     return SliverAppBar(
       bottom: PreferredSize(
-          preferredSize: Size(200, 83),
+          preferredSize: Size(200, ScreenUtil().setWidth(164.0)),
           child: Container()
       ),
       backgroundColor: Colors.white,
-      expandedHeight: 352.0,
+      expandedHeight: ScreenUtil().setWidth(706.0),
       flexibleSpace: Stack(
         overflow: Overflow.clip,
         children: <Widget>[
