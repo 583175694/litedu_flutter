@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'package:flutter_module/pages/calendar_page.dart';
+import 'package:flutter_module/pages/student_file.dart';
 import 'test.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -36,9 +37,13 @@ class _MyAppState extends State<MyApp> {
     return ScopedModel<MainModel>(
       model: mainModel,
       child: MaterialApp(
-          title: 'Flutter Boost example',
-          builder: FlutterBoost.init(postPush: _onRoutePushed),
-          home: CalendarPage()
+        title: 'Flutter Boost example',
+        builder: FlutterBoost.init(postPush: _onRoutePushed),
+        home: CalendarPage(),
+        routes: {
+          "calendar_page": (context) => CalendarPage(),
+          "student_file": (context) => StudentFile(),
+        }
       ),
     );
   }

@@ -177,7 +177,7 @@ class CalendarPageState extends State<CalendarPage> {
         children: <Widget>[
           CalendarViewWidget(
             weekBarItemWidgetBuilder: () {
-              return CustomStyleWeekBarItem();
+              return CustomStyleWeekBarItem(text: text);
             },
             dayWidgetBuilder: (dateModel) {
               return CustomStyleDayWidget(dateModel);

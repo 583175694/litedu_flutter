@@ -5,12 +5,13 @@
  **/
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/screen_fit.dart';
-import 'package:flutter_module/main.dart';
 import 'package:flutter_module/plugins/calendar_plugin/model/date_model.dart';
 import 'package:flutter_module/plugins/calendar_plugin/widget/base_day_view.dart';
 import 'package:flutter_module/plugins/calendar_plugin/widget/base_week_bar.dart';
 
 class CustomStyleWeekBarItem extends BaseWeekBar {
+  CustomStyleWeekBarItem({Key key, this.text}) : super(key: key);
+  ValueNotifier<String> text;
 
   final List<String> weekList = ["一", "二", "三", "四", "五", "六", "日"];
 
@@ -18,7 +19,6 @@ class CustomStyleWeekBarItem extends BaseWeekBar {
   @override
   Widget build(BuildContext context) {
     List<Widget> children = List();
-    DateModel date = mainModel.currentDateModel;
 
     var items = getWeekDayWidget();
     children.add(Row(
@@ -33,7 +33,11 @@ class CustomStyleWeekBarItem extends BaseWeekBar {
           ),
           margin: EdgeInsets.only(right: 16.0),
         ),
-        Text('${date.year}年${date.month}月', style: TextStyle(fontSize: ScreenUtil().setWidth(28), color: Color(0xff6D7993)))
+        ValueListenableBuilder(
+            valueListenable: text,
+            builder: (context, value, child) {
+              return new Text(text.value, style: TextStyle(fontSize: ScreenUtil().setWidth(28), color: Color(0xff6D7993)),);
+            }),
       ],
     ));
     children.add(Row(
