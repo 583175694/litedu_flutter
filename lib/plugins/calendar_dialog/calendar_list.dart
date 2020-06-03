@@ -2,6 +2,8 @@ library calendar_list;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/screen_fit.dart';
+import 'package:flutter_module/dto/dateDto.dart';
+import 'package:flutter_module/plugins/calendar_plugin/flutter_custom_calendar.dart';
 
 import 'month_view.dart';
 import 'weekday_row.dart';
@@ -9,8 +11,7 @@ import 'weekday_row.dart';
 class CalendarList extends StatefulWidget {
   final DateTime firstDate;
   final DateTime lastDate;
-  final DateTime selectedStartDate;
-  final DateTime selectedEndDate;
+  final DateModel selectedStartDate;
   final Function onSelectFinish;
   final Function onSelect;
 
@@ -19,7 +20,6 @@ class CalendarList extends StatefulWidget {
       @required this.lastDate,
       this.onSelectFinish,
       this.selectedStartDate,
-      this.selectedEndDate,
       this.onSelect})
       : assert(firstDate != null),
         assert(lastDate != null),
@@ -32,21 +32,19 @@ class CalendarList extends StatefulWidget {
 
 class _CalendarListState extends State<CalendarList> {
   final double HORIZONTAL_PADDING = 0.0;
-  DateTime selectStartTime;
-  DateTime selectEndTime;
+  DateModel selectStartTime;
   int yearStart;
   int monthStart;
   int yearEnd;
   int monthEnd;
   int count;
+  DateDto _dateDto = new DateDto();
 
   @override
   void initState() {
     super.initState();
     // 传入的开始日期
     selectStartTime = widget.selectedStartDate;
-    // 传入的结束日期
-    selectEndTime = widget.selectedEndDate;
     yearStart = widget.firstDate.year;
     monthStart = widget.firstDate.month;
     yearEnd = widget.lastDate.year;
@@ -115,7 +113,6 @@ class _CalendarListState extends State<CalendarList> {
       month: month,
       padding: HORIZONTAL_PADDING,
       dateTimeStart: selectStartTime,
-      dateTimeEnd: selectEndTime,
       todayColor: Colors.deepOrange,
       onSelectDayRang: (dateTime) => onSelectDayChanged(dateTime),
     );

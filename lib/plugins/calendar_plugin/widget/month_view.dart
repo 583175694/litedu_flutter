@@ -6,7 +6,6 @@ import 'package:flutter_module/model/main_model.dart';
 import 'package:flutter_module/plugins/calendar_plugin/cache_data.dart';
 import 'package:flutter_module/plugins/calendar_plugin/calendar_provider.dart';
 import 'package:flutter_module/plugins/calendar_plugin/configuration.dart';
-import 'package:flutter_module/plugins/calendar_plugin/constants/constants.dart';
 import 'package:flutter_module/plugins/calendar_plugin/model/date_model.dart';
 import 'package:flutter_module/plugins/calendar_plugin/utils/LogUtil.dart';
 import 'package:flutter_module/plugins/calendar_plugin/utils/date_util.dart';
@@ -111,30 +110,17 @@ class _MonthViewState extends State<MonthView>
         itemBuilder: (context, index) {
           DateModel dateModel = items[index];
 
-          //判断是否被选择
-          if (configuration.selectMode == CalendarConstants.MODE_MULTI_SELECT) {
-            if (calendarProvider.selectedDateList.contains(dateModel)) {
-              dateModel.isSelected = true;
-            } else {
-              dateModel.isSelected = false;
-            }
-          } else {
-            if (calendarProvider.selectDateModel == dateModel) {
-              dateModel.isSelected = true;
-            } else if (dateModel.year == DateTime.now().year &&
-                dateModel.month == DateTime.now().month &&
-                dateModel.day == DateTime.now().day) {
-              mainModel.currentDateModel = dateModel;
-              dateModel.isSelected = true;
-            } else {
-              dateModel.isSelected = false;
-            }
+          //  🐶判断是否被选择
+          if (mainModel.currentDateModel == null &&
+              dateModel.year == DateTime.now().year &&
+              dateModel.month == DateTime.now().month &&
+              dateModel.day == DateTime.now().day) {
+            mainModel.currentDateModel = dateModel;
           }
 
           return ItemContainer(
             dateModel: dateModel,
-            key: ObjectKey(
-                dateModel), //这里使用objectKey，保证可以刷新。原因1：跟flutter的刷新机制有关。原因2：statefulElement持有state。
+            key: ObjectKey(dateModel),  //这里使用objectKey，保证可以刷新。原因1：跟flutter的刷新机制有关。原因2：statefulElement持有state。
           );
         });
   }
@@ -143,16 +129,10 @@ class _MonthViewState extends State<MonthView>
   bool get wantKeepAlive => true;
 }
 
-/**
- * 多选模式，包装item，这样的话，就只需要刷新当前点击的item就行了，不需要刷新整个页面
- */
 class ItemContainer extends StatefulWidget {
   final DateModel dateModel;
 
-  const ItemContainer({
-    Key key,
-    this.dateModel,
-  }) : super(key: key);
+  const ItemContainer({Key key, this.dateModel}) : super(key: key);
 
   @override
   ItemContainerState createState() => ItemContainerState();
@@ -163,44 +143,20 @@ class ItemContainerState extends State<ItemContainer> {
   CalendarConfiguration configuration;
   CalendarProvider calendarProvider;
 
-  ValueNotifier<bool> isSelected;
-
   @override
   void initState() {
     super.initState();
     dateModel = widget.dateModel;
-    isSelected = ValueNotifier(dateModel.isSelected);
 
-    if (mainModel.currentDateModel == dateModel) {
-      dateModel.isSelected = true;
-    } else {
-      dateModel.isSelected = false;
-    }
-
-//    先注释掉这段代码
+    //  🐶判断是不是当前时间
     WidgetsBinding.instance.addPostFrameCallback((callback) {
        if (dateModel.year == DateTime.now().year &&
           dateModel.month == DateTime.now().month &&
           dateModel.day == DateTime.now().day) {
-        calendarProvider?.lastClickItemState = this;
+         calendarProvider.lastClickDateModel = dateModel;
+         calendarProvider.selectDateModel = dateModel;
       }
     });
-  }
-
-  /**
-   * 提供方法给外部，可以调用这个方法进行刷新item
-   */
-  void refreshItem(bool v) {
-    /**
-        Exception caught by gesture
-        The following assertion was thrown while handling a gesture:
-        setState() called after dispose()
-     */
-    if (mounted) {
-      setState(() {
-        dateModel.isSelected = v;
-      });
-    }
   }
 
   @override
@@ -211,56 +167,20 @@ class ItemContainerState extends State<ItemContainer> {
     configuration = calendarProvider.calendarConfiguration;
 
     return GestureDetector(
-      //点击整个item都会触发事件
+      //  🐶点击整个item都会触发事件
       behavior: HitTestBehavior.opaque,
       onTap: () {
         print("GestureDetector onTap: $dateModel}");
         mainModel.currentDateModel = dateModel;
 
-        //范围外不可点击
-        if (!dateModel.isInRange) {
-          //多选回调
-          if (configuration.selectMode == CalendarConstants.MODE_MULTI_SELECT) {
-            configuration.multiSelectOutOfRange();
-          }
-          return;
-        }
-
         calendarProvider.lastClickDateModel = dateModel;
-
         calendarProvider.selectDateModel = dateModel;
+
         if (configuration.calendarSelect != null) {
           configuration.calendarSelect(dateModel);
         }
-
-//        单选需要刷新上一个item
-        if (calendarProvider.lastClickItemState != this) {
-          calendarProvider.lastClickItemState?.refreshItem(false);
-          calendarProvider.lastClickItemState = this;
-        }
-        refreshItem(true);
       },
       child: configuration.dayWidgetBuilder(dateModel),
     );
-  }
-
-  @override
-  void deactivate() {
-//    LogUtil.log(
-//        TAG: this.runtimeType, message: "ItemContainerState deactivate");
-    super.deactivate();
-  }
-
-  @override
-  void dispose() {
-//    LogUtil.log(TAG: this.runtimeType, message: "ItemContainerState dispose");
-    super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(ItemContainer oldWidget) {
-//    LogUtil.log(
-//        TAG: this.runtimeType, message: "ItemContainerState didUpdateWidget");
-    super.didUpdateWidget(oldWidget);
   }
 }

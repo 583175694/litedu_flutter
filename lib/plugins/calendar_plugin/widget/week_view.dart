@@ -73,24 +73,6 @@ class _WeekViewState extends State<WeekView> {
         itemCount: 7,
         itemBuilder: (context, index) {
           DateModel dateModel = items[index];
-          //判断是否被选择
-          if (configuration.selectMode == CalendarConstants.MODE_MULTI_SELECT) {
-            if (calendarProvider.selectedDateList.contains(dateModel)) {
-              dateModel.isSelected = true;
-            } else {
-              dateModel.isSelected = false;
-            }
-          } else {
-            if (calendarProvider.selectDateModel == dateModel) {
-              dateModel.isSelected = true;
-            } else if (dateModel.year == DateTime.now().year &&
-                dateModel.month == DateTime.now().month &&
-                dateModel.day == DateTime.now().day) {
-              dateModel.isSelected = true;
-            } else {
-              dateModel.isSelected = false;
-            }
-          }
 
           return ItemContainer(
             dateModel: dateModel,

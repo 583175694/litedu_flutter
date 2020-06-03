@@ -5,7 +5,7 @@
  **/
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/screen_fit.dart';
-import 'package:flutter_module/plugins/calendar_dialog/index.dart';
+import 'package:flutter_module/plugins/calendar_dialog/calendar_dialog.dart';
 
 class DateChoiceModel extends StatefulWidget {
   @override
@@ -13,7 +13,6 @@ class DateChoiceModel extends StatefulWidget {
 }
 
 class DateChoiceModelState extends State<DateChoiceModel> {
-  DateTime _selectedDate = DateTime.now();
   TextStyle titleFont = TextStyle(fontSize: ScreenUtil().setSp(32), color: Color(0xff6D7993), fontWeight: FontWeight.normal, decoration: TextDecoration.none);
   TextStyle buttonFont = TextStyle(fontSize: ScreenUtil().setWidth(32), color: Color(0xff29D9D6), fontWeight: FontWeight.normal, decoration: TextDecoration.none);
 

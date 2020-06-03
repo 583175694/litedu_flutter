@@ -12,7 +12,7 @@ import 'package:flutter_module/components/grade_choice_model.dart';
 import 'package:flutter_module/components/schedule_list.dart';
 import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/main.dart';
-import 'package:flutter_module/plugins/calendar_dialog/index.dart';
+import 'package:flutter_module/plugins/calendar_dialog/calendar_dialog.dart';
 import 'package:flutter_module/plugins/calendar_plugin/constants/constants.dart';
 import 'package:flutter_module/plugins/calendar_plugin/controller.dart';
 import 'package:flutter_module/plugins/calendar_plugin/widget/calendar_view.dart';

@@ -4,9 +4,29 @@ import 'package:flutter_module/plugins/calendar_plugin/model/date_model.dart';
 import 'package:flutter_module/model/main_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-/**
- * 通过canvas自定义item，只需实现相关的方法就可以
- */
+
+//  🐶通过组合widget创建item，只需实现相关的方法就可以
+abstract class BaseCombineDayWidget extends StatelessWidget {
+  final DateModel dateModel;
+
+  BaseCombineDayWidget(this.dateModel);
+
+  @override
+  Widget build(BuildContext context) {
+    final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
+
+    //  根据当前点击日期，判断是否选中
+    return mainModel.currentDateModel == dateModel
+        ? getSelectedWidget(dateModel)
+        : getNormalWidget(dateModel);
+  }
+
+  Widget getNormalWidget(DateModel dateModel);
+
+  Widget getSelectedWidget(DateModel dateModel);
+}
+
+//  通过canvas自定义item，只需实现相关的方法就可以
 abstract class BaseCustomDayWidget extends StatelessWidget {
   final DateModel dateModel;
 
@@ -21,12 +41,12 @@ abstract class BaseCustomDayWidget extends StatelessWidget {
     return Container(
       child: new CustomPaint(
         painter:
-            //根据isSelected标志获取对应的item
-            mainModel.currentDateModel == dateModel
-                ? new CustomDayWidgetPainter(dateModel,
-                    drawDayWidget: drawSelected)
-                : new CustomDayWidgetPainter(dateModel,
-                    drawDayWidget: drawNormal),
+          //  根据当前点击日期，判断是否选中
+          mainModel.currentDateModel == dateModel
+              ? new CustomDayWidgetPainter(dateModel,
+                  drawDayWidget: drawSelected)
+              : new CustomDayWidgetPainter(dateModel,
+                  drawDayWidget: drawNormal),
       ),
     );
   }
@@ -54,26 +74,4 @@ class CustomDayWidgetPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
   }
-}
-
-/**
- * 通过组合widget创建item，只需实现相关的方法就可以
- */
-abstract class BaseCombineDayWidget extends StatelessWidget {
-  final DateModel dateModel;
-
-  BaseCombineDayWidget(this.dateModel);
-
-  @override
-  Widget build(BuildContext context) {
-    final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
-
-    return mainModel.currentDateModel == dateModel
-        ? getSelectedWidget(dateModel)
-        : getNormalWidget(dateModel);
-  }
-
-  Widget getNormalWidget(DateModel dateModel);
-
-  Widget getSelectedWidget(DateModel dateModel);
 }

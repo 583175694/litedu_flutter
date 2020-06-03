@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_module/main.dart';
+import 'package:flutter_module/model/main_model.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:flutter_module/plugins/calendar_plugin/flutter_custom_calendar.dart';
 import 'calendar_notification.dart';
 
 import 'day_number.dart';
@@ -13,7 +17,6 @@ class MonthView extends StatefulWidget {
     @required this.month,
     @required this.padding,
     @required this.dateTimeStart,
-    @required this.dateTimeEnd,
     @required this.onSelectDayRang,
     this.todayColor,
     this.monthNames,
@@ -25,8 +28,7 @@ class MonthView extends StatefulWidget {
   final double padding;
   final Color todayColor;
   final List<String> monthNames;
-  final DateTime dateTimeStart;
-  final DateTime dateTimeEnd;
+  final DateModel dateTimeStart;
   final Function onSelectDayRang;
 
   double get itemWidth => getDayNumberSize(context, padding);
@@ -36,7 +38,7 @@ class MonthView extends StatefulWidget {
 }
 
 class _MonthViewState extends State<MonthView> {
-  DateTime selectedDate;
+  DateModel selectedDate = new DateModel();
 
   Widget buildMonthDays(BuildContext context) {
     List<Row> dayRows = <Row>[];
@@ -51,27 +53,15 @@ class _MonthViewState extends State<MonthView> {
       DateTime moment = DateTime(widget.year, widget.month, day);
       final bool isToday = dateIsToday(moment);
 
-      bool isDefaultSelected = false;
-      if (widget.dateTimeStart == null &&
-          selectedDate == null) {
-        isDefaultSelected = false;
-      }
-      if (isToday && widget.dateTimeStart == null ) {
-        isDefaultSelected = true;
-      }
-      if (widget.dateTimeStart == selectedDate &&
-          selectedDate?.day == day &&
-          day > 0) {
-        isDefaultSelected = true;
-      }
-
       dayRowChildren.add(
         DayNumber(
           size: widget.itemWidth,
           day: day,
+          month: widget.month,
+          year: widget.year,
           isToday: isToday,
-          isDefaultSelected: isDefaultSelected,
           todayColor: widget.todayColor,
+          selectedDate: widget.dateTimeStart
         ),
       );
 
@@ -93,10 +83,15 @@ class _MonthViewState extends State<MonthView> {
   }
 
   Widget buildMonthView(BuildContext context) {
+    final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
+
     return NotificationListener<CalendarNotification>(
         onNotification: (notification) {
-          selectedDate =
-              DateTime(widget.year, widget.month, notification.selectDay);
+          selectedDate
+            ..day = notification.selectDay
+            ..month = widget.month
+            ..year = widget.year;
+          mainModel.currentDateModel = selectedDate;
           widget.onSelectDayRang(selectedDate);
           return true;
         },
@@ -117,7 +112,8 @@ class _MonthViewState extends State<MonthView> {
               ),
             ],
           ),
-        ));
+        )
+    );
   }
 
   @override

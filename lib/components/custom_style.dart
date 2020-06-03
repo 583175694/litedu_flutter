@@ -70,7 +70,7 @@ class CustomStyleDayWidget extends BaseCombineDayWidget {
 
   final TextStyle normalTextStyle = TextStyle(fontSize: ScreenUtil().setWidth(28), color: Color(0xff6D7993));
   final TextStyle selectTextStyle = TextStyle(fontSize: ScreenUtil().setWidth(28), color: Colors.white);
-  final TextStyle noIsCurrentMonthTextStyle = TextStyle(fontSize: ScreenUtil().setWidth(28), color: Colors.white);
+  final TextStyle noIsCurrentMonthTextStyle = TextStyle(fontSize: ScreenUtil().setWidth(28), color: Color(0xFFD3D6DE));
 
   @override
   Widget getNormalWidget(DateModel dateModel) {
@@ -123,9 +123,7 @@ class CustomStyleDayWidget extends BaseCombineDayWidget {
                   child: Center(
                     child: new Text(
                       dateModel.day.toString(),
-                      style: dateModel.isCurrentMonth
-                          ? selectTextStyle
-                          : noIsCurrentMonthTextStyle,
+                      style: selectTextStyle,
                     ),
                   ),
                 ),

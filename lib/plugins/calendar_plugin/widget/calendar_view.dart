@@ -98,8 +98,7 @@ class CalendarContainer extends StatefulWidget {
   CalendarContainerState createState() => CalendarContainerState();
 }
 
-class CalendarContainerState extends State<CalendarContainer>
-    with SingleTickerProviderStateMixin {
+class CalendarContainerState extends State<CalendarContainer> with SingleTickerProviderStateMixin {
   double itemHeight;
   double totalHeight;
 
