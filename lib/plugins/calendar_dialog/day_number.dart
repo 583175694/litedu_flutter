@@ -31,14 +31,15 @@ class _DayNumberState extends State<DayNumber> {
       height: ScreenUtil().setWidth(64),
       margin: EdgeInsets.all(ScreenUtil().setWidth(15.8)),
       alignment: Alignment.center,
-      decoration: (isSelected && widget.day > 0)
-          ? BoxDecoration(color: Colors.blue)
-          : widget.isToday ? BoxDecoration(color: widget.todayColor) : null,
+      decoration: (isSelected && widget.day > 0) ? BoxDecoration(
+        color: Color(0xff29D9D6),
+        borderRadius: BorderRadius.all(Radius.circular(40))
+      ) : null,
       child: Text(
         widget.day < 1 ? '' : widget.day.toString(),
         textAlign: TextAlign.center,
         style: TextStyle(
-          color: (widget.isToday || isSelected) ? Colors.white : Colors.black87,
+          color: isSelected ? Colors.white : Color(0xff6D7993),
           fontSize: ScreenUtil().setSp(28),
           fontWeight: FontWeight.normal,
         ),

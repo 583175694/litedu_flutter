@@ -5,7 +5,7 @@
  **/
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/screen_fit.dart';
-import 'package:flutter_module/plugins/calendar_dialog/fullscreen_demo.dart';
+import 'package:flutter_module/plugins/calendar_dialog/index.dart';
 
 class DateChoiceModel extends StatefulWidget {
   @override
@@ -14,6 +14,8 @@ class DateChoiceModel extends StatefulWidget {
 
 class DateChoiceModelState extends State<DateChoiceModel> {
   DateTime _selectedDate = DateTime.now();
+  TextStyle titleFont = TextStyle(fontSize: ScreenUtil().setSp(32), color: Color(0xff6D7993), fontWeight: FontWeight.normal, decoration: TextDecoration.none);
+  TextStyle buttonFont = TextStyle(fontSize: ScreenUtil().setWidth(32), color: Color(0xff29D9D6), fontWeight: FontWeight.normal, decoration: TextDecoration.none);
 
   @override
   void initState() {
@@ -26,41 +28,47 @@ class DateChoiceModelState extends State<DateChoiceModel> {
       child: Container(
         width: ScreenUtil().setWidth(670),
         height: ScreenUtil().setWidth(806),
-        child: Column(
+        child: Stack(
           children: <Widget>[
-            Container(
-              height: 56,
-              child: Center(
-                child: Text('选择班级', style: TextStyle(fontSize: ScreenUtil().setWidth(32), color: Color(0xff6D7993), fontWeight: FontWeight.normal, decoration: TextDecoration.none)),
-              ),
-              decoration: BoxDecoration(
-                  border: Border(bottom: BorderSide(color: Color.fromRGBO(0, 0, 0, 0.06)))
-              ),
-            ),
-            Container(
-              width: ScreenUtil().setWidth(670),
-              height: ScreenUtil().setWidth(582),
-              child: FullScreenDemo(),
-              decoration: BoxDecoration(
-                  border: Border(bottom: BorderSide(color: Color.fromRGBO(0, 0, 0, 0.06)))
-              ),
-            ),
-            GestureDetector(
-              child: Container(
-                height: 56,
-                width: 336,
-                child: Center(
-                  child: Text('确定', style: TextStyle(fontSize: ScreenUtil().setWidth(32), color: Color(0xff29D9D6), fontWeight: FontWeight.normal, decoration: TextDecoration.none)),
+            Column(
+              children: <Widget>[
+                Container(
+                  height: 56,
+                  child: Center(
+                    child: Text('日期', style: titleFont),
+                  ),
                 ),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(8))
+                Container(
+                  width: ScreenUtil().setWidth(670),
+                  height: ScreenUtil().setWidth(582),
+                  child: CalendarDialog(),
+                  decoration: BoxDecoration(
+                      border: Border(bottom: BorderSide(color: Color.fromRGBO(0, 0, 0, 0.06)))
+                  ),
                 ),
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-              },
+                GestureDetector(
+                  child: Container(
+                    height: 56,
+                    width: 336,
+                    child: Center(
+                      child: Text('确定', style: buttonFont),
+                    ),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(8))
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
             ),
+            Positioned(
+              top: ScreenUtil().setHeight(40),
+              right: ScreenUtil().setWidth(48),
+              child: Text('取消', style: buttonFont),
+            )
           ],
         ),
         decoration: BoxDecoration(

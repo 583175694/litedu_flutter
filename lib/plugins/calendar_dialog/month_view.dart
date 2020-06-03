@@ -53,24 +53,16 @@ class _MonthViewState extends State<MonthView> {
 
       bool isDefaultSelected = false;
       if (widget.dateTimeStart == null &&
-          widget.dateTimeEnd == null &&
           selectedDate == null) {
         isDefaultSelected = false;
       }
+      if (isToday && widget.dateTimeStart == null ) {
+        isDefaultSelected = true;
+      }
       if (widget.dateTimeStart == selectedDate &&
-          widget.dateTimeEnd == null &&
           selectedDate?.day == day &&
           day > 0) {
         isDefaultSelected = true;
-      }
-      if (widget.dateTimeStart != null && widget.dateTimeEnd != null) {
-        isDefaultSelected = (moment.isAtSameMomentAs(widget.dateTimeStart) ||
-                    moment.isAtSameMomentAs(widget.dateTimeEnd)) ||
-                moment.isAfter(widget.dateTimeStart) &&
-                    moment.isBefore(widget.dateTimeEnd) &&
-                    day > 0
-            ? true
-            : false;
       }
 
       dayRowChildren.add(
@@ -115,6 +107,7 @@ class _MonthViewState extends State<MonthView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               MonthTitle(
+                year: widget.year,
                 month: widget.month,
                 monthNames: widget.monthNames,
               ),

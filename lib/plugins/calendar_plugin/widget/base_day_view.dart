@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_module/plugins/calendar_plugin/controller.dart';
 import 'package:flutter_module/plugins/calendar_plugin/model/date_model.dart';
+import 'package:flutter_module/model/main_model.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 /**
  * 通过canvas自定义item，只需实现相关的方法就可以
@@ -14,11 +16,13 @@ abstract class BaseCustomDayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
+
     return Container(
       child: new CustomPaint(
         painter:
             //根据isSelected标志获取对应的item
-            dateModel.isSelected
+            mainModel.currentDateModel == dateModel
                 ? new CustomDayWidgetPainter(dateModel,
                     drawDayWidget: drawSelected)
                 : new CustomDayWidgetPainter(dateModel,
@@ -62,7 +66,9 @@ abstract class BaseCombineDayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return dateModel.isSelected
+    final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
+
+    return mainModel.currentDateModel == dateModel
         ? getSelectedWidget(dateModel)
         : getNormalWidget(dateModel);
   }

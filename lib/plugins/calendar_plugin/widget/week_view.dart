@@ -83,10 +83,13 @@ class _WeekViewState extends State<WeekView> {
           } else {
             if (calendarProvider.selectDateModel == dateModel) {
               dateModel.isSelected = true;
+            } else if (dateModel.year == DateTime.now().year &&
+                dateModel.month == DateTime.now().month &&
+                dateModel.day == DateTime.now().day) {
+              dateModel.isSelected = true;
             } else {
               dateModel.isSelected = false;
             }
-//            dateModel.isSelected = false;
           }
 
           return ItemContainer(

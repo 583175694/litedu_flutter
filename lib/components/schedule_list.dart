@@ -5,6 +5,8 @@
  **/
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/screen_fit.dart';
+import 'package:flutter_module/model/main_model.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class ScheduleList extends StatefulWidget {
   ScheduleList({Key key, this.selectText}) : super(key: key);
@@ -15,6 +17,11 @@ class ScheduleList extends StatefulWidget {
 }
 
 class ScheduleListState extends State<ScheduleList> {
+  TextStyle courseFont = TextStyle(fontSize: ScreenUtil().setSp(28), color: Color(0xff6D7993), fontWeight: FontWeight.normal, decoration: TextDecoration.none);
+  TextStyle evaluateFont = TextStyle(fontSize: ScreenUtil().setSp(28), color: Color(0xff29D9D6), fontWeight: FontWeight.normal, decoration: TextDecoration.none);
+  TextStyle timeFont = TextStyle(fontSize: ScreenUtil().setSp(22), color: Color(0xffB6BCC9));
+  TextStyle selectFont = TextStyle(color: Color(0xff29D9D6), fontSize: ScreenUtil().setSp(32));
+
   Map prov = new Map();
   Map next = new Map();
 
@@ -60,11 +67,30 @@ class ScheduleListState extends State<ScheduleList> {
 
   @override
   Widget build(BuildContext context) {
-    //  日程列表
-    List<Widget> scheduleList() {
-      TextStyle timeFont = TextStyle(fontSize: ScreenUtil().setSp(22), color: Color(0xffB6BCC9));
+    final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
 
+  //  日程列表
+    List<Widget> scheduleList() {
       List<Widget> tiles = [];
+
+      //  选中课程
+      mainModel.isEdit ? tiles.add(
+          Container(
+            height: ScreenUtil().setWidth(112),
+            color: Color.fromRGBO(41, 217, 214, 0.2),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text('调课：', style: selectFont),
+                Text('${widget.selectText.value} ', style: selectFont),
+                Text('数学课', style: selectFont)
+              ],
+            ),
+            padding: EdgeInsets.only(left: ScreenUtil().setWidth(48)),
+          )
+      ) : null;
+
+      //  日期标题
       tiles.add(
           Container(
             height: 60.0,
@@ -78,6 +104,7 @@ class ScheduleListState extends State<ScheduleList> {
             margin: EdgeInsets.only(left: 15.0),
           )
       );
+
       for (int i = 0; i < titleItems.length; i++) {
         //  可拖动列表
         if (!isLunchBreak(i)) {
@@ -180,9 +207,6 @@ class ScheduleListState extends State<ScheduleList> {
 
   //  课程项
   Widget courseItem(int i) {
-    TextStyle courseFont = TextStyle(fontSize: ScreenUtil().setSp(28), color: Color(0xff6D7993), fontWeight: FontWeight.normal, decoration: TextDecoration.none);
-    TextStyle evaluateFont = TextStyle(fontSize: ScreenUtil().setSp(28), color: Color(0xff29D9D6), fontWeight: FontWeight.normal, decoration: TextDecoration.none);
-
     return Opacity(
       opacity: willAcceptIndex == i && accepted ? 0.6 : 1,
       child: Container(
@@ -197,14 +221,10 @@ class ScheduleListState extends State<ScheduleList> {
                 Row(
                   children: <Widget>[
                     Container(
-                      child: Text(timeItems[i]["class"],
-                          style: courseFont
-                      ),
+                      child: Text(timeItems[i]["class"], style: courseFont),
                       margin: EdgeInsets.only(left: 12, right: 6),
                     ),
-                    Text(titleItems[i] == null ? '' : "-  ${titleItems[i]}",
-                        style: courseFont
-                    ),
+                    Text(titleItems[i] == null ? '' : "-  ${titleItems[i]}", style: courseFont),
                   ],
                 ),
                 i == 5 ? Container() : Container(
@@ -233,10 +253,7 @@ class ScheduleListState extends State<ScheduleList> {
                   ),
                   margin: EdgeInsets.only(left: 12, right: 6),
                 ),
-                Text(
-                  timeItems[i]["interval"],
-                  style: courseFont,
-                ),
+                Text(timeItems[i]["interval"], style: courseFont,),
               ],
             ),
           ],
@@ -262,14 +279,10 @@ class ScheduleListState extends State<ScheduleList> {
           Row(
             children: <Widget>[
               Container(
-                child: Text(timeItems[i]["class"],
-                    style: TextStyle(fontSize: 14, color: Color(0xff6D7993), fontWeight: FontWeight.normal, decoration: TextDecoration.none)
-                ),
+                child: Text(timeItems[i]["class"], style: courseFont),
                 margin: EdgeInsets.only(left: 12, right: 6),
               ),
-              Text(titleItems[i] == null ? '' : "-  ${titleItems[i]}",
-                  style: TextStyle(fontSize: 14, color: Color(0xff6D7993), decoration: TextDecoration.none, fontWeight: FontWeight.normal)
-              ),
+              Text(titleItems[i] == null ? '' : "-  ${titleItems[i]}", style: courseFont),
             ],
           ),
           Row(
@@ -283,10 +296,7 @@ class ScheduleListState extends State<ScheduleList> {
                 ),
                 margin: EdgeInsets.only(left: 12, right: 6),
               ),
-              Text(
-                timeItems[i]["interval"],
-                style: TextStyle(fontSize: 14, color: Color(0xff6D7993), decoration: TextDecoration.none, fontWeight: FontWeight.normal),
-              ),
+              Text(timeItems[i]["interval"], style: courseFont),
             ],
           ),
         ],

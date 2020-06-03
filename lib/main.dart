@@ -2,12 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'package:flutter_module/pages/calendar_page.dart';
 import 'test.dart';
+import 'package:scoped_model/scoped_model.dart';
 
+import 'model/main_model.dart';
+
+MainModel mainModel = MainModel();
 void main() {
-  runApp(MyApp());
+  runApp(MyApp(model: MainModel()));
 }
 
 class MyApp extends StatefulWidget {
+  final MainModel model;
+  const MyApp({Key key, @required this.model}) : super(key: key);
+  
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -26,10 +33,13 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Boost example',
-        builder: FlutterBoost.init(postPush: _onRoutePushed),
-        home: CalendarPage()
+    return ScopedModel<MainModel>(
+      model: mainModel,
+      child: MaterialApp(
+          title: 'Flutter Boost example',
+          builder: FlutterBoost.init(postPush: _onRoutePushed),
+          home: CalendarPage()
+      ),
     );
   }
 

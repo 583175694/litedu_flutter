@@ -23,30 +23,6 @@ class _MonthViewPagerState extends State<MonthViewPager>
     LogUtil.log(TAG: this.runtimeType, message: "MonthViewPager initState");
 
     calendarProvider = Provider.of<CalendarProvider>(context, listen: false);
-
-//    //计算当前月视图的index
-//    DateModel dateModel = calendarProvider.lastClickDateModel;
-//    List<DateModel> monthList =
-//        calendarProvider.calendarConfiguration.monthList;
-//    int index = 0;
-//    for (int i = 0; i < monthList.length; i++) {
-//      DateModel firstDayOfMonth = monthList[i];
-//      DateModel lastDayOfMonth = DateModel.fromDateTime(firstDayOfMonth
-//          .getDateTime()
-//          .add(Duration(
-//              days: DateUtil.getMonthDaysCount(
-//                  firstDayOfMonth.year, firstDayOfMonth.month))));
-//
-//      if ((dateModel.isAfter(firstDayOfMonth) ||
-//              dateModel.isSameWith(firstDayOfMonth)) &&
-//          dateModel.isBefore(lastDayOfMonth)) {
-//        index = i;
-//        break;
-//      }
-//    }
-//    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-//      calendarProvider.calendarConfiguration.monthController.jumpToPage(index);
-//    });
   }
 
   @override

@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_module/main.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:flutter_module/model/main_model.dart';
 import 'package:flutter_module/plugins/calendar_plugin/cache_data.dart';
 import 'package:flutter_module/plugins/calendar_plugin/calendar_provider.dart';
 import 'package:flutter_module/plugins/calendar_plugin/configuration.dart';
@@ -92,7 +95,6 @@ class _MonthViewState extends State<MonthView>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    LogUtil.log(TAG: this.runtimeType, message: "_MonthViewState build");
 
     CalendarProvider calendarProvider =
         Provider.of<CalendarProvider>(context, listen: false);
@@ -108,6 +110,7 @@ class _MonthViewState extends State<MonthView>
         itemCount: items.isEmpty ? 0 : items.length,
         itemBuilder: (context, index) {
           DateModel dateModel = items[index];
+
           //判断是否被选择
           if (configuration.selectMode == CalendarConstants.MODE_MULTI_SELECT) {
             if (calendarProvider.selectedDateList.contains(dateModel)) {
@@ -118,10 +121,14 @@ class _MonthViewState extends State<MonthView>
           } else {
             if (calendarProvider.selectDateModel == dateModel) {
               dateModel.isSelected = true;
+            } else if (dateModel.year == DateTime.now().year &&
+                dateModel.month == DateTime.now().month &&
+                dateModel.day == DateTime.now().day) {
+              mainModel.currentDateModel = dateModel;
+              dateModel.isSelected = true;
             } else {
               dateModel.isSelected = false;
             }
-//            dateModel.isSelected = false;
           }
 
           return ItemContainer(
@@ -164,13 +171,20 @@ class ItemContainerState extends State<ItemContainer> {
     dateModel = widget.dateModel;
     isSelected = ValueNotifier(dateModel.isSelected);
 
+    if (mainModel.currentDateModel == dateModel) {
+      dateModel.isSelected = true;
+    } else {
+      dateModel.isSelected = false;
+    }
+
 //    先注释掉这段代码
-//    WidgetsBinding.instance.addPostFrameCallback((callback) {
-//      if (configuration.selectMode == CalendarConstants.MODE_SINGLE_SELECT &&
-//          dateModel.isSelected) {
-//        calendarProvider.lastClickItemState = this;
-//      }
-//    });
+    WidgetsBinding.instance.addPostFrameCallback((callback) {
+       if (dateModel.year == DateTime.now().year &&
+          dateModel.month == DateTime.now().month &&
+          dateModel.day == DateTime.now().day) {
+        calendarProvider?.lastClickItemState = this;
+      }
+    });
   }
 
   /**
@@ -185,14 +199,14 @@ class ItemContainerState extends State<ItemContainer> {
     if (mounted) {
       setState(() {
         dateModel.isSelected = v;
-//        isSelected.value = !isSelected.value;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-//    LogUtil.log(TAG: this.runtimeType, message: "ItemContainerState build");
+    final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
+
     calendarProvider = Provider.of<CalendarProvider>(context, listen: false);
     configuration = calendarProvider.calendarConfiguration;
 
@@ -200,9 +214,8 @@ class ItemContainerState extends State<ItemContainer> {
       //点击整个item都会触发事件
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        LogUtil.log(
-            TAG: this.runtimeType,
-            message: "GestureDetector onTap: $dateModel}");
+        print("GestureDetector onTap: $dateModel}");
+        mainModel.currentDateModel = dateModel;
 
         //范围外不可点击
         if (!dateModel.isInRange) {
@@ -215,39 +228,17 @@ class ItemContainerState extends State<ItemContainer> {
 
         calendarProvider.lastClickDateModel = dateModel;
 
-        if (configuration.selectMode == CalendarConstants.MODE_MULTI_SELECT) {
-          if (calendarProvider.selectedDateList.contains(dateModel)) {
-            calendarProvider.selectedDateList.remove(dateModel);
-          } else {
-            //多选，判断是否超过限制，超过范围
-            if (calendarProvider.selectedDateList.length ==
-                configuration.maxMultiSelectCount) {
-              if (configuration.multiSelectOutOfSize != null) {
-                configuration.multiSelectOutOfSize();
-              }
-              return;
-            }
-            calendarProvider.selectedDateList.add(dateModel);
-          }
-          if (configuration.calendarSelect != null) {
-            configuration.calendarSelect(dateModel);
-          }
-
-          //多选也可以弄这些单选的代码
-          calendarProvider.selectDateModel = dateModel;
-        } else {
-          calendarProvider.selectDateModel = dateModel;
-          if (configuration.calendarSelect != null) {
-            configuration.calendarSelect(dateModel);
-          }
-
-          //单选需要刷新上一个item
-          if (calendarProvider.lastClickItemState != this) {
-            calendarProvider.lastClickItemState?.refreshItem(false);
-            calendarProvider.lastClickItemState = this;
-          }
+        calendarProvider.selectDateModel = dateModel;
+        if (configuration.calendarSelect != null) {
+          configuration.calendarSelect(dateModel);
         }
-        refreshItem(!this.dateModel.isSelected);
+
+//        单选需要刷新上一个item
+        if (calendarProvider.lastClickItemState != this) {
+          calendarProvider.lastClickItemState?.refreshItem(false);
+          calendarProvider.lastClickItemState = this;
+        }
+        refreshItem(true);
       },
       child: configuration.dayWidgetBuilder(dateModel),
     );

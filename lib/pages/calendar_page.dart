@@ -11,7 +11,8 @@ import 'package:flutter_module/components/date_choice_model.dart';
 import 'package:flutter_module/components/grade_choice_model.dart';
 import 'package:flutter_module/components/schedule_list.dart';
 import 'package:flutter_module/components/screen_fit.dart';
-import 'package:flutter_module/plugins/calendar_dialog/fullscreen_demo.dart';
+import 'package:flutter_module/main.dart';
+import 'package:flutter_module/plugins/calendar_dialog/index.dart';
 import 'package:flutter_module/plugins/calendar_plugin/constants/constants.dart';
 import 'package:flutter_module/plugins/calendar_plugin/controller.dart';
 import 'package:flutter_module/plugins/calendar_plugin/widget/calendar_view.dart';
@@ -38,7 +39,6 @@ class CalendarPageState extends State<CalendarPage> {
   ValueNotifier<String> selectText;
   //  编辑状态
   bool isEdit = false;
-  List<DateTime> selectResult2 = <DateTime>[];
 
   @override
   void initState() {
@@ -57,7 +57,7 @@ class CalendarPageState extends State<CalendarPage> {
 
     _calendarController.addOnCalendarSelectListener((dateModel) {
       //刷新选择的时间
-      selectText.value = "${dateModel.year}年 ${dateModel.month}月${dateModel.day}日";
+      selectText.value = "${dateModel.year}年${dateModel.month}月${dateModel.day}日";
       setState(() { });
     });
 
@@ -95,24 +95,13 @@ class CalendarPageState extends State<CalendarPage> {
   }
 
   // Dialog方式
-  _navigateDialogDemo() {
-//    showDialog(
-//      context: context,
-//      builder: (BuildContext context) {
-//        return Container(
-//          width: ScreenUtil().setWidth(670),
-//          height: ScreenUtil().setWidth(806),
-//          child: FullScreenDemo(),
-//        );
-//      },
-//    );
+  _navigateDialog() {
     showDialog(context: context, builder: (context) => DateChoiceModel());
   }
 
   //  选择班级
   void _selectClass() {
-    _navigateDialogDemo();
-//    showDialog(context: context, builder: (context) => GradeChoiceModel());
+    showDialog(context: context, builder: (context) => GradeChoiceModel());
   }
 
   @override
@@ -129,10 +118,11 @@ class CalendarPageState extends State<CalendarPage> {
                 child: Container(
                   width: ScreenUtil().setWidth(64),
                   height: ScreenUtil().setWidth(48),
-                  child: isEdit ? Text('取消', style: TextStyle(fontSize: ScreenUtil().setSp(28), color: Color(0xff6D7993))) : Image.asset('lib/assets/icon_list.png', width: ScreenUtil().setWidth(48),),
+                  child: mainModel.isEdit ? Text('取消', style: TextStyle(fontSize: ScreenUtil().setSp(28), color: Color(0xff6D7993))) : Image.asset('lib/assets/icon_list.png', width: ScreenUtil().setWidth(48),),
                 ),
                 onTap: () {
                   isEdit = !isEdit;
+                  mainModel.isEdit = isEdit;
                   setState(() { });
                 },
               ),
@@ -144,17 +134,17 @@ class CalendarPageState extends State<CalendarPage> {
                   child: Image.asset('lib/assets/icon_setting.png'),
                 ),
                 onTap: () {
-                  _selectClass();
+                  mainModel.isEdit ? _navigateDialog() : _selectClass();
                 },
               ),
             ],
           ),
           backgroundColor: Colors.white,
-          elevation: isEdit ? 0.3 : 0.0,
+          elevation: mainModel.isEdit ? 0.3 : 0.0,
         ),
         body: Stack(
           children: <Widget>[
-            isEdit ? CustomScrollView(
+            mainModel.isEdit ? CustomScrollView(
               slivers: <Widget>[
                 ScheduleList(selectText: selectText)
               ],

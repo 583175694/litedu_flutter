@@ -1,6 +1,7 @@
 library calendar_list;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_module/components/screen_fit.dart';
 
 import 'month_view.dart';
 import 'weekday_row.dart';
@@ -55,33 +56,8 @@ class _CalendarListState extends State<CalendarList> {
 
   // 选项处理回调
   void onSelectDayChanged(dateTime) {
-    if (selectStartTime == null && selectEndTime == null) {
-      selectStartTime = dateTime;
-    } else if (selectStartTime != null && selectEndTime == null) {
-      selectEndTime = dateTime;
-      // 如果选择的开始日期和结束日期相等，则清除选项
-      if (selectStartTime == selectEndTime) {
-        setState(() {
-          selectStartTime = null;
-          selectEndTime = null;
-        });
-        return;
-      }
-      // 如果用户反选，则交换开始和结束日期
-      if (selectStartTime?.isAfter(selectEndTime)) {
-        DateTime temp = selectStartTime;
-        selectStartTime = selectEndTime;
-        selectEndTime = temp;
-      }
-    } else if (selectStartTime != null && selectEndTime != null) {
-      selectStartTime = null;
-      selectEndTime = null;
-      selectStartTime = dateTime;
-    }
-    setState(() {
-      selectStartTime;
-      selectEndTime;
-    });
+    selectStartTime = dateTime;
+    setState(() { });
   }
 
   @override
@@ -94,7 +70,7 @@ class _CalendarListState extends State<CalendarList> {
               top: 0,
               left: 0,
               right: 0,
-              height: 55.0,
+              height: ScreenUtil().setHeight(56.0),
               child: Container(
                 padding: EdgeInsets.only(
                     left: HORIZONTAL_PADDING, right: HORIZONTAL_PADDING),
@@ -107,7 +83,7 @@ class _CalendarListState extends State<CalendarList> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 55.0),
+              margin: EdgeInsets.only(top: ScreenUtil().setHeight(56.0)),
               child: CustomScrollView(
                 slivers: <Widget>[
                   SliverList(
@@ -122,23 +98,12 @@ class _CalendarListState extends State<CalendarList> {
                   ),
                 ],
               ),
+              color: Colors.white,
             ),
           ],
         ),
       ),
     );
-  }
-
-  void _finishSelect() {
-    if (selectStartTime != null) {
-      widget.onSelectFinish(selectStartTime, selectEndTime);
-    }
-  }
-
-  void _onSelect() {
-    if (selectStartTime != null) {
-      widget.onSelect();
-    }
   }
 
   Widget _getMonthView(DateTime dateTime) {

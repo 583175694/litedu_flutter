@@ -67,7 +67,7 @@ class GradeChoiceModelState extends State<GradeChoiceModel> {
     return Center(
       child: Container(
         width: ScreenUtil().setWidth(670),
-        height: ScreenUtil().setHeight(662),
+        height: ScreenUtil().setWidth(662),
         child: Column(
           children: <Widget>[
             Container(
@@ -80,7 +80,7 @@ class GradeChoiceModelState extends State<GradeChoiceModel> {
               ),
             ),
             Container(
-              height: ScreenUtil().setHeight(438),
+              height: ScreenUtil().setWidth(438),
               child: classList(),
               decoration: BoxDecoration(
                   border: Border(bottom: BorderSide(color: Color.fromRGBO(0, 0, 0, 0.06)))
@@ -88,8 +88,8 @@ class GradeChoiceModelState extends State<GradeChoiceModel> {
             ),
             GestureDetector(
               child: Container(
-                height: 56,
-                width: 336,
+                height: ScreenUtil().setWidth(112),
+                width: ScreenUtil().setWidth(670),
                 child: Center(
                   child: Text('确定', style: TextStyle(fontSize: ScreenUtil().setWidth(32), color: Color(0xff29D9D6), fontWeight: FontWeight.normal, decoration: TextDecoration.none)),
                 ),

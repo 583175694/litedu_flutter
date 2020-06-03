@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_module/components/screen_fit.dart';
 
 class WeekdayRow extends StatelessWidget {
   Widget _weekdayContainer(String weekDay) => Expanded(
@@ -6,8 +7,8 @@ class WeekdayRow extends StatelessWidget {
           child: Center(
             child: DefaultTextStyle(
               style: TextStyle(
-                color: Colors.black,
-                fontSize: 14.0,
+                color: Color(0xffB6BCC9),
+                fontSize: ScreenUtil().setSp(28),
               ),
               child: Text(
                 weekDay,
@@ -31,7 +32,7 @@ class WeekdayRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: _renderWeekDays(),
-      );
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: _renderWeekDays(),
+  );
 }
