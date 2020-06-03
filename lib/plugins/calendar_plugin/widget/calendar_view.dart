@@ -69,7 +69,6 @@ class _CalendarViewWidgetState extends State<CalendarViewWidget> {
 
   @override
   void dispose() {
-//    widget.calendarController.clearData();
     super.dispose();
   }
 
@@ -174,9 +173,9 @@ class CalendarContainerState extends State<CalendarContainer> with SingleTickerP
             message: "totalHeight:$totalHeight,newHeight:$newHeight");
         if (totalHeight.toInt() != newHeight.toInt()) {
           LogUtil.log(TAG: this.runtimeType, message: "月份视图高度发生变化");
-          setState(() {
-            totalHeight = newHeight;
-          });
+//          setState(() {
+//            totalHeight = newHeight;
+//          });
         }
       }
     });

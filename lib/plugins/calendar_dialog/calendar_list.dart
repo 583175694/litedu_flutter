@@ -9,8 +9,8 @@ import 'month_view.dart';
 import 'weekday_row.dart';
 
 class CalendarList extends StatefulWidget {
-  final DateTime firstDate;
-  final DateTime lastDate;
+  final DateModel firstDate;
+  final DateModel lastDate;
   final DateModel selectedStartDate;
   final Function onSelectFinish;
   final Function onSelect;
@@ -112,9 +112,6 @@ class _CalendarListState extends State<CalendarList> {
       year: year,
       month: month,
       padding: HORIZONTAL_PADDING,
-      dateTimeStart: selectStartTime,
-      todayColor: Colors.deepOrange,
-      onSelectDayRang: (dateTime) => onSelectDayChanged(dateTime),
     );
   }
 }

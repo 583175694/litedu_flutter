@@ -16,8 +16,6 @@ class MonthView extends StatefulWidget {
     @required this.year,
     @required this.month,
     @required this.padding,
-    @required this.dateTimeStart,
-    @required this.onSelectDayRang,
     this.todayColor,
     this.monthNames,
   });
@@ -28,8 +26,6 @@ class MonthView extends StatefulWidget {
   final double padding;
   final Color todayColor;
   final List<String> monthNames;
-  final DateModel dateTimeStart;
-  final Function onSelectDayRang;
 
   double get itemWidth => getDayNumberSize(context, padding);
 
@@ -60,8 +56,6 @@ class _MonthViewState extends State<MonthView> {
           month: widget.month,
           year: widget.year,
           isToday: isToday,
-          todayColor: widget.todayColor,
-          selectedDate: widget.dateTimeStart
         ),
       );
 
@@ -92,7 +86,6 @@ class _MonthViewState extends State<MonthView> {
             ..month = widget.month
             ..year = widget.year;
           mainModel.currentDateModel = selectedDate;
-          widget.onSelectDayRang(selectedDate);
           return true;
         },
         child: Container(

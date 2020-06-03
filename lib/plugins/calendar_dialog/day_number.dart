@@ -11,18 +11,14 @@ class DayNumber extends StatefulWidget {
     @required this.day,
     @required this.month,
     @required this.year,
-    @required this.selectedDate,
     this.isToday,
-    this.todayColor = Colors.blue,
   });
 
   final int day;
   final int month;
   final int year;
   final bool isToday;
-  final Color todayColor;
   final double size;
-  final DateModel selectedDate;
 
   @override
   _DayNumberState createState() => _DayNumberState();

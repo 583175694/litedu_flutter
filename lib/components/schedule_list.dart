@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/model/main_model.dart';
+import 'package:flutter_module/plugins/calendar_plugin/model/date_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class ScheduleList extends StatefulWidget {
@@ -68,8 +69,9 @@ class ScheduleListState extends State<ScheduleList> {
   @override
   Widget build(BuildContext context) {
     final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
+    DateModel date = mainModel.currentDateModel;
 
-  //  日程列表
+    //  日程列表
     List<Widget> scheduleList() {
       List<Widget> tiles = [];
 
@@ -82,7 +84,7 @@ class ScheduleListState extends State<ScheduleList> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text('调课：', style: selectFont),
-                Text('${widget.selectText.value} ', style: selectFont),
+                Text('${date.year}年${date.month}月${date.day}日 ', style: selectFont),
                 Text('数学课', style: selectFont)
               ],
             ),
@@ -92,17 +94,17 @@ class ScheduleListState extends State<ScheduleList> {
 
       //  日期标题
       tiles.add(
-          Container(
-            height: 60.0,
-            color: Colors.white,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(widget.selectText.value, style: TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(44)))
-              ],
-            ),
-            margin: EdgeInsets.only(left: 15.0),
-          )
+        Container(
+          height: ScreenUtil().setHeight(60),
+          color: Colors.white,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text('${date.year}年${date.month}月${date.day}日', style: TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(44)))
+            ],
+          ),
+          margin: EdgeInsets.only(left: 15.0),
+        )
       );
 
       for (int i = 0; i < titleItems.length; i++) {

@@ -170,7 +170,6 @@ class ItemContainerState extends State<ItemContainer> {
       //  🐶点击整个item都会触发事件
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        print("GestureDetector onTap: $dateModel}");
         mainModel.currentDateModel = dateModel;
 
         calendarProvider.lastClickDateModel = dateModel;

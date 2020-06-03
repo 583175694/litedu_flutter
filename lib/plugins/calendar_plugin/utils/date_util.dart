@@ -114,7 +114,6 @@ class DateUtil {
       DateModel maxSelectDate,
       Map<DateModel, Object> extraDataMap,
       int offset = 0}) {
-    print('initCalendarForMonthView start');
     weekStart = DateTime.monday;
     //获取月视图真实偏移量
     int mPreDiff = getIndexOfFirstDayInMonth(new DateTime(year, month), offset: offset);
@@ -180,8 +179,6 @@ class DateUtil {
 
       result.add(dateModel);
     }
-
-    print('initCalendarForMonthView end');
 
     return result;
   }

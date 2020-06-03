@@ -82,18 +82,6 @@ class CalendarPageState extends State<CalendarPage> {
     });
   }
 
-  Future<DateTime> _showDatePicker() {
-    var date = DateTime.now();
-    return showDatePicker(
-      context: context,
-      initialDate: date,
-      firstDate: date,
-      lastDate: date.add( //未来30天可选
-        Duration(days: 365),
-      ),
-    );
-  }
-
   // Dialog方式
   _navigateDialog() {
     showDialog(context: context, builder: (context) => DateChoiceModel());
@@ -189,7 +177,7 @@ class CalendarPageState extends State<CalendarPage> {
         children: <Widget>[
           CalendarViewWidget(
             weekBarItemWidgetBuilder: () {
-              return CustomStyleWeekBarItem(text: text,);
+              return CustomStyleWeekBarItem();
             },
             dayWidgetBuilder: (dateModel) {
               return CustomStyleDayWidget(dateModel);
