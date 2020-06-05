@@ -11,29 +11,24 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/screen_fit.dart';
 
-class SpiderStatefulWidget extends StatefulWidget {
+class StudentPortraits extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => SpiderWidget();
+  State<StatefulWidget> createState() => StudentPortraitsState();
 }
 
-class SpiderWidget extends State<SpiderStatefulWidget> {
+class StudentPortraitsState extends State<StudentPortraits> {
   int edge = 6;
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil(width: 750, height: 1624)
-      ..init(context);
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Center(
-          child: CustomPaint(
-            painter: SpiderView(edge),
-            size: Size(ScreenUtil().setWidth(360), ScreenUtil().setWidth(360)),
-          ),
+    return Container(
+      height: ScreenUtil().setWidth(500),
+      child: Center(
+        child: CustomPaint(
+          painter: SpiderView(edge),
+          size: Size(ScreenUtil().setWidth(360), ScreenUtil().setWidth(360)),
         ),
-      ],
+      ),
     );
   }
 }
@@ -155,11 +150,11 @@ class SpiderView extends CustomPainter {
     double angle = CIRCLE_ANGLE / mEdgeSize;
     double radiusMaxLimit = min(mCenterY, mCenterY);
     for (int i = 0; i < mEdgeSize; i++) {
-      double value = (random.nextInt(10) + 1) / 10;
+      double value = (random.nextInt(10) + 1) / 10;  // 满分为1
       double x = mCenterX + radiusMaxLimit * cos(degToRad(angle * i)) * value;
       double y = mCenterY + radiusMaxLimit * sin(degToRad(angle * i)) * value;
       if (i == 0) {
-        mPath.moveTo(x, mCenterY);
+        mPath.moveTo(x, y);
       } else {
         mPath.lineTo(x, y);
       }

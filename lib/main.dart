@@ -37,9 +37,9 @@ class _MyAppState extends State<MyApp> {
     return ScopedModel<MainModel>(
       model: mainModel,
       child: MaterialApp(
-        title: 'Flutter Boost example',
+        title: '',
         builder: FlutterBoost.init(postPush: _onRoutePushed),
-        home: CalendarPage(),
+        home: StudentFile(),
         routes: {
           "calendar_page": (context) => CalendarPage(),
           "student_file": (context) => StudentFile(),
