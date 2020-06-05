@@ -5,9 +5,11 @@
  **/
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/screen_fit.dart';
+import 'package:flutter_module/components/pie_chart.dart';
 import 'package:flutter_module/components/student_attendance.dart';
 import 'package:flutter_module/components/student_data.dart';
 import 'package:flutter_module/components/student_portraits.dart';
+import 'package:flutter_module/components/student_score.dart';
 
 class StudentFile extends StatefulWidget {
   @override
@@ -38,11 +40,10 @@ class StudentFileState extends State<StudentFile> {
             StudentPortraits(),
 
             //  学生考勤
-            Container(
-              width: ScreenUtil().setWidth(284),
-              height: ScreenUtil().setWidth(284),
-              child: StudentAttendance.withSampleData(),
-            )
+            StudentAttendance(),
+
+            //  学生分数
+            StudentScore()
           ],
         ),
       ),
