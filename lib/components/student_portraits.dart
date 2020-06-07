@@ -23,6 +23,7 @@ class StudentPortraitsState extends State<StudentPortraits> {
   Widget build(BuildContext context) {
     return Container(
       height: ScreenUtil().setWidth(500),
+      width: MediaQuery.of(context).size.width,
       child: Stack(
         children: <Widget>[
           Positioned(

@@ -19,13 +19,14 @@ class StudentDataState extends State<StudentData> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
+      height: ScreenUtil().setWidth(348),
       child: Stack(
-        alignment: Alignment.center,
         children: <Widget>[
           Container(
             width: ScreenUtil().setWidth(348),
             height: ScreenUtil().setWidth(348),
             child: Image.asset('lib/assets/img_litedu.png'),
+            margin: EdgeInsets.only(left: ScreenUtil().setWidth(202)),
           ),
           Positioned(
             top: 0,
@@ -54,7 +55,7 @@ class StudentDataState extends State<StudentData> {
             ),
           ),
           Positioned(
-            bottom: 0,
+            top: ScreenUtil().setWidth(314),
             left: ScreenUtil().setWidth(496),
             child: RichText(
               text: TextSpan(

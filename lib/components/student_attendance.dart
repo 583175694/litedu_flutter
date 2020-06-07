@@ -25,7 +25,7 @@ class StudentAttendanceState extends State<StudentAttendance> {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Stack(
           children: <Widget>[
@@ -59,6 +59,7 @@ class StudentAttendanceState extends State<StudentAttendance> {
         Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               attendanceValue(0, '80%', '考勤正常'),
               attendanceValue(1, '15%', '请假'),
