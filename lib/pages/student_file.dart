@@ -4,8 +4,9 @@
  * @Date 2019-12-14
  **/
 import 'package:flutter/material.dart';
+import 'package:flutter_module/components/line_chart.dart';
 import 'package:flutter_module/components/screen_fit.dart';
-import 'package:flutter_module/components/pie_chart.dart';
+import 'package:flutter_module/components/student_assessment.dart';
 import 'package:flutter_module/components/student_attendance.dart';
 import 'package:flutter_module/components/student_data.dart';
 import 'package:flutter_module/components/student_portraits.dart';
@@ -31,6 +32,7 @@ class StudentFileState extends State<StudentFile> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
+        color: Colors.white,
         child: ListView(
           children: <Widget>[
             //  学生数据
@@ -43,7 +45,13 @@ class StudentFileState extends State<StudentFile> {
             StudentAttendance(),
 
             //  学生分数
-            StudentScore()
+            StudentScore(),
+
+            //  学生评估
+            StudentAssessment(),
+
+            //  趋势
+            LineChart()
           ],
         ),
       ),

@@ -1,5 +1,5 @@
 /**
- * @ClassName widget_spider
+ * @ClassName 学生画像
  * @Author wushaohang
  * @Date 2020/6/3
  **/
@@ -23,11 +23,26 @@ class StudentPortraitsState extends State<StudentPortraits> {
   Widget build(BuildContext context) {
     return Container(
       height: ScreenUtil().setWidth(500),
-      child: Center(
-        child: CustomPaint(
-          painter: SpiderView(edge),
-          size: Size(ScreenUtil().setWidth(360), ScreenUtil().setWidth(360)),
-        ),
+      child: Stack(
+        children: <Widget>[
+          Positioned(
+            top: ScreenUtil().setWidth(70),
+            width: MediaQuery.of(context).size.width,
+            height: ScreenUtil().setWidth(360),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image.asset('lib/assets/img_hexagon.png'),
+              ],
+            ),
+          ),
+          Center(
+            child: CustomPaint(
+              painter: SpiderView(edge),
+              size: Size(ScreenUtil().setWidth(360), ScreenUtil().setWidth(360)),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -89,7 +104,8 @@ class SpiderView extends CustomPainter {
 
     // 图层 防止刷新属性结构
     canvas.save();
-    drawSpiderEdge(canvas);
+//    drawSpiderEdge(canvas);
+    drawText(canvas);
     drawCover(canvas);
     canvas.restore();
   }
@@ -133,7 +149,7 @@ class SpiderView extends CustomPainter {
       }
       canvas.drawPath(mPath, mPaint);
     }
-    drawText(canvas, radiusMaxLimit, angle);
+    drawText(canvas);
   }
 
   num degToRad(num deg) => (deg + 90) * (pi / 180.0);
@@ -166,7 +182,9 @@ class SpiderView extends CustomPainter {
   /***
    * 绘制文本
    */
-  void drawText(Canvas canvas, double radius, double angle) {
+  void drawText(Canvas canvas) {
+    double angle = CIRCLE_ANGLE / mEdgeSize;
+    double radius = mCenterX > mCenterY ? mCenterX : mCenterY;
     //  描述
     for (int i = 0; i < mEdgeSize; i++) {
       double x = mCenterX + radius * 1.32 * cos(degToRad(angle * i)) - ScreenUtil().setWidth(12);
@@ -174,15 +192,16 @@ class SpiderView extends CustomPainter {
 
       ParagraphBuilder pb = ParagraphBuilder(ParagraphStyle(
         textAlign: TextAlign.center,
-        fontSize: ScreenUtil().setSp(24),
+        fontSize: ScreenUtil().setSp(22)
       ))
         ..pushStyle(ui.TextStyle(color: Color(0xff6D7993)))
         ..addText(item[i]);
       ParagraphConstraints pc = ParagraphConstraints(width: ScreenUtil().setWidth(48));
       Paragraph paragraph = pb.build()..layout(pc);
+
       canvas.drawCircle(
           Offset(x - ScreenUtil().setWidth(18), y + ScreenUtil().setWidth(18)),
-          4,
+          ScreenUtil().setWidth(6),
           mPaint
             ..color = Color(0xffFFA938)
             ..style = PaintingStyle.fill
