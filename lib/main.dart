@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'package:flutter_module/pages/calendar_page.dart';
-import 'package:flutter_module/pages/student_file.dart';
+import 'package:flutter_module/pages/archive_page.dart';
+import 'package:flutter_module/pages/demo_page.dart';
+import 'package:flutter_module/pages/evaluation_page.dart';
 import 'test.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -39,11 +41,15 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: '',
         builder: FlutterBoost.init(postPush: _onRoutePushed),
-        home: StudentFile(),
+        home: CalendarPage(),
         routes: {
           "calendar_page": (context) => CalendarPage(),
-          "student_file": (context) => StudentFile(),
-        }
+          "archive_page": (context) => ArchivePage(),
+          "evaluation_page": (context) => EvaluationPage(),
+        },
+        theme: ThemeData(
+          primaryColor: Colors.white,
+        ),
       ),
     );
   }

@@ -19,12 +19,12 @@ class StudentAssessmentState extends State<StudentAssessment> {
   num degToRad(num deg) => deg * (pi / 180.0);
   List<String> colorItems = [
     'lib/assets/img_blue.png',
-    'lib/assets/img_red.png',
     'lib/assets/img_yellow.png',
     'lib/assets/img_blue.png',
-    'lib/assets/img_red.png',
-    'lib/assets/img_blue.png',
+    'lib/assets/img_green.png',
     'lib/assets/img_yellow.png',
+    'lib/assets/img_green.png',
+    'lib/assets/img_red.png',
   ];
 
   @override

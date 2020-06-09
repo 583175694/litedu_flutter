@@ -9,13 +9,51 @@ import 'dart:math';
 import 'package:flutter_module/components/screen_fit.dart';
 
 class LineChart extends StatelessWidget {
+  TextStyle fontItem = TextStyle(fontSize: ScreenUtil().setSp(22), color: Color(0xffD3D6DE));
+  List<String> months = ['一月', '二月', '三月', '四月', '五月'];
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: CustomPaint(
-        size:  Size(ScreenUtil().setWidth(588), ScreenUtil().setWidth(288)), //指定画布大小
-        painter: MyPainter(),
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              for (int i = 0; i < 6; i++) Container(
+                child: Text('${(5 - i) * 20}', style: fontItem,),
+                margin: EdgeInsets.only(bottom: ScreenUtil().setWidth(28)),
+              )
+            ],
+          ),
+          margin: EdgeInsets.only(right: ScreenUtil().setWidth(4)),
+        ),
+        Container(
+          child: Column(
+            children: <Widget>[
+              CustomPaint(
+                size:  Size(ScreenUtil().setWidth(588), ScreenUtil().setWidth(288)), //指定画布大小
+                painter: MyPainter(),
+              ),
+              Container(
+                width: ScreenUtil().setWidth(588),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    for ( String item in months) Container(
+                      width: 0,
+                      child: Text(item, style: fontItem),
+                    )
+                  ],
+                ),
+                margin: EdgeInsets.only(right: ScreenUtil().setWidth(24), top: ScreenUtil().setWidth(14)),
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
