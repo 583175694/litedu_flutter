@@ -21,30 +21,34 @@ class StudentPortraitsState extends State<StudentPortraits> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: ScreenUtil().setWidth(500),
-      width: MediaQuery.of(context).size.width,
-      child: Stack(
-        children: <Widget>[
-          Positioned(
-            top: ScreenUtil().setWidth(70),
+    return LayoutBuilder(
+        builder: (context, constraints){
+          return Container(
+            height: ScreenUtil().setWidth(500),
             width: MediaQuery.of(context).size.width,
-            height: ScreenUtil().setWidth(360),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Stack(
               children: <Widget>[
-                Image.asset('lib/assets/img_hexagon.png'),
+                Positioned(
+                  top: ScreenUtil().setWidth(70),
+                  width: constraints.maxWidth,
+                  height: ScreenUtil().setWidth(360),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset('lib/assets/img_hexagon.png'),
+                    ],
+                  ),
+                ),
+                Center(
+                  child: CustomPaint(
+                    painter: SpiderView(edge),
+                    size: Size(ScreenUtil().setWidth(360), ScreenUtil().setWidth(360)),
+                  ),
+                ),
               ],
             ),
-          ),
-          Center(
-            child: CustomPaint(
-              painter: SpiderView(edge),
-              size: Size(ScreenUtil().setWidth(360), ScreenUtil().setWidth(360)),
-            ),
-          ),
-        ],
-      ),
+          );
+        }
     );
   }
 }
