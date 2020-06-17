@@ -116,6 +116,7 @@ class AppExpansionTileState extends State<AppExpansionTile> with SingleTickerPro
             data: new IconThemeData(color: _iconColor.evaluate(_easeInAnimation)),
             child: new ListTile(
               onTap: toggle,
+              contentPadding: EdgeInsets.only(left: 0.0, right: 12.0),
               leading: widget.leading,
               title: new DefaultTextStyle(
                 style: Theme
@@ -127,7 +128,7 @@ class AppExpansionTileState extends State<AppExpansionTile> with SingleTickerPro
               ),
               trailing: widget.trailing ?? new RotationTransition(
                 turns: _iconTurns,
-                child: const Icon(Icons.expand_more),
+                child: const Icon(Icons.keyboard_arrow_down),
               ),
             ),
           ),
