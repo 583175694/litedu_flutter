@@ -30,7 +30,9 @@ class _MyAppState extends State<MyApp> {
 
     FlutterBoost.singleton.registerPageBuilders(<String, PageBuilder>{
       'newsDetailPage': (String pageName, Map<dynamic, dynamic> params, String _) =>
-          EmbeddedFirstRouteWidget()
+          EmbeddedFirstRouteWidget(),
+      'flutterFragment': (String pageName, Map<dynamic, dynamic> params, String _) =>
+          CalendarPage(),
     });
     FlutterBoost.singleton.addBoostNavigatorObserver(TestBoostNavigatorObserver());
   }

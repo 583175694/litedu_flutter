@@ -14,7 +14,9 @@ import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/main.dart';
 import 'package:flutter_module/plugins/calendar_plugin/constants/constants.dart';
 import 'package:flutter_module/plugins/calendar_plugin/controller.dart';
+import 'package:flutter_module/plugins/calendar_plugin/flutter_custom_calendar.dart';
 import 'package:flutter_module/plugins/calendar_plugin/widget/calendar_view.dart';
+import 'package:flutter_boost/flutter_boost.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({Key key}) : super(key: key);
@@ -41,6 +43,14 @@ class CalendarPageState extends State<CalendarPage> {
 
   @override
   void initState() {
+    FlutterBoost.singleton.channel.addMethodHandler((handler) {
+      print(handler.method);
+      DateModel date = new DateModel();
+      date.year = 1999;
+      date.month = 12;
+      mainModel.currentDateModel = date;
+      return Future.value(123);
+    });
     super.initState();
     DateTime now = DateTime.now();
     _calendarController = new CalendarController(

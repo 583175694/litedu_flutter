@@ -4,6 +4,8 @@
  * @Date 2020-06-04
  **/
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_boost/flutter_boost.dart';
 import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/components/student_assessment.dart';
 import 'package:flutter_module/components/student_attendance.dart';
@@ -16,6 +18,19 @@ class ArchivePage extends StatefulWidget {
 }
 
 class ArchivePageState extends State<ArchivePage> {
+  MethodChannel platform;
+  
+
+  @override
+  void initState() {
+    FlutterBoost.singleton.channel.addEventListener("test_channel", (name, param) {
+      print(name);
+      print(param);
+      return null;
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1624)
