@@ -27,8 +27,6 @@ dependencies:
     git:
       url: 'https://github.com/alibaba/flutter_boost.git'
       ref: 'task/task_v1.12.13_support_hotfixes'
-  flutter_seekbar:
-    git: https://github.com/LiuC520/flutter_seekbar.git
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -40,6 +38,11 @@ dev_dependencies:
   scoped_model: ^1.0.1
   provider: ^4.0.4
   charts_flutter: ^0.9.0
+  dio: ^3.0.9
+  connectivity: ^0.4.4
+  flutter_common_utils: ^1.1.0
+  flutter_seekbar:
+    git: https://github.com/LiuC520/flutter_seekbar.git
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

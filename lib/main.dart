@@ -3,12 +3,11 @@ import 'package:flutter_boost/flutter_boost.dart';
 import 'package:flutter_module/pages/assessment_page.dart';
 import 'package:flutter_module/pages/calendar_page.dart';
 import 'package:flutter_module/pages/archive_page.dart';
-import 'package:flutter_module/pages/demo_page.dart';
 import 'package:flutter_module/pages/evaluation_page.dart';
 import 'package:flutter_module/pages/evaluation_report_page.dart';
-import 'package:flutter_module/components/expansion_tile.dart';
 import 'test.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:flutter_common_utils/http/http_manager.dart';
 
 import 'model/main_model.dart';
 
@@ -46,7 +45,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: '',
         builder: FlutterBoost.init(postPush: _onRoutePushed),
-        home: AssessmentPage(),
+        home: CalendarPage(),
         routes: {
           "calendar_page": (context) => CalendarPage(),
           "archive_page": (context) => ArchivePage(),

@@ -1,28 +1,46 @@
+import 'package:flutter_module/plugins/http.dart';
 /**
  * @ClassName main_model
  * @Author wushaohang
  * @Date 2020/6/2
  **/
 import 'package:scoped_model/scoped_model.dart';
-import 'package:flutter_module/plugins/calendar_plugin/model/date_model.dart';
-import 'package:flutter_module/dto/dateDto.dart';
+import 'package:flutter_common_utils/http/http_manager.dart';
+import 'package:flutter_common_utils/http/http_error.dart';
+import 'package:dio/dio.dart';
 
-class MainModel extends Model{
-  //  编辑状态
-  bool _isEdit = false;
-  //  当前选中日期，默认当前日期
-  DateModel _currentDateModel = DateDto().toDateModel(DateTime.now());
+import 'calendar_model.dart';
 
-  bool get isEdit => _isEdit;
-  DateModel get currentDateModel => _currentDateModel;
-
-  set isEdit(bool value) {
-    _isEdit = value;
-    notifyListeners();
+class MainModel extends Model with CalendarModel {
+// GET 请求
+// 返回的结果直接就是 json 格式
+// 要使用 await，必须在方法名后面加上 async
+  handleGetShelf() async {
+    var result = await HttpUtils.request('/sell/buyer/product/list', method: HttpUtils.GET, data: {
+      'id': 1,
+    });
   }
 
-  set currentDateModel(DateModel value) {
-    _currentDateModel = value;
-    notifyListeners();
+// POST 请求
+  handleAddShelf() async {
+    var result = await HttpUtils.request('/gysw/shelf', method: HttpUtils.POST, data: {
+      'id': 1,
+    });
   }
+
+// PUT 请求
+  handleEditShelf() async {
+    var result = await HttpUtils.request('/gysw/shelf/:id', method: HttpUtils.PUT, data: {
+      'id': 1,
+    });
+  }
+
+// DELETE 请求
+  handleDelShelf() async {
+    var result = await HttpUtils.request('/gysw/shelf/:id', method: HttpUtils.DELETE, data: {
+      'id': 1,
+    });
+  }
+
+  MainModel of(context) => ScopedModel.of(context);
 }
