@@ -6,10 +6,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_module/components/screen_fit.dart';
+import 'package:flutter_module/plugins/calendar_plugin/model/date_model.dart';
 import 'package:flutter_module/plugins/seekbar_plugin.dart';
 import 'dart:ui' as ui;
 
-import 'package:flutter_seekbar/seekbar/progress_value.dart';
+import '../main.dart';
+
+//import 'package:flutter_seekbar/seekbar/progress_value.dart';
 
 class AssessmentPage extends StatefulWidget {
   @override
@@ -66,46 +69,141 @@ class AssessmentPageState extends State<AssessmentPage> {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1624)
       ..init(context);
 
+    DateModel date = mainModel.currentDateModel;
+    TextStyle selectFont = TextStyle(color: Color(0xff29D9D6), fontSize: ScreenUtil().setSp(32));
+    TextStyle nameFont = TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(32));
+    TextStyle textFont = TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(28));
+
     _imageBubbles = [_bubble1, _bubble2, _bubble3, _bubble4];
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-            padding: EdgeInsets.fromLTRB(0, 80, 0, 0),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('课堂表现', style: TextStyle(fontSize: ScreenUtil().setSp(40), color: Color(0xff6D7993))),
+        elevation: 0.0,
+      ),
+      body: ListView(
+        children: <Widget>[
+          Container(
+            height: ScreenUtil().setWidth(112),
+            width: MediaQuery.of(context).size.width,
+            child: Container(
+              color: Color.fromRGBO(41, 217, 214, 0.2),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text('${date.year}年${date.month}月${date.day}日 ', style: selectFont),
+                  Text('数学课', style: selectFont)
+                ],
+              ),
+              padding: EdgeInsets.only(left: ScreenUtil().setWidth(64), right: ScreenUtil().setWidth(64)),
+            ),
+          ),
+          Container(
+            height: ScreenUtil().setWidth(144),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  width: ScreenUtil().setWidth(96),
+                  height: ScreenUtil().setWidth(96),
+                  child: CircleAvatar(
+                      radius: ScreenUtil().setWidth(96),
+                      //头像图片 -> NetworkImage网络图片，AssetImage项目资源包图片, FileImage本地存储图片
+                      backgroundImage: AssetImage('lib/assets/avatar.JPG')
+                  ),
+                  margin: EdgeInsets.only(left: ScreenUtil().setWidth(48), right: ScreenUtil().setWidth(48)),
+                ),
+                Text('丁丁', style: nameFont,)
+              ],
+            ),
+            decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: Color.fromRGBO(240,241,244,1)))
+            ),
+          ),
+          Container(
+            height: ScreenUtil().setWidth(114),
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: ScreenUtil().setWidth(20),
+                  height: ScreenUtil().setWidth(20),
+                  decoration: BoxDecoration(
+                      color: Color(0xff29D9D6),
+                      borderRadius: BorderRadius.all(Radius.circular(ScreenUtil().setWidth(20)))
+                  ),
+                  margin: EdgeInsets.only(left: ScreenUtil().setWidth(48), right: ScreenUtil().setWidth(20)),
+                ),
+                Text('前期评估', style: nameFont,)
+              ],
+            ),
+          ),
+          Container(
+            color: Color(0xffF7F8F9),
+            padding: EdgeInsets.only(top: ScreenUtil().setWidth(48), bottom: ScreenUtil().setWidth(20)),
             child: Column(
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.fromLTRB(40, 40, 40, 40),
-                  width: ScreenUtil().setWidth(558),
-                  child: SeekBar(
-                    progressHeight: ScreenUtil().setWidth(32),
-                    value: progressValue,
-                    sectionCount: 4,
-                    sectionRadius: ScreenUtil().setWidth(16),
-                    isRound: true,
-                    showSectionText: false,
-                    progressColor: Color(0xff29D9D6),
-                    backgroundColor: Color(0xffF0F1F4),
-                    sectionTextMarginTop: 2,
-                    sectionDecimal: 0,
-                    sectionTextSize: 14,
-                    hideBubble: false,
-                    afterDragShowSectionText: true,
-                    progressImage: _image,
-                    bubbleImage: _bubble1,
-                    bubbleImages: _imageBubbles,
-                    onValueChanged: (res) {
-                      setState(() {
-                        progressValue = res.value;
-                      });
-                    },
-                  )
+                    width: ScreenUtil().setWidth(590),
+                    child: Text('在游戏或活动时，儿童能够遵守教师或同伴所订下的活动规则，例如主动轮候、在指定范围内活动、不骚扰别人。', style: textFont,)
                 ),
-                Text('${progressValue}')
+                Seekbar(),
               ],
             ),
-        ),
+          ),
+          Container(
+            padding: EdgeInsets.only(top: ScreenUtil().setWidth(48), bottom: ScreenUtil().setWidth(20)),
+            child: Column(
+              children: <Widget>[
+                Container(
+                    width: ScreenUtil().setWidth(590),
+                    child: Text('在游戏或活动时，儿童能够遵守教师或同伴所订下的活动规则，例如主动轮候、在指定范围内活动、不骚扰别人。', style: textFont,)
+                ),
+                Seekbar(),
+              ],
+            ),
+          ),
+        ],
       ),
     );
+  }
+
+  Container Seekbar() {
+    return Container(
+        child: Column(
+          children: <Widget>[
+            Container(
+                margin: EdgeInsets.fromLTRB(ScreenUtil().setWidth(40), ScreenUtil().setWidth(40), ScreenUtil().setWidth(40), ScreenUtil().setWidth(40)),
+                width: ScreenUtil().setWidth(558),
+                child: SeekBar(
+                  progressHeight: ScreenUtil().setWidth(32),
+                  value: progressValue,
+                  sectionCount: 4,
+                  sectionRadius: ScreenUtil().setWidth(16),
+                  isRound: true,
+                  showSectionText: false,
+                  progressColor: Color(0xff29D9D6),
+                  backgroundColor: Color(0xffF0F1F4),
+                  sectionTextMarginTop: 2,
+                  sectionDecimal: 0,
+                  sectionTextSize: 14,
+                  hideBubble: false,
+                  afterDragShowSectionText: false,
+                  progressImage: _image,
+                  bubbleImage: _bubble1,
+                  bubbleImages: _imageBubbles,
+                  onValueChanged: (res) {
+                    setState(() {
+                      progressValue = res.value;
+                    });
+                  },
+                )
+            ),
+            Text('${progressValue}')
+          ],
+        ),
+      );
   }
 }

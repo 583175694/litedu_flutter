@@ -1,8 +1,3 @@
-/**
- * @ClassName seekbar_plugin
- * @Author wushaohang
- * @Date 2020/6/19
- **/
 // Copyright 2018 LiuCheng .All rights reserved.
 // Use of this source code is governed by a Apache license that can be
 // found in the LICENSE file.
@@ -10,14 +5,53 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_module/components/screen_fit.dart';
-import 'package:flutter_module/plugins/seekbar_plugin/seekbar/get_text_width.dart';
-import 'package:flutter_module/plugins/seekbar_plugin/seekbar/progress_value.dart';
-import 'package:flutter_module/plugins/seekbar_plugin/seekbar/section_text_model.dart';
-//import 'package:flutter_seekbar/flutter_seekbar.dart';
+import './progress_value.dart';
+import './get_text_width.dart';
+import './section_text_model.dart';
+
+///要显示的刻度值
+///如果要自定义刻度值，数组中需要包含这个实体类
+///   List<SectionTextModel> sectionTexts = [];
+///   sectionTexts.add(SectionTextModel(position: 0, text: 'bad', progressColor: Colors.red));
+///   sectionTexts.add(SectionTextModel(position: 2, text: 'good', progressColor: Colors.yellow));
+///   sectionTexts.add(SectionTextModel( position: 4, text: 'great', progressColor: Colors.green));
+/// Padding(
+///                  padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
+///                  child: Column(
+///                    children: <Widget>[
+///                      Container(
+///                          margin: EdgeInsets.fromLTRB(0, 0, 0, 40),
+///                          width: 200,
+///                          child: SeekBar(
+///                            progresseight: 10,
+///                            value: 75,
+///                            sectionCount: 4,
+///                            sectionRadius: 6,
+///                            showSectionText: true,
+///                            sectionTexts: sectionTexts,
+///                            sectionTextMarginTop: 2,
+///                            sectionDecimal: 0,
+///                            sectionTextColor: Colors.black,
+///                            sectionSelectTextColor: Colors.red,
+///                            sectionTextSize: 14,
+///                            hideBubble: false,
+///                            bubbleRadius: 14,
+///                            bubbleColor: Colors.purple,
+///                            bubbleTextColor: Colors.white,
+///                            bubbleTextSize: 14,
+///                            bubbleMargin: 4,
+///                            afterDragShowSectionText: true,
+///                          )),
+///                      Text(
+///                        "自定义刻度值显示，带带刻度的指示器,可设置刻度的样式和选中的刻度的样式，拖拽结束显示刻度值，拖拽开始显示气泡",
+///                        style: TextStyle(fontSize: 10),
+///                      )
+///                    ],
+///                  ),
+///                ),
+///
 
 abstract class BasicSeekbar extends StatefulWidget {
   ///最小值
@@ -90,45 +124,35 @@ abstract class BasicSeekbar extends StatefulWidget {
   final ValueChanged<ProgressValue> onValueChanged;
   // final void Function(double) onValueChanged;
 
-  final ui.Image progressImage;
-
   ///进度条是否是圆角的，还是方形的，默认是圆角的
   final bool isRound;
 
-  final ui.Image bubbleImage;
-
-  final List<ui.Image> bubbleImages;
-
   const BasicSeekbar(
       {Key key,
-        this.min,
-        this.max,
-        this.value,
-        this.progresseight,
-        this.sectionCount,
-        this.sectionColor,
-        this.sectionUnSelecteColor,
-        this.sectionRadius,
-        this.showSectionText,
-        this.sectionTexts,
-        this.sectionTextSize,
-        this.afterDragShowSectionText,
-        this.sectionTextColor,
-        this.sectionSelectTextColor,
-        this.sectionDecimal,
-        this.sectionTextMarginTop,
-        this.backgroundColor,
-        this.progressColor,
-        this.semanticsLabel,
-        this.semanticsValue,
-        this.indicatorRadius,
-        this.indicatorColor,
-        this.onValueChanged,
-        this.isRound,
-        this.progressImage,
-        this.bubbleImage,
-        this.bubbleImages
-      })
+      this.min,
+      this.max,
+      this.value,
+      this.progresseight,
+      this.sectionCount,
+      this.sectionColor,
+      this.sectionUnSelecteColor,
+      this.sectionRadius,
+      this.showSectionText,
+      this.sectionTexts,
+      this.sectionTextSize,
+      this.afterDragShowSectionText,
+      this.sectionTextColor,
+      this.sectionSelectTextColor,
+      this.sectionDecimal,
+      this.sectionTextMarginTop,
+      this.backgroundColor,
+      this.progressColor,
+      this.semanticsLabel,
+      this.semanticsValue,
+      this.indicatorRadius,
+      this.indicatorColor,
+      this.onValueChanged,
+      this.isRound})
       : super(key: key);
 
   Color _getBackgroundColor(BuildContext context) =>
@@ -137,9 +161,9 @@ abstract class BasicSeekbar extends StatefulWidget {
       progressColor ?? Theme.of(context).accentColor;
 
   Widget _buildSemanticsWrapper({
-                                  @required BuildContext context,
-                                  @required Widget child,
-                                }) {
+    @required BuildContext context,
+    @required Widget child,
+  }) {
     String expandedSemanticsValue = semanticsValue;
     if (value != null) {
       expandedSemanticsValue ??= '${(value * 100).round()}%';
@@ -246,49 +270,39 @@ class _SeekBarPainter extends CustomPainter {
   /// 气泡距离底部的高度
   double bubbleMargin;
 
-  ui.Image image;
-
-  ui.Image bubbleImage;
-
-  List<ui.Image> bubbleImages;
-
   /// 气泡在进度条的中间显示，而不是在进度条的上方展示，默认是false，在上方显示
   bool bubbleInCenter;
   _SeekBarPainter(
       {this.backgroundColor,
-        this.progressColor,
-        this.value,
-        this.min,
-        this.max,
-        this.indicatorRadius,
-        this.indicatorColor,
-        this.radius,
-        this.sectionCount,
-        this.sectionColor,
-        this.sectionUnSelecteColor,
-        this.sectionRadius,
-        this.showSectionText,
-        this.sectionTexts,
-        this.sectionTextSize,
-        this.afterDragShowSectionText,
-        this.sectionTextColor,
-        this.sectionSelectTextColor,
-        this.sectionDecimal,
-        this.sectionTextMarginTop,
-        this.progresseight,
-        this.hideBubble,
-        this.alwaysShowBubble,
-        this.bubbleRadius,
-        this.bubbleHeight,
-        this.bubbleColor,
-        this.bubbleTextColor,
-        this.bubbleTextSize,
-        this.bubbleMargin,
-        this.bubbleInCenter,
-        this.image,
-        this.bubbleImage,
-        this.bubbleImages
-      });
+      this.progressColor,
+      this.value,
+      this.min,
+      this.max,
+      this.indicatorRadius,
+      this.indicatorColor,
+      this.radius,
+      this.sectionCount,
+      this.sectionColor,
+      this.sectionUnSelecteColor,
+      this.sectionRadius,
+      this.showSectionText,
+      this.sectionTexts,
+      this.sectionTextSize,
+      this.afterDragShowSectionText,
+      this.sectionTextColor,
+      this.sectionSelectTextColor,
+      this.sectionDecimal,
+      this.sectionTextMarginTop,
+      this.progresseight,
+      this.hideBubble,
+      this.alwaysShowBubble,
+      this.bubbleRadius,
+      this.bubbleHeight,
+      this.bubbleColor,
+      this.bubbleTextColor,
+      this.bubbleTextSize,
+      this.bubbleMargin,
+      this.bubbleInCenter});
 
   // 画path
   Path drawPath(double progresseight, double x, double totalHeight, double r) {
@@ -419,7 +433,7 @@ class _SeekBarPainter extends CustomPainter {
       if (sectionCount <= 1) return;
       for (var i = 0; i < sectionCount + 1; i++) {
         paint.color =
-        i > value * sectionCount ? sectionUnSelecteColor : sectionColor;
+            i > value * sectionCount ? sectionUnSelecteColor : sectionColor;
 
         canvas.drawCircle(
             Offset(i * size.width / sectionCount, size.height / 2),
@@ -437,36 +451,72 @@ class _SeekBarPainter extends CustomPainter {
       Paint indicatorPaint = new Paint()
         ..style = PaintingStyle.fill
         ..color = indicatorColor;
-
-      canvas.drawImage(image,
-          Offset(value * size.width - ScreenUtil().setWidth(image.width.toDouble()), size.height - ScreenUtil().setWidth(image.height.toDouble())),
-          indicatorPaint);
-
-//      canvas.drawCircle(Offset(value * size.width, size.height / 2),
-//          indicatorRadius, indicatorPaint);
+      canvas.drawCircle(Offset(value * size.width, size.height / 2),
+          indicatorRadius, indicatorPaint);
     }
 
     //画顶部的指示器
     void drawTopBubble() {
       if (hideBubble || !alwaysShowBubble) return;
-
-      int index = (value * 4).toInt();
-      ui.Image bubble;
-      if (index < 2) {
-        bubble = bubbleImages[0];
-      } else if (index == 2) {
-        bubble = bubbleImages[1];
-      } else if (index == 3) {
-        bubble = bubbleImages[2];
-      } else if (index == 4) {
-        bubble = bubbleImages[3];
+      paint.color = bubbleColor;
+      double bubbleInCenterY = 0.0;
+      double newBubbleHeight;
+      if (bubbleInCenter) {
+        bubbleMargin = 0.0;
+        bubbleInCenterY = bubbleHeight - bubbleRadius;
+        newBubbleHeight = bubbleHeight;
+      } else {
+        bubbleInCenterY = indicatorRadius - size.height / 2 + bubbleMargin;
+        newBubbleHeight = bubbleHeight + bubbleInCenterY;
       }
+      //计算bubble的坐标值，画出bubble，
+      double x = bubbleRadius /
+          (newBubbleHeight - bubbleRadius) *
+          math.sqrt((math.pow(newBubbleHeight - bubbleRadius, 2) -
+              math.pow(bubbleRadius, 2)));
+      double y = math.sqrt(math.pow(bubbleRadius, 2) - x * x);
+      Path bubblePath = new Path()
+        ..moveTo(value * size.width,
+            bubbleInCenter ? bubbleInCenterY : -bubbleInCenterY)
+        ..lineTo(
+            value * size.width + x,
+            bubbleInCenter
+                ? -newBubbleHeight + bubbleRadius + y + bubbleInCenterY
+                : -newBubbleHeight + bubbleRadius + y)
+        ..arcToPoint(
+            Offset(
+                value * size.width - x,
+                bubbleInCenter
+                    ? -newBubbleHeight + bubbleRadius + y + bubbleInCenterY
+                    : -newBubbleHeight + bubbleRadius + y),
+            radius: Radius.circular(bubbleRadius),
+            clockwise: false,
+            largeArc: true)
+        ..close();
+      canvas.drawPath(bubblePath, paint);
 
-      canvas.drawImage(bubble,
+      double realValue = (max - min) * value + min;
+      int rv = realValue.ceil();
+      String text = '$rv';
+      double fontsize = bubbleTextSize;
+
+      //此���主要是拿到text的宽高，然后给个约束，同时把text准确的放到某个位置上
+      Size textSize = getTextWidth(text: text, fontsize: fontsize);
+
+      canvas.drawParagraph(
+          getParagraph(
+              text: text,
+              fontsize: fontsize,
+              textColor: bubbleTextColor,
+              textSize: textSize),
           Offset(
-              value * size.width - ScreenUtil().setWidth(bubbleImage.width.toDouble()),
-              size.height - ScreenUtil().setWidth(image.height.toDouble() * 2)), paint
-      );
+              value * size.width - textSize.width / 2,
+              bubbleInCenter
+                  ? -newBubbleHeight +
+                      bubbleRadius -
+                      textSize.height / 2 +
+                      bubbleInCenterY
+                  : -newBubbleHeight + bubbleRadius - textSize.height / 2));
     }
 
     drawSectionText(); // draw section text 画刻度值
@@ -514,89 +564,84 @@ class SeekBar extends BasicSeekbar {
   /// 是否可以触摸响应触摸事件
   bool isCanTouch;
   SeekBar({
-        Key key,
-        ValueChanged<ProgressValue> onValueChanged,
-        double min = 0.0,
-        double max = 100.0,
-        double progressHeight,
-        double value = 0.0,
-        Color backgroundColor,
-        Color progressColor,
-        String semanticsLabel,
-        String semanticsValue,
-        double indicatorRadius,
-        Color indicatorColor,
-        int sectionCount,
-        Color sectionColor,
-        ui.Image progressImage,
-        ui.Image bubbleImage,
-        List<ui.Image> bubbleImages,
+    Key key,
+    ValueChanged<ProgressValue> onValueChanged,
+    double min = 0.0,
+    double max = 100.0,
+    double progresseight,
+    double value = 0.0,
+    Color backgroundColor,
+    Color progressColor,
+    String semanticsLabel,
+    String semanticsValue,
+    double indicatorRadius,
+    Color indicatorColor,
+    int sectionCount,
+    Color sectionColor,
 
-        ///间隔圆圈未选中的颜色
-        final Color sectionUnSelecteColor,
-        double sectionRadius,
-        bool showSectionText,
+    ///间隔圆圈未选中的颜色
+    final Color sectionUnSelecteColor,
+    double sectionRadius,
+    bool showSectionText,
 
-        /// 刻度值的数组
-        final List<SectionTextModel> sectionTexts,
+    /// 刻度值的数组
+    final List<SectionTextModel> sectionTexts,
 
-        ///刻度值的字体大小
-        final double sectionTextSize = 14.0,
-        bool afterDragShowSectionText,
+    ///刻度值的字体大小
+    final double sectionTextSize = 14.0,
+    bool afterDragShowSectionText,
 
-        ///刻度值的字体颜色
-        final Color sectionTextColor,
+    ///刻度值的字体颜色
+    final Color sectionTextColor,
 
-        ///刻度值的字体颜色
-        final Color sectionSelectTextColor,
+    ///刻度值的字体颜色
+    final Color sectionSelectTextColor,
 
-        ///刻度值的小数点的位数，默认是0位
-        final int sectionDecimal = 0,
+    ///刻度值的小数点的位数，默认是0位
+    final int sectionDecimal = 0,
 
-        ///刻度值距离进度条的间距
-        final double sectionTextMarginTop = 4.0,
-        bool isRound = true,
-        bool hideBubble,
-        double bubbleRadius,
-        this.bubbleHeight,
-        this.bubbleColor,
-        this.bubbleTextColor = Colors.white,
-        this.bubbleTextSize = 14.0,
-        this.bubbleMargin = 4.0,
-        this.bubbleInCenter = false,
-        this.alwaysShowBubble,
-        this.isCanTouch = true,
-      })  : this.hideBubble = hideBubble ?? true,
-    this.bubbleRadius = bubbleRadius ?? 20,
-    super(
-    key: key,
-    onValueChanged: onValueChanged,
-    min: min,
-    max: max,
-    progresseight: progressHeight,
-    value: value,
-    backgroundColor: backgroundColor,
-    progressColor: progressColor,
-    semanticsLabel: semanticsLabel,
-    semanticsValue: semanticsValue,
-    indicatorRadius: indicatorRadius,
-    indicatorColor: indicatorColor,
-    isRound: isRound,
-    sectionCount: sectionCount,
-    sectionColor: sectionColor,
-    sectionUnSelecteColor: sectionUnSelecteColor,
-    sectionRadius: sectionRadius,
-    showSectionText: showSectionText,
-    sectionTexts: sectionTexts,
-    sectionTextSize: sectionTextSize,
-    afterDragShowSectionText: afterDragShowSectionText,
-    sectionTextColor: sectionTextColor,
-    sectionSelectTextColor: sectionSelectTextColor,
-    sectionDecimal: sectionDecimal,
-    sectionTextMarginTop: sectionTextMarginTop,
-    progressImage: progressImage,
-    bubbleImage: bubbleImage,
-    bubbleImages: bubbleImages);
+    ///刻度值距离进度条的间距
+    final double sectionTextMarginTop = 4.0,
+    bool isRound = true,
+    bool hideBubble,
+    double bubbleRadius,
+    this.bubbleHeight,
+    this.bubbleColor,
+    this.bubbleTextColor = Colors.white,
+    this.bubbleTextSize = 14.0,
+    this.bubbleMargin = 4.0,
+    this.bubbleInCenter = false,
+    this.alwaysShowBubble,
+    this.isCanTouch = true,
+  })  : this.hideBubble = hideBubble ?? true,
+        this.bubbleRadius = bubbleRadius ?? 20,
+        super(
+          key: key,
+          onValueChanged: onValueChanged,
+          min: min,
+          max: max,
+          progresseight: progresseight,
+          value: value,
+          backgroundColor: backgroundColor,
+          progressColor: progressColor,
+          semanticsLabel: semanticsLabel,
+          semanticsValue: semanticsValue,
+          indicatorRadius: indicatorRadius,
+          indicatorColor: indicatorColor,
+          isRound: isRound,
+          sectionCount: sectionCount,
+          sectionColor: sectionColor,
+          sectionUnSelecteColor: sectionUnSelecteColor,
+          sectionRadius: sectionRadius,
+          showSectionText: showSectionText,
+          sectionTexts: sectionTexts,
+          sectionTextSize: sectionTextSize,
+          afterDragShowSectionText: afterDragShowSectionText,
+          sectionTextColor: sectionTextColor,
+          sectionSelectTextColor: sectionSelectTextColor,
+          sectionDecimal: sectionDecimal,
+          sectionTextMarginTop: sectionTextMarginTop,
+        );
 
   @override
   _SeekBarState createState() => _SeekBarState();
@@ -689,10 +734,10 @@ class _SeekBarState extends State<SeekBar> {
             progresseight: progresseight,
             radius: widget.isRound ? progresseight / 2 : 0.0,
             indicatorColor:
-            widget.indicatorColor ?? widget._getProgressColor(context),
+                widget.indicatorColor ?? widget._getProgressColor(context),
             sectionCount: sectionCount,
             sectionColor:
-            widget.sectionColor ?? widget._getProgressColor(context),
+                widget.sectionColor ?? widget._getProgressColor(context),
             sectionUnSelecteColor: widget.sectionUnSelecteColor ??
                 widget._getBackgroundColor(context),
             sectionRadius: sectionRadius,
@@ -701,9 +746,9 @@ class _SeekBarState extends State<SeekBar> {
             sectionTextSize: widget.sectionTextSize,
             afterDragShowSectionText: _afterDragShowSectionText,
             sectionTextColor:
-            widget.sectionTextColor ?? widget._getProgressColor(context),
+                widget.sectionTextColor ?? widget._getProgressColor(context),
             sectionSelectTextColor:
-            widget.sectionSelectTextColor ?? Colors.transparent,
+                widget.sectionSelectTextColor ?? Colors.transparent,
             sectionDecimal: widget.sectionDecimal,
             sectionTextMarginTop: widget.sectionTextMarginTop,
             hideBubble: widget.hideBubble,
@@ -711,14 +756,11 @@ class _SeekBarState extends State<SeekBar> {
             bubbleRadius: widget.bubbleRadius,
             bubbleHeight: bubbleHeight,
             bubbleColor:
-            widget.bubbleColor ?? widget._getProgressColor(context),
+                widget.bubbleColor ?? widget._getProgressColor(context),
             bubbleTextColor: widget.bubbleTextColor,
             bubbleTextSize: widget.bubbleTextSize,
             bubbleMargin: widget.bubbleMargin,
             bubbleInCenter: widget.bubbleInCenter,
-            image: widget.progressImage,
-            bubbleImage: widget.bubbleImage,
-            bubbleImages: widget.bubbleImages
           ),
         ),
       ),
@@ -812,6 +854,8 @@ class _SeekBarState extends State<SeekBar> {
   }
 
   void _setValue() {
+    //这个是当前的进度 从0-1
+    //这个�����值��能在这个地方获取，如果没有指定，就是容器的��度
     if (sectionCount > 1) {
       for (var i = 0; i < sectionCount; i++) {
         if (_value >= i * e && _value <= (i + 1) * e) {
