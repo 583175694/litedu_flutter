@@ -20,6 +20,8 @@ class AssessmentPage extends StatefulWidget {
 }
 
 class AssessmentPageState extends State<AssessmentPage> {
+  final TextEditingController _textController = new TextEditingController();
+
   var v;
   ui.Image _image;
   ui.Image _bubble1;
@@ -28,6 +30,8 @@ class AssessmentPageState extends State<AssessmentPage> {
   ui.Image _bubble4;
   List<ui.Image> _imageBubbles;
   num progressValue = 0.0;
+
+  String assessment;  //  前期评估
 
   @override
   void initState() {
@@ -73,6 +77,8 @@ class AssessmentPageState extends State<AssessmentPage> {
     TextStyle selectFont = TextStyle(color: Color(0xff29D9D6), fontSize: ScreenUtil().setSp(32));
     TextStyle nameFont = TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(32));
     TextStyle textFont = TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(28));
+    TextStyle btnFont = TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(40));
+    TextStyle saveFont = TextStyle(color: Color(0xff29D9D6), fontSize: ScreenUtil().setSp(40));
 
     _imageBubbles = [_bubble1, _bubble2, _bubble3, _bubble4];
 
@@ -165,6 +171,83 @@ class AssessmentPageState extends State<AssessmentPage> {
               ],
             ),
           ),
+
+          Container(
+            height: ScreenUtil().setWidth(114),
+            width: MediaQuery.of(context).size.width,
+            alignment: Alignment.centerLeft,
+            child: Text('前期评估', style: nameFont),
+            margin: EdgeInsets.only(left: ScreenUtil().setWidth(48)),
+          ),
+          Container(
+            child: Center(
+              child: Container(
+                width: ScreenUtil().setWidth(658),
+                height: ScreenUtil().setWidth(224),
+                decoration: BoxDecoration(
+                    color: Color(0xffF8F8FA),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(4),
+                    ),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(ScreenUtil().setWidth(8.0)),
+                  child: TextField(
+                    controller: _textController,
+                    decoration: InputDecoration(
+                      filled: true,
+                      hintText: '请输入评语',
+                      hintStyle: TextStyle(color: Color.fromRGBO(0, 0, 0, 0.25), height: ScreenUtil().setWidth(0.8)),
+                      fillColor: Color(0xffF8F8FA),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none
+                      ),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        assessment = value;
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  width: ScreenUtil().setWidth(304),
+                  height: ScreenUtil().setWidth(112),
+                  child: Center(
+                    child: Text('提交', style: btnFont,),
+                  ),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(112)),
+                      color: Color(0xff29D9D6)
+                  ),
+                  margin: EdgeInsets.only(right: ScreenUtil().setWidth(46)),
+                ),
+                Container(
+                  width: ScreenUtil().setWidth(304),
+                  height: ScreenUtil().setWidth(112),
+                  child: Center(
+                    child: Text('保存', style: saveFont,),
+                  ),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(112)),
+                      color: Color(0xffffffff),
+                    border: Border.all(color: Color(0xff29D9D6), width: 2)
+                  ),
+                ),
+              ],
+            ),
+            margin: EdgeInsets.only(top: ScreenUtil().setWidth(48), bottom: ScreenUtil().setWidth(80)),
+          ),
         ],
       ),
     );
@@ -201,7 +284,6 @@ class AssessmentPageState extends State<AssessmentPage> {
                   },
                 )
             ),
-            Text('${progressValue}')
           ],
         ),
       );

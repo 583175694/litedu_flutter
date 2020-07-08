@@ -7,7 +7,6 @@ import 'package:flutter_module/pages/evaluation_page.dart';
 import 'package:flutter_module/pages/evaluation_report_page.dart';
 import 'test.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:flutter_common_utils/http/http_manager.dart';
 
 import 'model/main_model.dart';
 

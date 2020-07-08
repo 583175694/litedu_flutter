@@ -5,9 +5,6 @@ import 'package:flutter_module/plugins/http.dart';
  * @Date 2020/6/2
  **/
 import 'package:scoped_model/scoped_model.dart';
-import 'package:flutter_common_utils/http/http_manager.dart';
-import 'package:flutter_common_utils/http/http_error.dart';
-import 'package:dio/dio.dart';
 
 import 'calendar_model.dart';
 
