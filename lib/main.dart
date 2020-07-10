@@ -33,6 +33,8 @@ class _MyAppState extends State<MyApp> {
           EmbeddedFirstRouteWidget(),
       'flutterFragment': (String pageName, Map<dynamic, dynamic> params, String _) =>
           CalendarPage(),
+      'archivePage': (String pageName, Map<dynamic, dynamic> params, String _) =>
+          ArchivePage(),
     });
     FlutterBoost.singleton.addBoostNavigatorObserver(TestBoostNavigatorObserver());
   }
