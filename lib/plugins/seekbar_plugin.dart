@@ -17,7 +17,6 @@ import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/plugins/seekbar_plugin/seekbar/get_text_width.dart';
 import 'package:flutter_module/plugins/seekbar_plugin/seekbar/progress_value.dart';
 import 'package:flutter_module/plugins/seekbar_plugin/seekbar/section_text_model.dart';
-//import 'package:flutter_seekbar/flutter_seekbar.dart';
 
 abstract class BasicSeekbar extends StatefulWidget {
   ///最小值

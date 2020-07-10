@@ -23,7 +23,7 @@ class HttpUtils {
   static Dio dio;
 
   /// default options
-  static const String API_PREFIX = 'http://127.0.0.1:8888/';
+  static const String API_PREFIX = 'http://192.168.0.110:8888/';
   static const int CONNECT_TIMEOUT = 10000;
   static const int RECEIVE_TIMEOUT = 3000;
   static const Map<String, dynamic> HEADER = null;
