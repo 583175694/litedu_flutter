@@ -1,3 +1,5 @@
+import 'dart:io';
+
 /**
  * @ClassName http
  * @Author wushaohang
@@ -23,10 +25,12 @@ class HttpUtils {
   static Dio dio;
 
   /// default options
-  static const String API_PREFIX = 'http://192.168.0.110:8888/';
+  static const String API_PREFIX = 'https://api.lit-edu.com';
   static const int CONNECT_TIMEOUT = 10000;
   static const int RECEIVE_TIMEOUT = 3000;
-  static const Map<String, dynamic> HEADER = null;
+  static const Map<String, dynamic> HEADER = {
+  "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsImV4cCI6MTYyMzE1MzE1NywiaWF0IjoxNTkxNjE3MTU3LCJuYmYiOjE1OTE2MTcxNTcsImp0aSI6IjhjM2IyZDljLWE5N2UtMTFlYS05OTg0LTAyNDJhYzEzMDAwNCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJpc3MiOiJodHRwczovL2FwaS5saXQtZWR1LmNvbS9hcGkvZnJvbnRlbmQvYXV0aC9sb2dpbiJ9.wqOH7ofcZhaK9kTBagCUGZPABSfZvxc0TCoRX8yDrhY"
+  };
 
   /// http request methods
   static const String GET = 'get';
@@ -38,10 +42,11 @@ class HttpUtils {
   /// request method
   static Future<Map> request (
       String url,
-      { data, method }) async {
+      { data, method, headers }) async {
 
     data = data ?? {};
     method = method ?? 'GET';
+    headers = headers ?? {};
 
     /// restful 请求处理
     /// /gysw/search/hist/:user_id        user_id=27
@@ -60,7 +65,7 @@ class HttpUtils {
     var result;
 
     try {
-      Response response = await dio.request(url, data: data, options: new Options(method: method));
+      Response response = await dio.request(url, data: data, options: new Options(method: method, headers: headers,));
 
       result = response.data;
 
@@ -80,7 +85,6 @@ class HttpUtils {
       /// 全局属性：请求前缀、连接超时时间、响应超时时间
       BaseOptions options = new BaseOptions(
         baseUrl: API_PREFIX,
-//        headers: getRequestHeader(),
         connectTimeout: CONNECT_TIMEOUT,
         receiveTimeout: RECEIVE_TIMEOUT,
       );

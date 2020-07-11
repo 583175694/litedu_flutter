@@ -12,6 +12,8 @@ import 'package:flutter_module/components/student_attendance.dart';
 import 'package:flutter_module/components/student_data.dart';
 import 'package:flutter_module/components/student_portraits.dart';
 
+import '../main.dart';
+
 class ArchivePage extends StatefulWidget {
   @override
   ArchivePageState createState() => ArchivePageState();
@@ -36,6 +38,8 @@ class ArchivePageState extends State<ArchivePage> {
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1624)
       ..init(context);
+
+    mainModel.getMyStudents();
 
     return Scaffold(
       body: ListView(
