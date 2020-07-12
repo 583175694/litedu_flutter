@@ -25,8 +25,7 @@ class HttpUtils {
   static Dio dio;
 
   /// default options
-  static const String API_PREFIX = 'https://api-dev.lit-edu.com/papi/';
-  static const String API_PREFIX_OLD = 'https://api-dev.lit-edu.com/';
+  static const String API_PREFIX = 'https://api-dev.lit-edu.com/';
   static const int CONNECT_TIMEOUT = 10000;
   static const int RECEIVE_TIMEOUT = 3000;
   static const Map<String, dynamic> HEADER = null;
@@ -80,7 +79,7 @@ class HttpUtils {
     if (dio == null) {
       /// 全局属性：请求前缀、连接超时时间、响应超时时间
       BaseOptions options = new BaseOptions(
-        baseUrl: API_PREFIX_OLD,
+        baseUrl: API_PREFIX,
         connectTimeout: CONNECT_TIMEOUT,
         receiveTimeout: RECEIVE_TIMEOUT
       );

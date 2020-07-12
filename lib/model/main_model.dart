@@ -5,8 +5,6 @@ import 'package:flutter_module/model/school_model.dart';
 import 'package:flutter_module/model/student_model.dart';
 import 'package:flutter_module/plugins/common.dart';
 import 'package:flutter_module/plugins/http.dart';
-import 'package:dio/dio.dart';
-import 'dart:convert';
 
 /**
  * @ClassName main_model
@@ -20,13 +18,13 @@ import 'calendar_model.dart';
 class MainModel extends Model with CalendarModel, StudentModel, SchoolModel {
 
   Map<String, dynamic> HEADER = {
-    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImV4cCI6MTU5NDU3MDA2NywiaWF0IjoxNTk0NDgzNjY3LCJuYmYiOjE1OTQ0ODM2NjcsImp0aSI6ImE5OGU2Njc2LWMzOTAtMTFlYS1iYWQ0LTAyNDJhYzE0MDAwNCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJpc3MiOiJodHRwczovL2FwaS1kZXYubGl0LWVkdS5jb20vYXBpL2Zyb250ZW5kL2F1dGgvbG9naW4ifQ.aIIpMsHzvgejjUqsAAPuQLWzuwRLaaJTxkNDDRIPmAU",
+    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImV4cCI6MTYyNjEwODg4MywiaWF0IjoxNTk0NTcyODgzLCJuYmYiOjE1OTQ1NzI4ODMsImp0aSI6IjYyMjUzZDM0LWM0NjAtMTFlYS05ODUwLTAyNDJhYzE0MDAwNCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJpc3MiOiJodHRwczovL2FwaS1kZXYubGl0LWVkdS5jb20vYXBpL2Zyb250ZW5kL2F1dGgvbG9naW4ifQ.GS-kairdnvZLFUAEiZljG2Z0IW3G7L1IEm4pjpBuAuI"
   };
 
   //  学生档案详情
   getStudentArchive() async {
     var response = await HttpUtils.request(
-      '/api/frontend/student_archive/',
+      '/papi/api/frontend/student_archive/',
       method: HttpUtils.POST,
       headers: HEADER,
       data: {
@@ -39,11 +37,11 @@ class MainModel extends Model with CalendarModel, StudentModel, SchoolModel {
   }
 
   //  学生评价列表
-  getStudentEvaluation() async {
+  getStudentEvaluation(int id) async {
     var response = await HttpUtils.request(
-      '/api/frontend/student_evaluation/?school_course_schedule_id=144',
+      '/papi/api/frontend/student_evaluation/?school_course_schedule_id=$id',
       method: HttpUtils.GET,
-      headers: HEADER
+      headers: HEADER,
     );
 
     mainModel.studentEvaluation = response["data"];
@@ -52,7 +50,7 @@ class MainModel extends Model with CalendarModel, StudentModel, SchoolModel {
   //  学生评价更新
   submitStudentEvaluation(int id) async {
     var response = await HttpUtils.request(
-      '/api/frontend/student_evaluation/$id/',
+      '/papi/api/frontend/student_evaluation/$id/',
       method: HttpUtils.PATCH,
       headers: HEADER,
       data: {

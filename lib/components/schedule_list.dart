@@ -206,18 +206,21 @@ class ScheduleListState extends State<ScheduleList> {
                     Text(titleItems[i] == null ? '' : "-  ${titleItems[i]['name']}", style: courseFont),
                   ],
                 ),
-                i == 5 ? Container() : Container(
-                  width: ScreenUtil().setWidth(128),
-                  height: ScreenUtil().setWidth(56),
-                  alignment: Alignment.centerRight,
-                  child: Center(
-                    child: Text('评估', style: evaluateFont),
+                i == 5 ? Container() : GestureDetector(
+                  child: Container(
+                    width: ScreenUtil().setWidth(128),
+                    height: ScreenUtil().setWidth(56),
+                    alignment: Alignment.centerRight,
+                    child: Center(
+                      child: Text('评估', style: evaluateFont),
+                    ),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(14)),
+                        color: Colors.white
+                    ),
+                    margin: EdgeInsets.only(right: 8),
                   ),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(14)),
-                      color: Colors.white
-                  ),
-                  margin: EdgeInsets.only(right: 8),
+                  onTap: () => toEvaluation(titleItems[i]["id"]),
                 )
               ],
             ),
@@ -349,5 +352,11 @@ class ScheduleListState extends State<ScheduleList> {
 
     print(courseList);
     mainModel.reschedule(courseList);
+  }
+
+  //  跳转到评价列表
+  void toEvaluation(int id) {
+    mainModel.getStudentEvaluation(id);
+    Navigator.pushNamed(context, "assessment_page");
   }
 }

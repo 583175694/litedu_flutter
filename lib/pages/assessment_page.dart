@@ -24,11 +24,13 @@ class AssessmentPageState extends State<AssessmentPage> {
 
   var v;
   ui.Image _image;
+  ui.Image _imageBtn;
   ui.Image _bubble1;
   ui.Image _bubble2;
   ui.Image _bubble3;
   ui.Image _bubble4;
   List<ui.Image> _imageBubbles;
+
   num progressValue = 0.0;
 
   String assessment;  //  前期评估
@@ -36,10 +38,6 @@ class AssessmentPageState extends State<AssessmentPage> {
   @override
   void initState() {
     super.initState();
-
-    _loadImage('lib/assets/icon_switch.png').then((res) {
-      _image = res;
-    });
 
     _loadImage('lib/assets/bubble_smile1.png').then((res) {
       _bubble1 = res;
@@ -70,9 +68,6 @@ class AssessmentPageState extends State<AssessmentPage> {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil(width: 750, height: 1624)
-      ..init(context);
-
     DateModel date = mainModel.currentDateModel;
     TextStyle selectFont = TextStyle(color: Color(0xff29D9D6), fontSize: ScreenUtil().setSp(32));
     TextStyle nameFont = TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(32));
@@ -81,6 +76,11 @@ class AssessmentPageState extends State<AssessmentPage> {
     TextStyle saveFont = TextStyle(color: Color(0xff29D9D6), fontSize: ScreenUtil().setSp(40));
 
     _imageBubbles = [_bubble1, _bubble2, _bubble3, _bubble4];
+
+    _loadImage('lib/assets/icon_switch.png').then((res) {
+      _image = res;
+      setState(() {});
+    });
 
     return Scaffold(
       backgroundColor: Colors.white,
