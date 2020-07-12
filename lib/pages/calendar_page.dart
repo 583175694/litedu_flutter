@@ -107,9 +107,6 @@ class CalendarPageState extends State<CalendarPage> {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1624)
       ..init(context);
 
-    //  测试网络请求
-    mainModel.handleGetShelf();
-
     return Scaffold(
         appBar: AppBar(
           title: Row(

@@ -9,53 +9,20 @@
  * @Date 2020/7/7
  **/
 import 'package:scoped_model/scoped_model.dart';
-import 'package:flutter_module/plugins/calendar_plugin/model/date_model.dart';
-import 'package:flutter_module/dto/dateDto.dart';
 
 class StudentModel extends Model{
   Map _studentArchive;
-  Map _studentManifests;
-  List _myStudents;
-  Map _semester;
-  Map _teachFeedbackList;
-  Map _studentAfterTeachFeedbackList;
+  Map _studentEvaluation;
 
-  List get myStudents => _myStudents;
+  Map get studentEvaluation => _studentEvaluation;
 
-  set myStudents(List value) {
-    _myStudents = value;
-  }
-
-  Map get studentAfterTeachFeedbackList => _studentAfterTeachFeedbackList;
-
-  set studentAfterTeachFeedbackList(Map value) {
-    _studentAfterTeachFeedbackList = value;
-  }
-
-  Map get teachFeedbackList => _teachFeedbackList;
-
-  set teachFeedbackList(Map value) {
-    _teachFeedbackList = value;
-  }
-
-  Map get semester => _semester;
-
-  set semester(Map value) {
-    _semester = value;
-    notifyListeners();
-  }
-
-  Map get studentManifests => _studentManifests;
-
-  set studentManifests(Map value) {
-    _studentManifests = value;
-    notifyListeners();
+  set studentEvaluation(Map value) {
+    _studentEvaluation = value;
   }
 
   Map get studentArchive => _studentArchive;
 
   set studentArchive(Map value) {
     _studentArchive = value;
-    notifyListeners();
   }
 }

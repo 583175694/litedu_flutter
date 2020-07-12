@@ -25,12 +25,11 @@ class HttpUtils {
   static Dio dio;
 
   /// default options
-  static const String API_PREFIX = 'https://api.lit-edu.com';
+  static const String API_PREFIX = 'https://api-dev.lit-edu.com/papi/';
+  static const String API_PREFIX_OLD = 'https://api-dev.lit-edu.com/';
   static const int CONNECT_TIMEOUT = 10000;
   static const int RECEIVE_TIMEOUT = 3000;
-  static const Map<String, dynamic> HEADER = {
-  "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsImV4cCI6MTYyMzE1MzE1NywiaWF0IjoxNTkxNjE3MTU3LCJuYmYiOjE1OTE2MTcxNTcsImp0aSI6IjhjM2IyZDljLWE5N2UtMTFlYS05OTg0LTAyNDJhYzEzMDAwNCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJpc3MiOiJodHRwczovL2FwaS5saXQtZWR1LmNvbS9hcGkvZnJvbnRlbmQvYXV0aC9sb2dpbiJ9.wqOH7ofcZhaK9kTBagCUGZPABSfZvxc0TCoRX8yDrhY"
-  };
+  static const Map<String, dynamic> HEADER = null;
 
   /// http request methods
   static const String GET = 'get';
@@ -65,14 +64,11 @@ class HttpUtils {
     var result;
 
     try {
-      Response response = await dio.request(url, data: data, options: new Options(method: method, headers: headers,));
-
+      Response response = await dio.request(url, data: data, options: new Options(method: method, headers: headers));
       result = response.data;
 
-      /// 打印响应相关信息
       print('响应数据：' + response.toString());
     } on DioError catch (e) {
-      /// 打印请求失败相关信息
       print('请求出错：' + e.toString());
     }
 
@@ -84,7 +80,7 @@ class HttpUtils {
     if (dio == null) {
       /// 全局属性：请求前缀、连接超时时间、响应超时时间
       BaseOptions options = new BaseOptions(
-        baseUrl: API_PREFIX,
+        baseUrl: API_PREFIX_OLD,
         connectTimeout: CONNECT_TIMEOUT,
         receiveTimeout: RECEIVE_TIMEOUT,
       );

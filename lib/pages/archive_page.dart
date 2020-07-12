@@ -39,7 +39,7 @@ class ArchivePageState extends State<ArchivePage> {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1624)
       ..init(context);
 
-    mainModel.getMyStudents();
+    mainModel.reschedule();
 
     return Scaffold(
       body: ListView(
@@ -59,25 +59,30 @@ class ArchivePageState extends State<ArchivePage> {
             color: Colors.white,
           ),
           //  学生评估
-          Container(
-            height: ScreenUtil().setWidth(662),
-            child: Stack(
-              children: <Widget>[
-                title('学生评估'),
-                Positioned(
-                  child: StudentAssessment(),
-                  top: ScreenUtil().setWidth(108),
-                  left: ScreenUtil().setWidth(286),
-                ),
-                Positioned(
-                  child: Text('- 最新评估 -', style: TextStyle(fontSize: ScreenUtil().setSp(22), color: Color(0xffB6BCC9))),
-                  bottom: ScreenUtil().setWidth(44),
-                  left: ScreenUtil().setWidth(314),
-                )
-              ],
+          GestureDetector(
+            child: Container(
+              height: ScreenUtil().setWidth(662),
+              child: Stack(
+                children: <Widget>[
+                  title('学生评估'),
+                  Positioned(
+                    child: StudentAssessment(),
+                    top: ScreenUtil().setWidth(108),
+                    left: ScreenUtil().setWidth(286),
+                  ),
+                  Positioned(
+                    child: Text('- 最新评估 -', style: TextStyle(fontSize: ScreenUtil().setSp(22), color: Color(0xffB6BCC9))),
+                    bottom: ScreenUtil().setWidth(44),
+                    left: ScreenUtil().setWidth(314),
+                  )
+                ],
+              ),
+              color: Colors.white,
+              margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
             ),
-            color: Colors.white,
-            margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
+            onTap: () {
+              Navigator.pushNamed(context, 'evaluation_page');
+            },
           ),
           //  学生画像
           Container(
