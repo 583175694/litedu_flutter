@@ -1,7 +1,7 @@
 /**
- * @ClassName 模板
+ * @ClassName 课程表组件
  * @Author wushaohang
- * @Date 2019-12-14
+ * @Date 2020-6-14
  **/
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/screen_fit.dart';

@@ -90,6 +90,16 @@ class CalendarPageState extends State<CalendarPage> {
       }
     });
 
+    initializeRequest();  //  初始化请求
+  }
+
+  //  初始化请求
+  void initializeRequest() async {
+    //  请求班级
+    await mainModel.getClassTeam();
+
+    //  请求课程
+    await mainModel.getSchoolCourseSchedules();
   }
 
   // Dialog方式

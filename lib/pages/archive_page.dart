@@ -24,6 +24,8 @@ class ArchivePageState extends State<ArchivePage> {
 
   @override
   void initState() {
+    super.initState();
+
     print("init state");
     FlutterBoost.singleton.channel.addMethodHandler((handler) {
       setState(() {
@@ -31,15 +33,14 @@ class ArchivePageState extends State<ArchivePage> {
       });
       return Future.value('done');
     });
-    super.initState();
+    mainModel.getStudentArchive();
+
   }
 
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1624)
       ..init(context);
-
-    mainModel.reschedule();
 
     return Scaffold(
       body: ListView(
