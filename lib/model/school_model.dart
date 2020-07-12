@@ -8,6 +8,14 @@ import 'package:scoped_model/scoped_model.dart';
 class SchoolModel extends Model {
   List<dynamic> _schoolCourseSchedules;
   List<dynamic> _classTeam;
+  List _currentCourse;
+
+  List get currentCourse => _currentCourse;
+
+  set currentCourse(List value) {
+    _currentCourse = value;
+    notifyListeners();
+  }
 
   List<dynamic> get schoolCourseSchedules => _schoolCourseSchedules;
 

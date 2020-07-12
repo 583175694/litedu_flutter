@@ -82,7 +82,7 @@ class HttpUtils {
       BaseOptions options = new BaseOptions(
         baseUrl: API_PREFIX_OLD,
         connectTimeout: CONNECT_TIMEOUT,
-        receiveTimeout: RECEIVE_TIMEOUT,
+        receiveTimeout: RECEIVE_TIMEOUT
       );
 
       dio = new Dio(options);

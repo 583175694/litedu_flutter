@@ -5,8 +5,10 @@
  **/
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/screen_fit.dart';
+import 'package:flutter_module/main.dart';
 import 'package:flutter_module/model/main_model.dart';
 import 'package:flutter_module/plugins/calendar_plugin/model/date_model.dart';
+import 'package:flutter_module/plugins/common.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class ScheduleList extends StatefulWidget {
@@ -27,7 +29,8 @@ class ScheduleListState extends State<ScheduleList> {
   Map next = new Map();
 
   // 数据源
-  List<String> titleItems = <String>[null, '英语课', '语文课', '化学课', '物理课', null, null, '数学课', '英语课', '语文课', '化学课'];  // 数据源
+//  List<String> titleItems = <String>[null, '英语课', '语文课', '化学课', '物理课', null, null, '数学课', '英语课', '语文课', '化学课'];  // 数据源
+  List titleItems = new List(11);
 
   List colorItems = [
     {"background": Color(0xffD0EDFF), "circle": Color(0xff14A4FF)},
@@ -44,18 +47,20 @@ class ScheduleListState extends State<ScheduleList> {
   ];
 
   List timeItems = [
-    {"class": "早读", "time": "07:00", "interval": "07:00 - 07:45"},
-    {"class": "第1节课", "time": "08:00", "interval": "08:00 - 08:45"},
-    {"class": "第2节课", "time": "09:00", "interval": "09:00 - 09:45"},
-    {"class": "第3节课", "time": "10:00", "interval": "10:00 - 10:45"},
-    {"class": "第4节课", "time": "11:00", "interval": "11:00 - 11:45"},
-    {"class": "午休时间", "time": "12:00", "interval": "12:00 - 12:45"},
-    {"class": "午休时间", "time": "13:00", "interval": "13:00 - 13:45"},
-    {"class": "第5节课", "time": "14:00", "interval": "14:00 - 14:45"},
-    {"class": "第6节课", "time": "15:00", "interval": "15:00 - 15:45"},
-    {"class": "第7节课", "time": "16:00", "interval": "16:00 - 16:45"},
-    {"class": "第8节课", "time": "17:00", "interval": "17:00 - 17:45"},
+    {"class": "早读", "time": "07:00", "interval": "07:00 - 08:00", "endTime": "08:00"},
+    {"class": "第1节课", "time": "08:00", "interval": "08:00 - 09:00", "endTime": "09:00"},
+    {"class": "第2节课", "time": "09:00", "interval": "09:00 - 10:00", "endTime": "10:00"},
+    {"class": "第3节课", "time": "10:00", "interval": "10:00 - 11:00", "endTime": "11:00"},
+    {"class": "第4节课", "time": "11:00", "interval": "11:00 - 12:00", "endTime": "12:00"},
+    {"class": "午休时间", "time": "12:00", "interval": "12:00 - 13:00", "endTime": "13:00"},
+    {"class": "午休时间", "time": "13:00", "interval": "13:00 - 14:00", "endTime": "14:00"},
+    {"class": "第5节课", "time": "14:00", "interval": "14:00 - 15:00", "endTime": "15:00"},
+    {"class": "第6节课", "time": "15:00", "interval": "15:00 - 16:00", "endTime": "16:00"},
+    {"class": "第7节课", "time": "16:00", "interval": "16:00 - 17:00", "endTime": "17:00"},
+    {"class": "第8节课", "time": "17:00", "interval": "17:00 - 18:00", "endTime": "18:00"},
   ];
+
+  Common common = new Common();
 
   int willAcceptIndex;
 
@@ -70,6 +75,10 @@ class ScheduleListState extends State<ScheduleList> {
   Widget build(BuildContext context) {
     final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
     DateModel date = mainModel.currentDateModel;
+    if (mainModel.currentCourse != null) {
+      titleItems = mainModel.currentCourse;
+    }
+    setState(() {});
 
     //  日程列表
     List<Widget> scheduleList() {
@@ -108,8 +117,9 @@ class ScheduleListState extends State<ScheduleList> {
       );
 
       for (int i = 0; i < titleItems.length; i++) {
+
         //  可拖动列表
-        if (!isLunchBreak(i)) {
+        if (!isLunchBreak(i) && titleItems[i] != null) {
           tiles.add(
               DragTarget(  //  可放置的地方
                 builder: (context, candidateData, rejectedData) {
@@ -154,48 +164,15 @@ class ScheduleListState extends State<ScheduleList> {
                   setState(() { });
                   return true;
                 },
-                onAccept: (data) {
-                  next["value"] = titleItems[i];
-                  next["color"] = colorItems[i];
-                  next["index"] = i;
-
-                  setState(() {
-                    titleItems[next["index"]] = prov["value"];
-                    titleItems[prov["index"]] = next["value"];
-                    colorItems[next["index"]] = prov["color"];
-                    colorItems[prov["index"]] = next["color"];
-
-                    accepted = false;
-                  });
-
-                  print('prov: $prov, next: $next accepted:$accepted');
-                },
+                onAccept: (data) => exchangeCourse(i),
               )
           );
         } else {
-          tiles.add(
-              Container(
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      width: ScreenUtil().setWidth(124),
-                      child: Column(
-                        children: <Widget>[
-                          Text(timeItems[i]["class"], style: timeFont),
-                          Text(timeItems[i]["time"], style: timeFont)
-                        ],
-                      ),
-                    ),
-                    lunchBreakItem(i)
-                  ],
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
-              )
-          );
+          //  午休时间
+          tiles.add(lunchBreakItem(i));
         }
       }
+
       return tiles;
     }
     
@@ -226,7 +203,7 @@ class ScheduleListState extends State<ScheduleList> {
                       child: Text(timeItems[i]["class"], style: courseFont),
                       margin: EdgeInsets.only(left: 12, right: 6),
                     ),
-                    Text(titleItems[i] == null ? '' : "-  ${titleItems[i]}", style: courseFont),
+                    Text(titleItems[i] == null ? '' : "-  ${titleItems[i]['name']}", style: courseFont),
                   ],
                 ),
                 i == 5 ? Container() : Container(
@@ -268,45 +245,109 @@ class ScheduleListState extends State<ScheduleList> {
     );
   }
 
-  //  午休的情况
+  //  午休和没课情况
   Widget lunchBreakItem(int i) {
-    return Container(
-      width: ScreenUtil().setWidth(626),
-      height: ScreenUtil().setWidth(138),
-      padding: EdgeInsets.only(top: i == 5 ? 20 : 0),
-      margin: EdgeInsets.only(top: i == 5 ? 6 : 0, bottom: i == 6 ? 6 : 0),
-      child: i == 6 ? Container() : Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Row(
+    return DragTarget(  //  可放置的地方
+      builder: (context, candidateData, rejectedData) {
+        return Container(
+          child: Row(
             children: <Widget>[
               Container(
-                child: Text(timeItems[i]["class"], style: courseFont),
-                margin: EdgeInsets.only(left: 12, right: 6),
-              ),
-              Text(titleItems[i] == null ? '' : "-  ${titleItems[i]}", style: courseFont),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Container(
-                width: 4,
-                height: 4,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                    color: colorItems[i]["circle"]
+                width: ScreenUtil().setWidth(124),
+                child: Column(
+                  children: <Widget>[
+                    Text(timeItems[i]["class"], style: timeFont),
+                    Text(timeItems[i]["time"], style: timeFont)
+                  ],
                 ),
-                margin: EdgeInsets.only(left: 12, right: 6),
               ),
-              Text(timeItems[i]["interval"], style: courseFont),
+              Container(
+                width: ScreenUtil().setWidth(626),
+                height: ScreenUtil().setWidth(138),
+                padding: EdgeInsets.only(top: i == 5 ? 20 : 0),
+                margin: EdgeInsets.only(top: i == 5 ? 6 : 0, bottom: i == 6 ? 6 : 0),
+                child: i == 6 ? Container() : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          child: Text(timeItems[i]["class"], style: courseFont),
+                          margin: EdgeInsets.only(left: 12, right: 6),
+                        ),
+                        Text("无课程", style: courseFont),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          width: 4,
+                          height: 4,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(4)),
+                              color: Color(0xffB6BCC9)
+                          ),
+                          margin: EdgeInsets.only(left: 12, right: 6),
+                        ),
+                        Text(timeItems[i]["interval"], style: courseFont),
+                      ],
+                    ),
+                  ],
+                ),
+                decoration: BoxDecoration(
+                    color: Color(0xffF0F2F4),
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(i == 6 ? 0 : 10), bottomLeft: Radius.circular(i == 5 ? 0 :10))
+                ),
+              )
             ],
           ),
-        ],
-      ),
-      decoration: BoxDecoration(
-          color: colorItems[i]["background"],
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(i == 6 ? 0 : 10), bottomLeft: Radius.circular(i == 5 ? 0 :10))
-      ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+          ),
+        );
+      },
+      onWillAccept: (data) {
+        willAcceptIndex = i;
+        setState(() { });
+        return true;
+      },
+      onAccept: (data) => exchangeCourse(i),
     );
+  }
+
+  //  调课
+  void exchangeCourse(int i) {
+    next["value"] = titleItems[i];
+    next["color"] = colorItems[i];
+    next["index"] = i;
+
+    setState(() {
+      titleItems[next["index"]] = prov["value"];
+      titleItems[prov["index"]] = next["value"];
+      colorItems[next["index"]] = prov["color"];
+      colorItems[prov["index"]] = next["color"];
+
+      accepted = false;
+    });
+
+    print('prov: $prov, next: $next accepted:$accepted');
+    mainModel.currentCourse = titleItems;
+
+    List courseList = new List();
+    print(titleItems);
+
+    for (int i = 0; i < titleItems.length; i++) {
+      if (titleItems[i] != null) {
+        courseList.add({
+          "id": titleItems[i]["id"],
+          "to_date": '${mainModel.currentDateModel.year}-${mainModel.currentDateModel.month}-${mainModel.currentDateModel.day}',
+          "start_time": timeItems[i]["time"],
+          "end_time": timeItems[i]["endTime"]
+        });
+      }
+    }
+
+    print(courseList);
+    mainModel.reschedule(courseList);
   }
 }
