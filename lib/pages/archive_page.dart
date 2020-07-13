@@ -103,19 +103,24 @@ class ArchivePageState extends State<ArchivePage> {
             },
           ),
           //  学生画像
-          Container(
-            height: ScreenUtil().setWidth(662),
-            child: Stack(
-              children: <Widget>[
-                title('学生画像'),
-                Container(
-                  child: StudentPortraits(),
-                  margin: EdgeInsets.only(top: ScreenUtil().setWidth(126)),
-                ),
-              ],
+          GestureDetector(
+            child: Container(
+              height: ScreenUtil().setWidth(662),
+              child: Stack(
+                children: <Widget>[
+                  title('学生画像'),
+                  Container(
+                    child: StudentPortraits(),
+                    margin: EdgeInsets.only(top: ScreenUtil().setWidth(126)),
+                  ),
+                ],
+              ),
+              color: Colors.white,
+              margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
             ),
-            color: Colors.white,
-            margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
+            onTap: () {
+              Navigator.pushNamed(context, 'evaluation_report_page');
+            },
           ),
           //  学生考勤
           Container(
