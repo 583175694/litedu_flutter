@@ -437,7 +437,7 @@ class _SeekBarPainter extends CustomPainter {
         ..style = PaintingStyle.fill
         ..color = indicatorColor;
 
-      canvas.drawImage(image,
+      if (image != null) canvas.drawImage(image,
           Offset(value * size.width - ScreenUtil().setWidth(image.width.toDouble()), size.height - ScreenUtil().setWidth(image.height.toDouble())),
           indicatorPaint);
 

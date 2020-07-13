@@ -17,6 +17,7 @@ import 'package:flutter_module/plugins/calendar_plugin/controller.dart';
 import 'package:flutter_module/plugins/calendar_plugin/flutter_custom_calendar.dart';
 import 'package:flutter_module/plugins/calendar_plugin/widget/calendar_view.dart';
 import 'package:flutter_boost/flutter_boost.dart';
+import 'package:flutter_module/plugins/common.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({Key key}) : super(key: key);
@@ -40,6 +41,8 @@ class CalendarPageState extends State<CalendarPage> {
   ValueNotifier<String> selectText;
   //  编辑状态
   bool isEdit = false;
+
+  Common common = new Common();
 
   @override
   void initState() {
@@ -82,16 +85,7 @@ class CalendarPageState extends State<CalendarPage> {
       }
     });
 
-    initializeRequest();  //  初始化请求
-  }
-
-  //  初始化请求
-  void initializeRequest() async {
-    //  请求班级
-    await mainModel.getClassTeam();
-
-    //  请求课程
-    await mainModel.getSchoolCourseSchedules();
+    mainModel.initializeRequest();  //  初始化请求
   }
 
   // Dialog方式

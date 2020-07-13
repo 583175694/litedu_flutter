@@ -167,10 +167,11 @@ class ItemContainerState extends State<ItemContainer> {
     configuration = calendarProvider.calendarConfiguration;
 
     return GestureDetector(
-      //  🐶点击整个item都会触发事件
+      //  🐶点击整个item都会触发事件，切换日期
       behavior: HitTestBehavior.opaque,
       onTap: () {
         mainModel.currentDateModel = dateModel;
+        mainModel.initializeRequest();  //  请求课程列表
 
         calendarProvider.lastClickDateModel = dateModel;
         calendarProvider.selectDateModel = dateModel;
