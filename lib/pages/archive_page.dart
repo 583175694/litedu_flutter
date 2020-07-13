@@ -20,21 +20,10 @@ class ArchivePage extends StatefulWidget {
 }
 
 class ArchivePageState extends State<ArchivePage> {
-  String _text = "0";
-
   @override
   void initState() {
     super.initState();
-
-    print("init state");
-    FlutterBoost.singleton.channel.addMethodHandler((handler) {
-      setState(() {
-        _text = handler.method;
-      });
-      return Future.value('done');
-    });
     mainModel.getStudentArchive();
-
   }
 
   @override
@@ -50,7 +39,7 @@ class ArchivePageState extends State<ArchivePage> {
             height: ScreenUtil().setWidth(560),
             child: Stack(
               children: <Widget>[
-                title(_text),
+                title('学生数据'),
                 Positioned(
                   child: StudentData(),
                   top: ScreenUtil().setWidth(152),
