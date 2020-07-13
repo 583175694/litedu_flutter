@@ -7,6 +7,9 @@ import 'dart:math';
  **/
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/screen_fit.dart';
+import 'package:flutter_module/entity/student_archive.dart';
+import 'package:flutter_module/model/main_model.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class StudentAssessment extends StatefulWidget {
   @override
@@ -15,6 +18,8 @@ class StudentAssessment extends StatefulWidget {
 
 class StudentAssessmentState extends State<StudentAssessment> {
   TextStyle fontCenter = TextStyle(fontSize: ScreenUtil().setSp(32), color: Color(0xff6D7993));
+
+  Qi_skills qiSkills;
 
   num degToRad(num deg) => deg * (pi / 180.0);
   List<String> colorItems = [
@@ -29,6 +34,10 @@ class StudentAssessmentState extends State<StudentAssessment> {
 
   @override
   Widget build(BuildContext context) {
+    final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
+
+    qiSkills = mainModel.studentArchive == null ? null : mainModel.studentArchive.qiSkills;
+
     return Container(
       height: ScreenUtil().setWidth(450),
       child: Column(

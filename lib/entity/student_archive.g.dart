@@ -35,9 +35,9 @@ Map<String, dynamic> _$StudentArchiveToJson(StudentArchive instance) =>
 
 Basics _$BasicsFromJson(Map<String, dynamic> json) {
   return Basics(
-    json['height'] as int,
-    json['weight'] as int,
-    json['soles'] as int,
+    (json['height'] as num)?.toDouble(),
+    (json['weight'] as num)?.toDouble(),
+    (json['soles'] as num)?.toDouble(),
     json['attention_matters'] as String,
   );
 }
@@ -173,11 +173,138 @@ Map<String, dynamic> _$Ability_test6ToJson(Ability_test6 instance) =>
     };
 
 Qi_skills _$Qi_skillsFromJson(Map<String, dynamic> json) {
-  return Qi_skills();
+  return Qi_skills(
+    json['skill_1'] == null
+        ? null
+        : Skill_1.fromJson(json['skill_1'] as Map<String, dynamic>),
+    json['skill_2'] == null
+        ? null
+        : Skill_2.fromJson(json['skill_2'] as Map<String, dynamic>),
+    json['skill_3'] == null
+        ? null
+        : Skill_3.fromJson(json['skill_3'] as Map<String, dynamic>),
+    json['skill_4'] == null
+        ? null
+        : Skill_4.fromJson(json['skill_4'] as Map<String, dynamic>),
+    json['skill_5'] == null
+        ? null
+        : Skill_5.fromJson(json['skill_5'] as Map<String, dynamic>),
+    json['skill_6'] == null
+        ? null
+        : Skill_6.fromJson(json['skill_6'] as Map<String, dynamic>),
+    json['skill_7'] == null
+        ? null
+        : Skill_7.fromJson(json['skill_7'] as Map<String, dynamic>),
+  );
 }
 
-Map<String, dynamic> _$Qi_skillsToJson(Qi_skills instance) =>
-    <String, dynamic>{};
+Map<String, dynamic> _$Qi_skillsToJson(Qi_skills instance) => <String, dynamic>{
+      'skill_1': instance.skill1,
+      'skill_2': instance.skill2,
+      'skill_3': instance.skill3,
+      'skill_4': instance.skill4,
+      'skill_5': instance.skill5,
+      'skill_6': instance.skill6,
+      'skill_7': instance.skill7,
+    };
+
+Skill_1 _$Skill_1FromJson(Map<String, dynamic> json) {
+  return Skill_1(
+    json['score'] as int,
+    json['max_score'] as int,
+    json['percent'] as int,
+  );
+}
+
+Map<String, dynamic> _$Skill_1ToJson(Skill_1 instance) => <String, dynamic>{
+      'score': instance.score,
+      'max_score': instance.maxScore,
+      'percent': instance.percent,
+    };
+
+Skill_2 _$Skill_2FromJson(Map<String, dynamic> json) {
+  return Skill_2(
+    json['score'] as int,
+    json['max_score'] as int,
+    json['percent'] as int,
+  );
+}
+
+Map<String, dynamic> _$Skill_2ToJson(Skill_2 instance) => <String, dynamic>{
+      'score': instance.score,
+      'max_score': instance.maxScore,
+      'percent': instance.percent,
+    };
+
+Skill_3 _$Skill_3FromJson(Map<String, dynamic> json) {
+  return Skill_3(
+    json['score'] as int,
+    json['max_score'] as int,
+    json['percent'] as int,
+  );
+}
+
+Map<String, dynamic> _$Skill_3ToJson(Skill_3 instance) => <String, dynamic>{
+      'score': instance.score,
+      'max_score': instance.maxScore,
+      'percent': instance.percent,
+    };
+
+Skill_4 _$Skill_4FromJson(Map<String, dynamic> json) {
+  return Skill_4(
+    json['score'] as int,
+    json['max_score'] as int,
+    json['percent'] as int,
+  );
+}
+
+Map<String, dynamic> _$Skill_4ToJson(Skill_4 instance) => <String, dynamic>{
+      'score': instance.score,
+      'max_score': instance.maxScore,
+      'percent': instance.percent,
+    };
+
+Skill_5 _$Skill_5FromJson(Map<String, dynamic> json) {
+  return Skill_5(
+    json['score'] as int,
+    json['max_score'] as int,
+    json['percent'] as int,
+  );
+}
+
+Map<String, dynamic> _$Skill_5ToJson(Skill_5 instance) => <String, dynamic>{
+      'score': instance.score,
+      'max_score': instance.maxScore,
+      'percent': instance.percent,
+    };
+
+Skill_6 _$Skill_6FromJson(Map<String, dynamic> json) {
+  return Skill_6(
+    json['score'] as int,
+    json['max_score'] as int,
+    json['percent'] as int,
+  );
+}
+
+Map<String, dynamic> _$Skill_6ToJson(Skill_6 instance) => <String, dynamic>{
+      'score': instance.score,
+      'max_score': instance.maxScore,
+      'percent': instance.percent,
+    };
+
+Skill_7 _$Skill_7FromJson(Map<String, dynamic> json) {
+  return Skill_7(
+    json['score'] as int,
+    json['max_score'] as int,
+    json['percent'] as int,
+  );
+}
+
+Map<String, dynamic> _$Skill_7ToJson(Skill_7 instance) => <String, dynamic>{
+      'score': instance.score,
+      'max_score': instance.maxScore,
+      'percent': instance.percent,
+    };
 
 Attendances _$AttendancesFromJson(Map<String, dynamic> json) {
   return Attendances(

@@ -1,10 +1,10 @@
-import 'package:json_annotation/json_annotation.dart'; 
-  
+import 'package:json_annotation/json_annotation.dart';
+
 part 'student_archive.g.dart';
 
 
 @JsonSerializable()
-  class StudentArchive extends Object {
+class StudentArchive extends Object {
 
   @JsonKey(name: 'student_id')
   int studentId;
@@ -29,18 +29,18 @@ part 'student_archive.g.dart';
 
 }
 
-  
+
 @JsonSerializable()
-  class Basics extends Object {
+class Basics extends Object {
 
   @JsonKey(name: 'height')
-  int height;
+  double height;
 
   @JsonKey(name: 'weight')
-  int weight;
+  double weight;
 
   @JsonKey(name: 'soles')
-  int soles;
+  double soles;
 
   @JsonKey(name: 'attention_matters')
   String attentionMatters;
@@ -53,9 +53,9 @@ part 'student_archive.g.dart';
 
 }
 
-  
+
 @JsonSerializable()
-  class Six_skills extends Object {
+class Six_skills extends Object {
 
   @JsonKey(name: 'ability_test1')
   Ability_test1 abilityTest1;
@@ -83,9 +83,9 @@ part 'student_archive.g.dart';
 
 }
 
-  
+
 @JsonSerializable()
-  class Ability_test1 extends Object {
+class Ability_test1 extends Object {
 
   @JsonKey(name: 'score')
   int score;
@@ -104,9 +104,9 @@ part 'student_archive.g.dart';
 
 }
 
-  
+
 @JsonSerializable()
-  class Ability_test2 extends Object {
+class Ability_test2 extends Object {
 
   @JsonKey(name: 'score')
   int score;
@@ -125,9 +125,9 @@ part 'student_archive.g.dart';
 
 }
 
-  
+
 @JsonSerializable()
-  class Ability_test3 extends Object {
+class Ability_test3 extends Object {
 
   @JsonKey(name: 'score')
   int score;
@@ -146,9 +146,9 @@ part 'student_archive.g.dart';
 
 }
 
-  
+
 @JsonSerializable()
-  class Ability_test4 extends Object {
+class Ability_test4 extends Object {
 
   @JsonKey(name: 'score')
   int score;
@@ -167,9 +167,9 @@ part 'student_archive.g.dart';
 
 }
 
-  
+
 @JsonSerializable()
-  class Ability_test5 extends Object {
+class Ability_test5 extends Object {
 
   @JsonKey(name: 'score')
   int score;
@@ -188,9 +188,9 @@ part 'student_archive.g.dart';
 
 }
 
-  
+
 @JsonSerializable()
-  class Ability_test6 extends Object {
+class Ability_test6 extends Object {
 
   @JsonKey(name: 'score')
   int score;
@@ -209,11 +209,32 @@ part 'student_archive.g.dart';
 
 }
 
-  
-@JsonSerializable()
-  class Qi_skills extends Object {
 
-  Qi_skills();
+@JsonSerializable()
+class Qi_skills extends Object {
+
+  @JsonKey(name: 'skill_1')
+  Skill_1 skill1;
+
+  @JsonKey(name: 'skill_2')
+  Skill_2 skill2;
+
+  @JsonKey(name: 'skill_3')
+  Skill_3 skill3;
+
+  @JsonKey(name: 'skill_4')
+  Skill_4 skill4;
+
+  @JsonKey(name: 'skill_5')
+  Skill_5 skill5;
+
+  @JsonKey(name: 'skill_6')
+  Skill_6 skill6;
+
+  @JsonKey(name: 'skill_7')
+  Skill_7 skill7;
+
+  Qi_skills(this.skill1,this.skill2,this.skill3,this.skill4,this.skill5,this.skill6,this.skill7,);
 
   factory Qi_skills.fromJson(Map<String, dynamic> srcJson) => _$Qi_skillsFromJson(srcJson);
 
@@ -221,9 +242,156 @@ part 'student_archive.g.dart';
 
 }
 
-  
+
 @JsonSerializable()
-  class Attendances extends Object {
+class Skill_1 extends Object {
+
+  @JsonKey(name: 'score')
+  int score;
+
+  @JsonKey(name: 'max_score')
+  int maxScore;
+
+  @JsonKey(name: 'percent')
+  int percent;
+
+  Skill_1(this.score,this.maxScore,this.percent,);
+
+  factory Skill_1.fromJson(Map<String, dynamic> srcJson) => _$Skill_1FromJson(srcJson);
+
+  Map<String, dynamic> toJson() => _$Skill_1ToJson(this);
+
+}
+
+
+@JsonSerializable()
+class Skill_2 extends Object {
+
+  @JsonKey(name: 'score')
+  int score;
+
+  @JsonKey(name: 'max_score')
+  int maxScore;
+
+  @JsonKey(name: 'percent')
+  int percent;
+
+  Skill_2(this.score,this.maxScore,this.percent,);
+
+  factory Skill_2.fromJson(Map<String, dynamic> srcJson) => _$Skill_2FromJson(srcJson);
+
+  Map<String, dynamic> toJson() => _$Skill_2ToJson(this);
+
+}
+
+
+@JsonSerializable()
+class Skill_3 extends Object {
+
+  @JsonKey(name: 'score')
+  int score;
+
+  @JsonKey(name: 'max_score')
+  int maxScore;
+
+  @JsonKey(name: 'percent')
+  int percent;
+
+  Skill_3(this.score,this.maxScore,this.percent,);
+
+  factory Skill_3.fromJson(Map<String, dynamic> srcJson) => _$Skill_3FromJson(srcJson);
+
+  Map<String, dynamic> toJson() => _$Skill_3ToJson(this);
+
+}
+
+
+@JsonSerializable()
+class Skill_4 extends Object {
+
+  @JsonKey(name: 'score')
+  int score;
+
+  @JsonKey(name: 'max_score')
+  int maxScore;
+
+  @JsonKey(name: 'percent')
+  int percent;
+
+  Skill_4(this.score,this.maxScore,this.percent,);
+
+  factory Skill_4.fromJson(Map<String, dynamic> srcJson) => _$Skill_4FromJson(srcJson);
+
+  Map<String, dynamic> toJson() => _$Skill_4ToJson(this);
+
+}
+
+
+@JsonSerializable()
+class Skill_5 extends Object {
+
+  @JsonKey(name: 'score')
+  int score;
+
+  @JsonKey(name: 'max_score')
+  int maxScore;
+
+  @JsonKey(name: 'percent')
+  int percent;
+
+  Skill_5(this.score,this.maxScore,this.percent,);
+
+  factory Skill_5.fromJson(Map<String, dynamic> srcJson) => _$Skill_5FromJson(srcJson);
+
+  Map<String, dynamic> toJson() => _$Skill_5ToJson(this);
+
+}
+
+
+@JsonSerializable()
+class Skill_6 extends Object {
+
+  @JsonKey(name: 'score')
+  int score;
+
+  @JsonKey(name: 'max_score')
+  int maxScore;
+
+  @JsonKey(name: 'percent')
+  int percent;
+
+  Skill_6(this.score,this.maxScore,this.percent,);
+
+  factory Skill_6.fromJson(Map<String, dynamic> srcJson) => _$Skill_6FromJson(srcJson);
+
+  Map<String, dynamic> toJson() => _$Skill_6ToJson(this);
+
+}
+
+
+@JsonSerializable()
+class Skill_7 extends Object {
+
+  @JsonKey(name: 'score')
+  int score;
+
+  @JsonKey(name: 'max_score')
+  int maxScore;
+
+  @JsonKey(name: 'percent')
+  int percent;
+
+  Skill_7(this.score,this.maxScore,this.percent,);
+
+  factory Skill_7.fromJson(Map<String, dynamic> srcJson) => _$Skill_7FromJson(srcJson);
+
+  Map<String, dynamic> toJson() => _$Skill_7ToJson(this);
+
+}
+
+
+@JsonSerializable()
+class Attendances extends Object {
 
   @JsonKey(name: 'leave')
   int leave;
@@ -245,4 +413,4 @@ part 'student_archive.g.dart';
 
 }
 
-  
+

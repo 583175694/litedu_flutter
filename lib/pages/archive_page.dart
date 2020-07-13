@@ -11,6 +11,9 @@ import 'package:flutter_module/components/student_assessment.dart';
 import 'package:flutter_module/components/student_attendance.dart';
 import 'package:flutter_module/components/student_data.dart';
 import 'package:flutter_module/components/student_portraits.dart';
+import 'package:flutter_module/entity/student_archive.dart';
+import 'package:flutter_module/model/main_model.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 import '../main.dart';
 
@@ -20,6 +23,18 @@ class ArchivePage extends StatefulWidget {
 }
 
 class ArchivePageState extends State<ArchivePage> {
+
+  //  学生档案
+  StudentArchive studentArchive;
+  //  基本信息
+  Basics basics;
+  //  学生画像
+  Six_skills sixSkills;
+  //  七边形图
+  Qi_skills qiSkills;
+  //  考勤
+  Attendances attendances;
+
   @override
   void initState() {
     super.initState();
@@ -28,8 +43,13 @@ class ArchivePageState extends State<ArchivePage> {
 
   @override
   Widget build(BuildContext context) {
+    final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1624)
       ..init(context);
+
+    studentArchive = mainModel.studentArchive;
+//    attendances = studentArchive.attendances;
+    setState(() {});
 
     return Scaffold(
       body: ListView(

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter_module/entity/student_archive.dart';
 import 'package:flutter_module/entity/student_evaluation.dart';
 import 'package:flutter_module/main.dart';
 import 'package:flutter_module/model/school_model.dart';
@@ -33,8 +34,9 @@ class MainModel extends Model with CalendarModel, StudentModel, SchoolModel {
         "str_date": "2020-06-01",
         "end_date": "2020-07-07"
       });
+    StudentArchive data = StudentArchive.fromJson(response["data"]);
 
-    mainModel.studentArchive = response["data"];
+    mainModel.studentArchive = data;
   }
 
   //  学生评价列表

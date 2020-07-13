@@ -6,6 +6,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/pie_chart.dart';
 import 'package:flutter_module/components/screen_fit.dart';
+import 'package:flutter_module/entity/student_archive.dart';
+import 'package:flutter_module/model/main_model.dart';
+import 'package:scoped_model/scoped_model.dart';
+
 
 class StudentAttendance extends StatefulWidget {
   @override
@@ -21,8 +25,14 @@ class StudentAttendanceState extends State<StudentAttendance> {
     Color(0xffFC4F4D)
   ];
 
+  Attendances attendances;
+
   @override
   Widget build(BuildContext context) {
+    final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
+
+    attendances = mainModel.studentArchive == null ? null : mainModel.studentArchive.attendances;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +54,7 @@ class StudentAttendanceState extends State<StudentAttendance> {
                   Text('丁丁上学', style: fontDefault),
                   Text.rich(
                     TextSpan(
-                      text: '1123',
+                      text: '${attendances.total}',
                       style: activeDefault,
                       children: <TextSpan>[
                         TextSpan(text: '天', style: fontDefault),
@@ -61,9 +71,9 @@ class StudentAttendanceState extends State<StudentAttendance> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              attendanceValue(0, '80%', '考勤正常'),
-              attendanceValue(1, '15%', '请假'),
-              attendanceValue(2, '5%', '考勤异常'),
+              attendanceValue(0, attendances.total == 0 ? '0%' : "${attendances.presence / attendances.total}%", '考勤正常'),
+              attendanceValue(1, attendances.total == 0 ? '0%' : "${attendances.leave / attendances.total}%", '请假'),
+              attendanceValue(2, attendances.total == 0 ? '0%' : "${attendances.absence / attendances.total}%", '考勤异常'),
             ],
           ),
           margin: EdgeInsets.only(left: ScreenUtil().setWidth(16)),

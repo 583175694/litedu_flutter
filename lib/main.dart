@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: '',
         builder: FlutterBoost.init(postPush: _onRoutePushed),
-        home: CalendarPage(),
+        home: ArchivePage(),
         routes: {
           "calendar_page": (context) => CalendarPage(),
           "archive_page": (context) => ArchivePage(),
