@@ -35,6 +35,8 @@ class _MyAppState extends State<MyApp> {
           CalendarPage(),
       'archivePage': (String pageName, Map<dynamic, dynamic> params, String _) =>
           ArchivePage(),
+      'calendarPage': (String pageName, Map<dynamic, dynamic> params, String _) =>
+          CalendarPage(),
     });
     FlutterBoost.singleton.addBoostNavigatorObserver(TestBoostNavigatorObserver());
   }

@@ -43,14 +43,6 @@ class CalendarPageState extends State<CalendarPage> {
 
   @override
   void initState() {
-    FlutterBoost.singleton.channel.addMethodHandler((handler) {
-      print(handler.method);
-      DateModel date = new DateModel();
-      date.year = 1999;
-      date.month = 12;
-      mainModel.currentDateModel = date;
-      return Future.value(123);
-    });
     super.initState();
     DateTime now = DateTime.now();
     _calendarController = new CalendarController(
