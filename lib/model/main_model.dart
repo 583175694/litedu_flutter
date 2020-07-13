@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter_module/entity/student_evaluation.dart';
 import 'package:flutter_module/main.dart';
 import 'package:flutter_module/model/school_model.dart';
 import 'package:flutter_module/model/student_model.dart';
@@ -43,24 +44,23 @@ class MainModel extends Model with CalendarModel, StudentModel, SchoolModel {
       method: HttpUtils.GET,
       headers: HEADER,
     );
+    StudentEvaluation data = StudentEvaluation.fromJson(response["data"]);
 
-    mainModel.studentEvaluation = response["data"];
+    mainModel.studentEvaluation = data;
   }
 
   //  学生评价更新
-  submitStudentEvaluation(int id) async {
+  submitStudentEvaluation(int id, String content, List<int> questionScores, List<int> attributeLabels) async {
     var response = await HttpUtils.request(
       '/papi/api/frontend/student_evaluation/$id/',
       method: HttpUtils.PATCH,
       headers: HEADER,
       data: {
-        "content": "备注一下课堂要点",
-        "attribute_labels": [1, 4, 7],
-        "question_scores": [1, 5, 9, 9, 5]
+        "content": content,
+        "attribute_labels": attributeLabels,
+        "question_scores": questionScores
       }
     );
-
-    mainModel.studentEvaluation = response["data"];
   }
 
   //  获取班级
