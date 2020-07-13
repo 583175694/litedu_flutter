@@ -92,6 +92,17 @@ class _DropdownListState extends State<DropdownList> {
     });
   }
 
+  ///  提交
+  void onConfirm(Results item) {
+    List<int> list = new List();
+    item.questions.forEach((Questions res) {
+      list.add(res.score);
+    });
+
+    print(item.content);
+    mainModel.submitStudentEvaluation(item.id, item.content, list, new List());
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1624)
@@ -120,7 +131,7 @@ class _DropdownListState extends State<DropdownList> {
               width: ScreenUtil().setWidth(558),
               child: SeekBar(
                 progressHeight: ScreenUtil().setWidth(32),
-                value: item.score.toDouble(),
+                value: item.score == -1 ? 0 : ((item.score - 2) / 8 * 100).toDouble(), //  换算成 0~100
                 sectionCount: 4,
                 sectionRadius: ScreenUtil().setWidth(16),
                 isRound: true,
@@ -137,7 +148,9 @@ class _DropdownListState extends State<DropdownList> {
                 bubbleImages: _imageBubbles,
                 onValueChanged: (res) {
                   setState(() {
-                    item.score = res.value.toInt();
+                    //  2，4，6，8，10 五段
+                    item.score = ((res.value * 8 / 100) + 2).toInt();
+                    print(item.score);
                   });
                 },
               )
@@ -237,7 +250,7 @@ class _DropdownListState extends State<DropdownList> {
                           ),
                           onChanged: (value) {
                             setState(() {
-                              assessment = value;
+                              item.content = value;
                             });
                           },
                         ),
@@ -249,17 +262,20 @@ class _DropdownListState extends State<DropdownList> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Container(
-                        width: ScreenUtil().setWidth(304),
-                        height: ScreenUtil().setWidth(112),
-                        child: Center(
-                          child: Text('提交', style: btnFont,),
+                      GestureDetector(
+                        child: Container(
+                          width: ScreenUtil().setWidth(304),
+                          height: ScreenUtil().setWidth(112),
+                          child: Center(
+                            child: Text('提交', style: btnFont,),
+                          ),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(112)),
+                              color: Color(0xff29D9D6)
+                          ),
+                          margin: EdgeInsets.only(right: ScreenUtil().setWidth(46)),
                         ),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(112)),
-                            color: Color(0xff29D9D6)
-                        ),
-                        margin: EdgeInsets.only(right: ScreenUtil().setWidth(46)),
+                        onTap: () => onConfirm(item),
                       ),
                       Container(
                         width: ScreenUtil().setWidth(304),
