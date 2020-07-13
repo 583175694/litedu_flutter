@@ -39,7 +39,6 @@ class AssessmentPageState extends State<AssessmentPage> {
     super.initState();
   }
 
-
   /// 加载图片
   Future<ui.Image> _loadImage(String path) async {
     var data = await rootBundle.load(path);

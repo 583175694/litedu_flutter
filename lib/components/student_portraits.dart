@@ -10,6 +10,11 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/screen_fit.dart';
+import 'package:flutter_module/entity/student_archive.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:flutter_module/model/main_model.dart';
+
+import '../main.dart';
 
 class StudentPortraits extends StatefulWidget {
   @override
@@ -18,9 +23,12 @@ class StudentPortraits extends StatefulWidget {
 
 class StudentPortraitsState extends State<StudentPortraits> {
   int edge = 6;
+  Six_skills sixSkills;
 
   @override
   Widget build(BuildContext context) {
+    final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
+
     return LayoutBuilder(
         builder: (context, constraints){
           return Container(
@@ -76,7 +84,22 @@ class SpiderView extends CustomPainter {
   double mCenterX = 0;
   double mCenterY = 0;
 
+  Six_skills sixSkills;
+  List skillList = new List();
+
   SpiderView(this.mEdgeSize) {
+    if (mainModel.studentArchive == null) {
+      sixSkills = null;
+    } else {
+      sixSkills = mainModel.studentArchive.sixSkills;
+
+      skillList = [
+        sixSkills.abilityTest1, sixSkills.abilityTest2,
+        sixSkills.abilityTest3, sixSkills.abilityTest4,
+        sixSkills.abilityTest5, sixSkills.abilityTest6
+      ];
+    }
+
     // 初始化画笔
     mPaint = Paint();
 
@@ -109,7 +132,6 @@ class SpiderView extends CustomPainter {
 
     // 图层 防止刷新属性结构
     canvas.save();
-//    drawSpiderEdge(canvas);
     drawText(canvas);
     drawCover(canvas);
     canvas.restore();
@@ -171,7 +193,7 @@ class SpiderView extends CustomPainter {
     double angle = CIRCLE_ANGLE / mEdgeSize;
     double radiusMaxLimit = min(mCenterY, mCenterY);
     for (int i = 0; i < mEdgeSize; i++) {
-      double value = (random.nextInt(10) + 1) / 10;  // 满分为1
+      double value = skillList.isEmpty ? 0 : skillList[i].score.toDouble();  // 满分为1
       double x = mCenterX + radiusMaxLimit * cos(degToRad(angle * i)) * value;
       double y = mCenterY + radiusMaxLimit * sin(degToRad(angle * i)) * value;
       if (i == 0) {
