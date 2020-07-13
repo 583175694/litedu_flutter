@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter_module/entity/student_evaluation.dart';
 import 'package:flutter_module/main.dart';
 import 'package:flutter_module/model/school_model.dart';
 import 'package:flutter_module/model/student_model.dart';
@@ -43,8 +44,9 @@ class MainModel extends Model with CalendarModel, StudentModel, SchoolModel {
       method: HttpUtils.GET,
       headers: HEADER,
     );
+    StudentEvaluation data = StudentEvaluation.fromJson(response["data"]);
 
-    mainModel.studentEvaluation = response["data"];
+    mainModel.studentEvaluation = data;
   }
 
   //  学生评价更新

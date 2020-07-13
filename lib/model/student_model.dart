@@ -1,8 +1,10 @@
+import 'package:flutter_module/entity/student_archive.dart';
 /**
  * @ClassName student_model
  * @Author wushaohang
  * @Date 2020/7/11
  **/
+import 'package:flutter_module/entity/student_evaluation.dart';
 /**
  * @ClassName calendar_model
  * @Author wushaohang
@@ -10,19 +12,21 @@
  **/
 import 'package:scoped_model/scoped_model.dart';
 
-class StudentModel extends Model{
-  Map _studentArchive;
-  Map _studentEvaluation;
+class StudentModel extends Model {
+  StudentArchive _studentArchive;
+  StudentEvaluation _studentEvaluation;
 
-  Map get studentEvaluation => _studentEvaluation;
+  StudentArchive get studentArchive => _studentArchive;
 
-  set studentEvaluation(Map value) {
-    _studentEvaluation = value;
+  set studentArchive(StudentArchive value) {
+    _studentArchive = value;
+    notifyListeners();
   }
 
-  Map get studentArchive => _studentArchive;
+  StudentEvaluation get studentEvaluation => _studentEvaluation;
 
-  set studentArchive(Map value) {
-    _studentArchive = value;
+  set studentEvaluation(StudentEvaluation value) {
+    _studentEvaluation = value;
+    notifyListeners();
   }
 }
