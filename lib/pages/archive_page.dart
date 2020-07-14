@@ -23,7 +23,10 @@ class ArchivePage extends StatefulWidget {
 }
 
 class ArchivePageState extends State<ArchivePage> {
-  String _text = "0";
+  String studentId;
+  String strDate;
+  String endDate;
+
   //  学生档案
   StudentArchive studentArchive;
   //  基本信息
@@ -38,16 +41,18 @@ class ArchivePageState extends State<ArchivePage> {
   @override
   void initState() {
     super.initState();
-
-    print("init state");
     FlutterBoost.singleton.channel.addMethodHandler((handler) {
-      setState(() {
-        _text = handler.method;
-      });
+      if (handler.method == 'archivePage/reloadData') {
+        setState(() {
+          this.studentId = handler.arguments['studentId'];
+          this.strDate = handler.arguments['strDate'];
+          this.endDate = handler.arguments['endDate'];
+        });
+        //  请求学生档案
+        mainModel.getStudentArchive(handler.arguments['studentId'], handler.arguments['strDate'], handler.arguments['endDate']);
+      } 
       return Future.value('done');
     });
-    //  请求学生档案
-    mainModel.getStudentArchive();
     //  请求学生课程
     mainModel.getSchoolCourse();
   }
@@ -66,18 +71,23 @@ class ArchivePageState extends State<ArchivePage> {
       body: ListView(
         children: <Widget>[
           //  学生数据
-          Container(
-            height: ScreenUtil().setWidth(560),
-            child: Stack(
-              children: <Widget>[
-                title(_text),
-                Positioned(
-                  child: StudentData(),
-                  top: ScreenUtil().setWidth(152),
-                ),
-              ],
+          GestureDetector(
+            child: Container(
+              height: ScreenUtil().setWidth(560),
+              child: Stack(
+                children: <Widget>[
+                  title('学生数据'),
+                  Positioned(
+                    child: StudentData(),
+                    top: ScreenUtil().setWidth(152),
+                  ),
+                ],
+              ),
+              color: Colors.white,
             ),
-            color: Colors.white,
+            onTap: () {
+              FlutterBoost.singleton.channel.invokeMethod('archivePage/routeStudentData');
+            },
           ),
           //  学生评估
           GestureDetector(
@@ -141,22 +151,27 @@ class ArchivePageState extends State<ArchivePage> {
             margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
           ),
           //  注意事项
-          Container(
-            child: Stack(
-              children: <Widget>[
-                title('注意事项'),
-                Center(
-                  child: Container(
-                    padding: EdgeInsets.only(bottom: ScreenUtil().setWidth(56), top: ScreenUtil().setWidth(64)),
-                    width: ScreenUtil().setWidth(622),
-                    child: Text('丁丁吃海鲜会过敏哟，老师们要注意哟～', style: TextStyle(fontSize: ScreenUtil().setSp(32), color: Color(0xffB6BCC9))),
-                    margin: EdgeInsets.only(top: ScreenUtil().setWidth(66)),
+          GestureDetector(
+            child: Container(
+              child: Stack(
+                children: <Widget>[
+                  title('注意事项'),
+                  Center(
+                    child: Container(
+                      padding: EdgeInsets.only(bottom: ScreenUtil().setWidth(56), top: ScreenUtil().setWidth(64)),
+                      width: ScreenUtil().setWidth(622),
+                      child: Text(studentArchive.basics.attentionMatters, style: TextStyle(fontSize: ScreenUtil().setSp(32), color: Color(0xffB6BCC9))),
+                      margin: EdgeInsets.only(top: ScreenUtil().setWidth(66)),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
+              color: Colors.white,
+              margin: EdgeInsets.only(top: ScreenUtil().setHeight(20), bottom: ScreenUtil().setHeight(120)),
             ),
-            color: Colors.white,
-            margin: EdgeInsets.only(top: ScreenUtil().setHeight(20), bottom: ScreenUtil().setHeight(120)),
+            onTap: () {
+              FlutterBoost.singleton.channel.invokeMethod('archivePage/routeStudentAttentions');
+            },
           ),
         ],
       ),

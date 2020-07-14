@@ -5,6 +5,7 @@ import 'package:flutter_module/entity/school_course.dart';
 import 'package:flutter_module/entity/student_archive.dart';
 import 'package:flutter_module/entity/student_evaluation.dart';
 import 'package:flutter_module/main.dart';
+import 'package:flutter_module/model/home_model.dart';
 import 'package:flutter_module/model/school_model.dart';
 import 'package:flutter_module/model/student_model.dart';
 import 'package:flutter_module/plugins/common.dart';
@@ -19,22 +20,22 @@ import 'package:scoped_model/scoped_model.dart';
 
 import 'calendar_model.dart';
 
-class MainModel extends Model with CalendarModel, StudentModel, SchoolModel {
+class MainModel extends Model with HomeModel, CalendarModel, StudentModel, SchoolModel {
 
   Map<String, dynamic> HEADER = {
     "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImV4cCI6MTYyNjEwODg4MywiaWF0IjoxNTk0NTcyODgzLCJuYmYiOjE1OTQ1NzI4ODMsImp0aSI6IjYyMjUzZDM0LWM0NjAtMTFlYS05ODUwLTAyNDJhYzE0MDAwNCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJpc3MiOiJodHRwczovL2FwaS1kZXYubGl0LWVkdS5jb20vYXBpL2Zyb250ZW5kL2F1dGgvbG9naW4ifQ.GS-kairdnvZLFUAEiZljG2Z0IW3G7L1IEm4pjpBuAuI"
   };
 
   //  学生档案详情
-  getStudentArchive() async {
+  getStudentArchive(String studentId, [String strDate, String endDate]) async {
     var response = await HttpUtils.request(
       '/papi/api/frontend/student_archive/',
       method: HttpUtils.POST,
       headers: HEADER,
       data: {
-        "student_id": 70,
-        "str_date": "2020-06-01",
-        "end_date": "2020-07-07"
+        "student_id": studentId,
+        "str_date": strDate,
+        "end_date": endDate
       });
     StudentArchive data = StudentArchive.fromJson(response["data"]);
 
