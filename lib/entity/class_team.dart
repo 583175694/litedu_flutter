@@ -1,17 +1,25 @@
-import 'package:json_annotation/json_annotation.dart'; 
-  
+import 'package:json_annotation/json_annotation.dart';
+
 part 'class_team.g.dart';
 
 
-List<ClassTeam> getClassTeamList(List<dynamic> list){
-    List<ClassTeam> result = [];
-    list.forEach((item){
-      result.add(ClassTeam.fromJson(item));
-    });
-    return result;
-  }
 @JsonSerializable()
-  class ClassTeam extends Object {
+class ClassTeam extends Object {
+
+  @JsonKey(name: 'data')
+  List<Classes> data;
+
+  ClassTeam(this.data,);
+
+  factory ClassTeam.fromJson(Map<String, dynamic> srcJson) => _$ClassTeamFromJson(srcJson);
+
+  Map<String, dynamic> toJson() => _$ClassTeamToJson(this);
+
+}
+
+
+@JsonSerializable()
+class Classes extends Object {
 
   @JsonKey(name: 'id')
   int id;
@@ -49,11 +57,11 @@ List<ClassTeam> getClassTeamList(List<dynamic> list){
   @JsonKey(name: 'year_grade_name')
   String yearGradeName;
 
-  ClassTeam(this.id,this.yearGradeId,this.year,this.name,this.createdAt,this.updatedAt,this.schoolId,this.initialYearGradeId,this.bindId,this.teacherId,this.teacherType,this.yearGradeName,);
+  Classes(this.id,this.yearGradeId,this.year,this.name,this.createdAt,this.updatedAt,this.schoolId,this.initialYearGradeId,this.bindId,this.teacherId,this.teacherType,this.yearGradeName,);
 
-  factory ClassTeam.fromJson(Map<String, dynamic> srcJson) => _$ClassTeamFromJson(srcJson);
+  factory Classes.fromJson(Map<String, dynamic> srcJson) => _$ClassesFromJson(srcJson);
 
-  Map<String, dynamic> toJson() => _$ClassTeamToJson(this);
+  Map<String, dynamic> toJson() => _$ClassesToJson(this);
 
 }
 

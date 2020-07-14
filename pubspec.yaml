@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   json_annotation: 3.0.1
   dio: 3.0.9
+  flutter_custom_dialog: 1.0.4
 
 dev_dependencies:
   flutter_test:

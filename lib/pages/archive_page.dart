@@ -46,7 +46,10 @@ class ArchivePageState extends State<ArchivePage> {
       });
       return Future.value('done');
     });
+    //  请求学生档案
     mainModel.getStudentArchive();
+    //  请求学生课程
+    mainModel.getSchoolCourse();
   }
 
   @override

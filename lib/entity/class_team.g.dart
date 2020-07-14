@@ -8,6 +8,19 @@ part of 'class_team.dart';
 
 ClassTeam _$ClassTeamFromJson(Map<String, dynamic> json) {
   return ClassTeam(
+    (json['data'] as List)
+        ?.map((e) =>
+            e == null ? null : Classes.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+  );
+}
+
+Map<String, dynamic> _$ClassTeamToJson(ClassTeam instance) => <String, dynamic>{
+      'data': instance.data,
+    };
+
+Classes _$ClassesFromJson(Map<String, dynamic> json) {
+  return Classes(
     json['id'] as int,
     json['year_grade_id'] as int,
     json['year'] as int,
@@ -23,7 +36,7 @@ ClassTeam _$ClassTeamFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$ClassTeamToJson(ClassTeam instance) => <String, dynamic>{
+Map<String, dynamic> _$ClassesToJson(Classes instance) => <String, dynamic>{
       'id': instance.id,
       'year_grade_id': instance.yearGradeId,
       'year': instance.year,

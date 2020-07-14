@@ -1,3 +1,4 @@
+import 'package:flutter_module/entity/school_course.dart';
 import 'package:flutter_module/entity/student_archive.dart';
 /**
  * @ClassName student_model
@@ -15,6 +16,15 @@ import 'package:scoped_model/scoped_model.dart';
 class StudentModel extends Model {
   StudentArchive _studentArchive;
   StudentEvaluation _studentEvaluation;
+  SchoolCourse _schoolCourse;
+
+
+  SchoolCourse get schoolCourse => _schoolCourse;
+
+  set schoolCourse(SchoolCourse value) {
+    _schoolCourse = value;
+    notifyListeners();
+  }
 
   StudentArchive get studentArchive => _studentArchive;
 

@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:flutter_module/entity/class_team.dart';
+import 'package:flutter_module/entity/school_course.dart';
 import 'package:flutter_module/entity/student_archive.dart';
 import 'package:flutter_module/entity/student_evaluation.dart';
 import 'package:flutter_module/main.dart';
@@ -58,6 +60,7 @@ class MainModel extends Model with CalendarModel, StudentModel, SchoolModel {
       method: HttpUtils.PATCH,
       headers: HEADER,
       data: {
+        "drafts": [],
         "content": content,
         "attribute_labels": attributeLabels,
         "question_scores": questionScores
@@ -66,21 +69,25 @@ class MainModel extends Model with CalendarModel, StudentModel, SchoolModel {
   }
 
   //  获取班级
-  getClassTeam() async {
+  Future getClassTeam() async {
     var response = await HttpUtils.request(
         '/api/frontend/classTeam/index/',
         method: HttpUtils.GET,
         headers: HEADER
     );
 
-    mainModel.classTeam = response["data"];
+    ClassTeam data = ClassTeam.fromJson(response);
+
+    mainModel.classTeam = data.data;
+
+    return data;
   }
 
   //  获取课程
   getSchoolCourseSchedules() async {
     String endDate = '${mainModel.currentDateModel.year}-${mainModel.currentDateModel.month}-${mainModel.currentDateModel.day}';
     String startDate = '${mainModel.currentDateModel.year}-${mainModel.currentDateModel.month}-${mainModel.currentDateModel.day}';
-    int id = mainModel.classTeam[0]["id"];
+    int id = mainModel.classTeam[0].id;
     var response = await HttpUtils.request(
         '/api/frontend/classTeam/schoolCourseSchedules?end_date=${endDate}&id=${id}&start_date=${startDate}',
         method: HttpUtils.GET,
@@ -101,30 +108,46 @@ class MainModel extends Model with CalendarModel, StudentModel, SchoolModel {
       data: {
         "end_date": date,
         "start_date": date,
-        "class_team_id": mainModel.classTeam[0]["id"],
+        "class_team_id": mainModel.classTeam[0].id,
         "course_schedules": courseList
       });
+  }
+
+  //  孩子课程
+  getSchoolCourse() async {
+    String endDate = '2020-11-11';
+    String startDate = '2019-01-01';
+    int id = 70;
+    var response = await HttpUtils.request(
+        '/papi/api/frontend/semester/school_course?end_date=${endDate}&student_id=${id}&str_date=${startDate}',
+        method: HttpUtils.GET,
+        headers: HEADER
+    );
+
+    SchoolCourse data = SchoolCourse.fromJson(response);
+
+    mainModel.schoolCourse = data;
   }
 
 
   //  初始化请求
   void initializeRequest() async {
     Common common = new Common();
-    //  请求班级
-    await mainModel.getClassTeam();
-
     //  请求课程
     await mainModel.getSchoolCourseSchedules();
+
+    List titleItems = new List(11);
+
+    if (mainModel.schoolCourseSchedules.isEmpty) {
+      mainModel.currentCourse = titleItems;
+      return;
+    }
 
     //  判断有第几节课
     List<dynamic> schedules = mainModel.schoolCourseSchedules[0]["school_course_schedules"];
 
-    List titleItems = new List(11);
 
-    if (schedules.isEmpty) {
-      mainModel.currentCourse = titleItems;
-      return;
-    }
+
 
     List courseList = new List();
     schedules.forEach((res) {

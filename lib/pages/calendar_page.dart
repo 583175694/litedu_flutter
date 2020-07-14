@@ -85,7 +85,11 @@ class CalendarPageState extends State<CalendarPage> {
       }
     });
 
-    mainModel.initializeRequest();  //  初始化请求
+    //  请求班级
+    mainModel.getClassTeam().then((res) {
+      //  初始化请求
+      mainModel.initializeRequest();
+    });
   }
 
   // Dialog方式

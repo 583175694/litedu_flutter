@@ -4,15 +4,22 @@
  * @Date 2019-12-14
  **/
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_dialog/components/bean/dialog_gravity.dart';
+import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
+import 'package:flutter_module/components/alert_dialog.dart';
 import 'package:flutter_module/components/expansion_tile.dart';
 import 'package:flutter_module/components/screen_fit.dart';
+import 'package:flutter_module/components/student_course.dart';
+import 'package:flutter_module/entity/school_course.dart';
+import 'package:flutter_module/model/main_model.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class Item {
   Item({
-         this.expandedValue,
-         this.headerValue,
-         this.isExpanded = false,
-       });
+     this.expandedValue,
+     this.headerValue,
+     this.isExpanded = false,
+   });
 
   String expandedValue;
   String headerValue;
@@ -34,29 +41,39 @@ class EvaluationReportPage extends StatefulWidget {
 }
 
 class EvaluationReportPageState extends State<EvaluationReportPage> {
-  List<Item> _data = generateItems(8);
+  TextStyle fontTitle = TextStyle(fontSize: ScreenUtil().setSp(40), color: Colors.white);
+
+  TextStyle nameFont = TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(32));
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil(width: 750, height: 1624)
-      ..init(context);
-    TextStyle fontTitle = TextStyle(fontSize: ScreenUtil().setSp(40), color: Colors.white);
+    final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
+
+    YYDialog.init(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('2019下学期', style: fontTitle),
-            Container(
-              child: Image.asset('lib/assets/icon_updown.png',
-                width: ScreenUtil().setWidth(16),
-                height: ScreenUtil().setWidth(32),
-                fit: BoxFit.contain,
-              ),
-              margin: EdgeInsets.only(left: ScreenUtil().setWidth(26)),
-            )
-          ],
+        title: GestureDetector(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('2019下学期', style: fontTitle),
+              Container(
+                child: Image.asset('lib/assets/icon_updown.png',
+                  width: ScreenUtil().setWidth(16),
+                  height: ScreenUtil().setWidth(32),
+                  fit: BoxFit.contain,
+                ),
+                margin: EdgeInsets.only(left: ScreenUtil().setWidth(26)),
+              )
+            ],
+          ),
+          onTap: () {
+            YYAlertDialogWithGravity(
+              gravity: Gravity.top,
+              width: MediaQuery.of(context).size.width,
+            );
+          },
         ),
         backgroundColor: Color(0xff29D9D6),
         elevation: 0,
@@ -159,32 +176,15 @@ class EvaluationReportPageState extends State<EvaluationReportPage> {
     );
   }
 
-  Widget _buildPanel() {
-    return ExpansionPanelList(
-      expansionCallback: (int index, bool isExpanded) {
-        setState(() {
-          _data[index].isExpanded = !isExpanded;
-        });
-      },
-      children: _data.map<ExpansionPanel>((Item item) {
-        return ExpansionPanel(
-          headerBuilder: (BuildContext context, bool isExpanded) {
-            return ListTile(
-              title: Text(item.headerValue),
-            );
-          },
-          body: ListTile(
-              title: Text(item.expandedValue),
-              subtitle: Text('To delete this panel, tap the trash can icon '),
-              trailing: Icon(Icons.delete),
-              onTap: () {
-                setState(() {
-                  _data.removeWhere((currentItem) => item == currentItem);
-                });
-              }),
-          isExpanded: item.isExpanded,
-        );
-      }).toList(),
-    );
+  YYDialog YYAlertDialogWithGravity({width, gravity, doubleButtonGravity, schoolCourse}) {
+    return YYDialog().build()
+      ..gravity = gravity
+      ..gravityAnimationEnable = true
+      ..borderRadius = 8.0
+      ..height = ScreenUtil().setHeight(1000)
+      ..widget(
+          StudentCourse()
+      )
+      ..show();
   }
 }

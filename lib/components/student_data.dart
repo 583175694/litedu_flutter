@@ -52,7 +52,7 @@ class StudentDataState extends State<StudentData> {
           ),
           Positioned(
             top: ScreenUtil().setWidth(142),
-            left: ScreenUtil().setWidth(36),
+            left: ScreenUtil().setWidth(24),
             child: RichText(
               text: TextSpan(
                 text: '体重：',

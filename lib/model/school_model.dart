@@ -1,3 +1,4 @@
+import 'package:flutter_module/entity/class_team.dart';
 /**
  * @ClassName school_model
  * @Author wushaohang
@@ -7,7 +8,14 @@ import 'package:scoped_model/scoped_model.dart';
 
 class SchoolModel extends Model {
   List<dynamic> _schoolCourseSchedules;
-  List<dynamic> _classTeam;
+  List<Classes> _classTeam;
+
+  List<Classes> get classTeam => _classTeam;
+
+  set classTeam(List<Classes> value) {
+    _classTeam = value;
+  }
+
   List _currentCourse;
 
   List get currentCourse => _currentCourse;
@@ -24,10 +32,4 @@ class SchoolModel extends Model {
     notifyListeners();
   }
 
-  List<dynamic> get classTeam => _classTeam;
-
-  set classTeam(List<dynamic> value) {
-    _classTeam = value;
-    notifyListeners();
-  }
 }
