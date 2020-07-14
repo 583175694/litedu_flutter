@@ -9,6 +9,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'dart:async';
 
+import 'package:flutter_boost/flutter_boost.dart';
+
 /*
  * 封装 restful 请求
  *
@@ -41,7 +43,8 @@ class HttpUtils {
   static Future<Map> request (
       String url,
       { data, method, headers }) async {
-
+    
+    var _headers = await FlutterBoost.singleton.channel.invokeMethod("app/getRequestHeader");
     data = data ?? {};
     method = method ?? 'GET';
     headers = headers ?? {};
