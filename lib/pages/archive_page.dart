@@ -148,22 +148,27 @@ class ArchivePageState extends State<ArchivePage> {
             margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
           ),
           //  注意事项
-          Container(
-            child: Stack(
-              children: <Widget>[
-                title('注意事项'),
-                Center(
-                  child: Container(
-                    padding: EdgeInsets.only(bottom: ScreenUtil().setWidth(56), top: ScreenUtil().setWidth(64)),
-                    width: ScreenUtil().setWidth(622),
-                    child: Text(studentArchive.basics.attentionMatters, style: TextStyle(fontSize: ScreenUtil().setSp(32), color: Color(0xffB6BCC9))),
-                    margin: EdgeInsets.only(top: ScreenUtil().setWidth(66)),
+          GestureDetector(
+            child: Container(
+              child: Stack(
+                children: <Widget>[
+                  title('注意事项'),
+                  Center(
+                    child: Container(
+                      padding: EdgeInsets.only(bottom: ScreenUtil().setWidth(56), top: ScreenUtil().setWidth(64)),
+                      width: ScreenUtil().setWidth(622),
+                      child: Text(studentArchive.basics.attentionMatters, style: TextStyle(fontSize: ScreenUtil().setSp(32), color: Color(0xffB6BCC9))),
+                      margin: EdgeInsets.only(top: ScreenUtil().setWidth(66)),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
+              color: Colors.white,
+              margin: EdgeInsets.only(top: ScreenUtil().setHeight(20), bottom: ScreenUtil().setHeight(120)),
             ),
-            color: Colors.white,
-            margin: EdgeInsets.only(top: ScreenUtil().setHeight(20), bottom: ScreenUtil().setHeight(120)),
+            onTap: () {
+              FlutterBoost.singleton.channel.invokeMethod('archivePage/routeStudentAttentions');
+            },
           ),
         ],
       ),
