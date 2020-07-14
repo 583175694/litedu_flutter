@@ -23,6 +23,9 @@ class ArchivePage extends StatefulWidget {
 }
 
 class ArchivePageState extends State<ArchivePage> {
+  String studentId;
+  String strDate;
+  String endDate;
 
   //  学生档案
   StudentArchive studentArchive;
@@ -38,7 +41,17 @@ class ArchivePageState extends State<ArchivePage> {
   @override
   void initState() {
     super.initState();
-    mainModel.getStudentArchive();
+    FlutterBoost.singleton.channel.addMethodHandler((handler) {
+      if (handler.method == 'archivePage/reloadData') {
+        setState(() {
+          this.studentId = handler.arguments['studentId'];
+          this.strDate = handler.arguments['strDate'];
+          this.endDate = handler.arguments['endDate'];
+        });
+        mainModel.getStudentArchive(handler.arguments['studentId'], handler.arguments['strDate'], handler.arguments['endDate']);
+      } 
+      return Future.value('done');
+    });
   }
 
   @override
@@ -143,7 +156,7 @@ class ArchivePageState extends State<ArchivePage> {
                   child: Container(
                     padding: EdgeInsets.only(bottom: ScreenUtil().setWidth(56), top: ScreenUtil().setWidth(64)),
                     width: ScreenUtil().setWidth(622),
-                    child: Text('丁丁吃海鲜会过敏哟，老师们要注意哟～', style: TextStyle(fontSize: ScreenUtil().setSp(32), color: Color(0xffB6BCC9))),
+                    child: Text(studentArchive.basics.attentionMatters, style: TextStyle(fontSize: ScreenUtil().setSp(32), color: Color(0xffB6BCC9))),
                     margin: EdgeInsets.only(top: ScreenUtil().setWidth(66)),
                   ),
                 ),

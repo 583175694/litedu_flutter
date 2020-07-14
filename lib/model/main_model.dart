@@ -24,15 +24,15 @@ class MainModel extends Model with CalendarModel, StudentModel, SchoolModel {
   };
 
   //  学生档案详情
-  getStudentArchive() async {
+  getStudentArchive(String studentId, [String strDate, String endDate]) async {
     var response = await HttpUtils.request(
       '/papi/api/frontend/student_archive/',
       method: HttpUtils.POST,
       headers: HEADER,
       data: {
-        "student_id": 72,
-        "str_date": "2020-06-01",
-        "end_date": "2020-07-07"
+        "student_id": studentId,
+        "str_date": strDate,
+        "end_date": endDate
       });
     StudentArchive data = StudentArchive.fromJson(response["data"]);
 
