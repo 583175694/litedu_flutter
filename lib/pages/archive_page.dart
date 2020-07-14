@@ -55,18 +55,23 @@ class ArchivePageState extends State<ArchivePage> {
       body: ListView(
         children: <Widget>[
           //  学生数据
-          Container(
-            height: ScreenUtil().setWidth(560),
-            child: Stack(
-              children: <Widget>[
-                title('学生数据'),
-                Positioned(
-                  child: StudentData(),
-                  top: ScreenUtil().setWidth(152),
-                ),
-              ],
+          GestureDetector(
+            child: Container(
+              height: ScreenUtil().setWidth(560),
+              child: Stack(
+                children: <Widget>[
+                  title('学生数据'),
+                  Positioned(
+                    child: StudentData(),
+                    top: ScreenUtil().setWidth(152),
+                  ),
+                ],
+              ),
+              color: Colors.white,
             ),
-            color: Colors.white,
+            onTap: () {
+              FlutterBoost.singleton.channel.invokeMethod('archivePage/routeStudentData');
+            },
           ),
           //  学生评估
           GestureDetector(

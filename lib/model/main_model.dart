@@ -30,7 +30,7 @@ class MainModel extends Model with CalendarModel, StudentModel, SchoolModel {
       method: HttpUtils.POST,
       headers: HEADER,
       data: {
-        "student_id": 70,
+        "student_id": 72,
         "str_date": "2020-06-01",
         "end_date": "2020-07-07"
       });
