@@ -4,7 +4,6 @@
  * @Date 2020-06-04
  **/
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/components/student_assessment.dart';
@@ -132,7 +131,7 @@ class ArchivePageState extends State<ArchivePage> {
               margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
             ),
             onTap: () {
-              Navigator.pushNamed(context, 'evaluation_report_page');
+              FlutterBoost.singleton.channel.invokeMethod('archivePage/routeEvaluationReport');
             },
           ),
           //  学生考勤
