@@ -6,7 +6,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_dialog/components/bean/dialog_gravity.dart';
 import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
-import 'package:flutter_module/components/alert_dialog.dart';
 import 'package:flutter_module/components/expansion_tile.dart';
 import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/components/student_course.dart';
@@ -176,7 +175,8 @@ class EvaluationReportPageState extends State<EvaluationReportPage> {
     );
   }
 
-  YYDialog YYAlertDialogWithGravity({width, gravity, doubleButtonGravity, schoolCourse}) {
+  //  弹框
+  YYDialog YYAlertDialogWithGravity({width, gravity, doubleButtonGravity}) {
     return YYDialog().build()
       ..gravity = gravity
       ..gravityAnimationEnable = true

@@ -45,6 +45,7 @@ class HttpUtils {
       { data, method, headers }) async {
     
     var _headers = await FlutterBoost.singleton.channel.invokeMethod("app/getRequestHeader");
+    print(_headers);
     data = data ?? {};
     method = method ?? 'GET';
     headers = headers ?? {};
