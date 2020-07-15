@@ -158,7 +158,7 @@ class ArchivePageState extends State<ArchivePage> {
                     child: Container(
                       padding: EdgeInsets.only(bottom: ScreenUtil().setWidth(56), top: ScreenUtil().setWidth(64)),
                       width: ScreenUtil().setWidth(622),
-                      child: Text(studentArchive == null ? '' : studentArchive.basics.attentionMatters, style: TextStyle(fontSize: ScreenUtil().setSp(32), color: Color(0xffB6BCC9))),
+                      child: Text(studentArchive == null ? '' : studentArchive?.basics?.attentionMatters, style: TextStyle(fontSize: ScreenUtil().setSp(32), color: Color(0xffB6BCC9))),
                       margin: EdgeInsets.only(top: ScreenUtil().setWidth(66)),
                     ),
                   ),

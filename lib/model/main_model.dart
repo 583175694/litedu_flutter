@@ -147,9 +147,6 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
     //  判断有第几节课
     List<dynamic> schedules = mainModel.schoolCourseSchedules[0]["school_course_schedules"];
 
-
-
-
     List courseList = new List();
     schedules.forEach((res) {
       courseList.add(common.getDuration(res["start_time"]));

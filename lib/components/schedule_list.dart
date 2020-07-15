@@ -203,7 +203,10 @@ class ScheduleListState extends State<ScheduleList> {
                       child: Text(timeItems[i]["class"], style: courseFont),
                       margin: EdgeInsets.only(left: 12, right: 6),
                     ),
-                    Text(titleItems[i] == null ? '' : "-  ${titleItems[i]['name']}", style: courseFont),
+                    Container(
+                      width: ScreenUtil().setWidth(320),
+                      child: Text(titleItems[i] == null ? '' : "-  ${titleItems[i]['name']}", style: courseFont, softWrap: false, overflow: TextOverflow.ellipsis,)
+                    ),
                   ],
                 ),
                 i == 5 ? Container() : GestureDetector(
