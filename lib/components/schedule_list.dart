@@ -117,7 +117,6 @@ class ScheduleListState extends State<ScheduleList> {
       );
 
       for (int i = 0; i < titleItems.length; i++) {
-
         //  可拖动列表
         if (!isLunchBreak(i) && titleItems[i] != null) {
           tiles.add(
@@ -209,22 +208,6 @@ class ScheduleListState extends State<ScheduleList> {
                     ),
                   ],
                 ),
-                i == 5 ? Container() : GestureDetector(
-                  child: Container(
-                    width: ScreenUtil().setWidth(128),
-                    height: ScreenUtil().setWidth(56),
-                    alignment: Alignment.centerRight,
-                    child: Center(
-                      child: Text('评估', style: evaluateFont),
-                    ),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(14)),
-                        color: Colors.white
-                    ),
-                    margin: EdgeInsets.only(right: 8),
-                  ),
-                  onTap: () => toEvaluation(titleItems[i]["id"]),
-                )
               ],
             ),
             Row(
@@ -253,72 +236,131 @@ class ScheduleListState extends State<ScheduleList> {
 
   //  午休和没课情况
   Widget lunchBreakItem(int i) {
-    return DragTarget(  //  可放置的地方
-      builder: (context, candidateData, rejectedData) {
-        return Container(
-          child: Row(
-            children: <Widget>[
-              Container(
-                width: ScreenUtil().setWidth(124),
-                child: Column(
-                  children: <Widget>[
-                    Text(timeItems[i]["class"], style: timeFont),
-                    Text(timeItems[i]["time"], style: timeFont)
-                  ],
-                ),
+    if (i > 4 && i < 7) {
+      return Container(
+        child: Row(
+          children: <Widget>[
+            Container(
+              width: ScreenUtil().setWidth(124),
+              child: Column(
+                children: <Widget>[
+                  Text(timeItems[i]["class"], style: timeFont),
+                  Text(timeItems[i]["time"], style: timeFont)
+                ],
               ),
-              Container(
-                width: ScreenUtil().setWidth(626),
-                height: ScreenUtil().setWidth(138),
-                padding: EdgeInsets.only(top: i == 5 ? 20 : 0),
-                margin: EdgeInsets.only(top: i == 5 ? 6 : 0, bottom: i == 6 ? 6 : 0),
-                child: i == 6 ? Container() : Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Container(
-                          child: Text(timeItems[i]["class"], style: courseFont),
-                          margin: EdgeInsets.only(left: 12, right: 6),
+            ),
+            Container(
+              width: ScreenUtil().setWidth(626),
+              height: ScreenUtil().setWidth(138),
+              padding: EdgeInsets.only(top: i == 5 ? 20 : 0),
+              margin: EdgeInsets.only(top: i == 5 ? 6 : 0, bottom: i == 6 ? 6 : 0),
+              child: i == 6 ? Container() : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        child: Text(timeItems[i]["class"], style: courseFont),
+                        margin: EdgeInsets.only(left: 12, right: 6),
+                      ),
+                      Text("无课程", style: courseFont),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        width: 4,
+                        height: 4,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                            color: Color(0xffB6BCC9)
                         ),
-                        Text("无课程", style: courseFont),
-                      ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Container(
-                          width: 4,
-                          height: 4,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(4)),
-                              color: Color(0xffB6BCC9)
+                        margin: EdgeInsets.only(left: 12, right: 6),
+                      ),
+                      Text(timeItems[i]["interval"], style: courseFont),
+                    ],
+                  ),
+                ],
+              ),
+              decoration: BoxDecoration(
+                  color: Color(0xffF0F2F4),
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(i == 6 ? 0 : 10), bottomLeft: Radius.circular(i == 5 ? 0 :10))
+              ),
+            )
+          ],
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
+      );
+    } else {
+      return DragTarget(  //  可放置的地方
+        builder: (context, candidateData, rejectedData) {
+          return Container(
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: ScreenUtil().setWidth(124),
+                  child: Column(
+                    children: <Widget>[
+                      Text(timeItems[i]["class"], style: timeFont),
+                      Text(timeItems[i]["time"], style: timeFont)
+                    ],
+                  ),
+                ),
+                Container(
+                  width: ScreenUtil().setWidth(626),
+                  height: ScreenUtil().setWidth(138),
+                  padding: EdgeInsets.only(top: i == 5 ? 20 : 0),
+                  margin: EdgeInsets.only(top: i == 5 ? 6 : 0, bottom: i == 6 ? 6 : 0),
+                  child: i == 6 ? Container() : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Container(
+                            child: Text(timeItems[i]["class"], style: courseFont),
+                            margin: EdgeInsets.only(left: 12, right: 6),
                           ),
-                          margin: EdgeInsets.only(left: 12, right: 6),
-                        ),
-                        Text(timeItems[i]["interval"], style: courseFont),
-                      ],
-                    ),
-                  ],
-                ),
-                decoration: BoxDecoration(
-                    color: Color(0xffF0F2F4),
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(i == 6 ? 0 : 10), bottomLeft: Radius.circular(i == 5 ? 0 :10))
-                ),
-              )
-            ],
-          ),
-          decoration: BoxDecoration(
-            color: Colors.white,
-          ),
-        );
-      },
-      onWillAccept: (data) {
-        willAcceptIndex = i;
-        setState(() { });
-        return true;
-      },
-      onAccept: (data) => exchangeCourse(i),
-    );
+                          Text("无课程", style: courseFont),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Container(
+                            width: 4,
+                            height: 4,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(4)),
+                                color: Color(0xffB6BCC9)
+                            ),
+                            margin: EdgeInsets.only(left: 12, right: 6),
+                          ),
+                          Text(timeItems[i]["interval"], style: courseFont),
+                        ],
+                      ),
+                    ],
+                  ),
+                  decoration: BoxDecoration(
+                      color: Color(0xffF0F2F4),
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(i == 6 ? 0 : 10), bottomLeft: Radius.circular(i == 5 ? 0 :10))
+                  ),
+                )
+              ],
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+          );
+        },
+        onWillAccept: (data) {
+          willAcceptIndex = i;
+          setState(() { });
+          return true;
+        },
+        onAccept: (data) => exchangeCourse(i),
+      );
+    }
   }
 
   //  调课
@@ -355,11 +397,5 @@ class ScheduleListState extends State<ScheduleList> {
 
     print(courseList);
     mainModel.reschedule(courseList);
-  }
-
-  //  跳转到评价列表
-  void toEvaluation(int id) {
-    mainModel.getStudentEvaluation(id);
-    Navigator.pushNamed(context, "assessment_page");
   }
 }

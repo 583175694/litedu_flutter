@@ -157,7 +157,7 @@ class _DropdownListState extends State<DropdownList> {
               ),
             );
           },
-          body: evaluateSeven(item),
+          body: item.evaluationType == 'six' ? evaluateSix(item) : evaluateSeven(item),
           isExpanded: expandStateList[i].isOpen, // 设置面板的状态，true展开，false折叠
         ),
       );

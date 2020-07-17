@@ -31,7 +31,7 @@ class StudentAttendanceState extends State<StudentAttendance> {
   Widget build(BuildContext context) {
     final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
 
-    attendances = mainModel.studentArchive == null ? null : mainModel.studentArchive.attendances;
+    attendances = mainModel.studentArchive == null ? Attendances(0, 0, 0, 0) : mainModel.studentArchive.attendances;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,

@@ -34,12 +34,12 @@ class PieChart extends StatelessWidget {
   }
 
   static List<charts.Series<LinearSales, int>> _createSampleData() {
-    attendances = mainModel.studentArchive == null ? null : mainModel.studentArchive.attendances;
+    attendances = mainModel.studentArchive == null ? Attendances(0, 0, 0, 0) : mainModel.studentArchive.attendances;
 
     final data = [
-      new LinearSales(0, attendances.presence == 0 ? 1 : attendances.presence),
-      new LinearSales(1, attendances.leave),
-      new LinearSales(2, attendances.absence),
+      new LinearSales(0, attendances?.presence == 0 ? 1 : attendances?.presence),
+      new LinearSales(1, attendances?.leave),
+      new LinearSales(2, attendances?.absence),
     ];
 
     final List<Color> colors = [

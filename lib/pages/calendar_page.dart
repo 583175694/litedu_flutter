@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_module/components/custom_style.dart';
 import 'package:flutter_module/components/date_choice_model.dart';
 import 'package:flutter_module/components/grade_choice_model.dart';
+import 'package:flutter_module/components/schedule_calendar.dart';
 import 'package:flutter_module/components/schedule_list.dart';
 import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/main.dart';
@@ -119,22 +120,24 @@ class CalendarPageState extends State<CalendarPage> {
                   child: mainModel.isEdit ? Text('取消', style: TextStyle(fontSize: ScreenUtil().setSp(28), color: Color(0xff6D7993))) : Image.asset('lib/assets/icon_list.png', width: ScreenUtil().setWidth(48),),
                 ),
                 onTap: () {
+                  currentView = 'month';
                   isEdit = !isEdit;
                   mainModel.isEdit = isEdit;
                   setState(() { });
                 },
               ),
               Text('课程安排', style: TextStyle(color: Color(0xff6D7993), fontSize: 20),),
-              GestureDetector(
-                child: Container(
-                  width: ScreenUtil().setWidth(48),
-                  height: ScreenUtil().setWidth(48),
-                  child: Image.asset('lib/assets/icon_setting.png'),
-                ),
-                onTap: () {
-                  mainModel.isEdit ? _navigateDialog() : _selectClass();
-                },
-              ),
+              Container()
+//              GestureDetector(
+//                child: Container(
+//                  width: ScreenUtil().setWidth(48),
+//                  height: ScreenUtil().setWidth(48),
+//                  child: Image.asset('lib/assets/icon_setting.png'),
+//                ),
+//                onTap: () {
+//                  mainModel.isEdit ? _navigateDialog() : _selectClass();
+//                },
+//              ),
             ],
           ),
           backgroundColor: Colors.white,
@@ -150,7 +153,7 @@ class CalendarPageState extends State<CalendarPage> {
               controller: _scrollController,
               slivers: <Widget>[
                 buildSliverAppBar(),
-                ScheduleList(selectText: selectText)
+                ScheduleCalendar(selectText: selectText)
               ],
             ),
           ],
