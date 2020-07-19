@@ -5,7 +5,11 @@
  **/
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/screen_fit.dart';
+import 'package:flutter_module/entity/student_archive.dart';
+import 'package:flutter_module/model/main_model.dart';
+import 'package:scoped_model/scoped_model.dart';
 
+import '../main.dart';
 import 'bar_chart.dart';
 
 class BarChart extends StatefulWidget {
@@ -15,8 +19,11 @@ class BarChart extends StatefulWidget {
 
 class BarChartState extends State<BarChart> {
   List<String> iconStar = ["lib/assets/icon_star3.png", "lib/assets/icon_star2.png", "lib/assets/icon_star1.png"];
+
   @override
   Widget build(BuildContext context) {
+    final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -67,6 +74,21 @@ class MyPainter extends CustomPainter {
     double eHeight = size.height / 6;
     double bWidth = size.width / 7;
 
+    Qi_skills qiSkills;
+    List<int> qiSkillsList = new List();
+
+    if (mainModel.studentArchive == null) {
+      qiSkills = null;
+    } else {
+      qiSkills = mainModel.studentArchive.qiSkills;
+      qiSkillsList.addAll([
+        qiSkills.qiAbility1, qiSkills.qiAbility2,
+        qiSkills.qiAbility3, qiSkills.qiAbility4,
+        qiSkills.qiAbility5, qiSkills.qiAbility6,
+        qiSkills.qiAbility7
+      ]);
+    }
+
     //画棋盘背景
     var paint = new Paint();
 
@@ -93,12 +115,12 @@ class MyPainter extends CustomPainter {
     double borderSide = ScreenUtil().setWidth(20);
 
     //  画柱状图
-    for (int i = 0; i < 7; ++i) {
+    for (int i = 0; i < qiSkillsList.length; ++i) {
       var rrect = RRect.fromLTRBAndCorners(
           point(i).dx - borderSide / 2.0, //  left
           size.height,  //  top
           point(i).dx + borderSide / 2.0,  //  right
-          point(i).dy,  //  bottom
+          150.0 - ((qiSkillsList[i] > 10 ? 10 : qiSkillsList[i]) * 15),  //  bottom
           topLeft: Radius.circular(64.0),
           topRight: Radius.circular(64.0),
           bottomRight: Radius.circular(0),

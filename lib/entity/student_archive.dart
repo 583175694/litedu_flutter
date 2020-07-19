@@ -94,7 +94,7 @@ class Ability_test1 extends Object {
   int maxScore;
 
   @JsonKey(name: 'percent')
-  int percent;
+  double percent;
 
   Ability_test1(this.score,this.maxScore,this.percent,);
 
@@ -115,7 +115,7 @@ class Ability_test2 extends Object {
   int maxScore;
 
   @JsonKey(name: 'percent')
-  int percent;
+  double percent;
 
   Ability_test2(this.score,this.maxScore,this.percent,);
 
@@ -136,7 +136,7 @@ class Ability_test3 extends Object {
   int maxScore;
 
   @JsonKey(name: 'percent')
-  int percent;
+  double percent;
 
   Ability_test3(this.score,this.maxScore,this.percent,);
 
@@ -157,7 +157,7 @@ class Ability_test4 extends Object {
   int maxScore;
 
   @JsonKey(name: 'percent')
-  int percent;
+  double percent;
 
   Ability_test4(this.score,this.maxScore,this.percent,);
 
@@ -178,7 +178,7 @@ class Ability_test5 extends Object {
   int maxScore;
 
   @JsonKey(name: 'percent')
-  int percent;
+  double percent;
 
   Ability_test5(this.score,this.maxScore,this.percent,);
 
@@ -199,7 +199,7 @@ class Ability_test6 extends Object {
   int maxScore;
 
   @JsonKey(name: 'percent')
-  int percent;
+  double percent;
 
   Ability_test6(this.score,this.maxScore,this.percent,);
 
@@ -213,179 +213,32 @@ class Ability_test6 extends Object {
 @JsonSerializable()
 class Qi_skills extends Object {
 
-  @JsonKey(name: 'skill_1')
-  Skill_1 skill1;
+  @JsonKey(name: 'qi_ability1')
+  int qiAbility1;
 
-  @JsonKey(name: 'skill_2')
-  Skill_2 skill2;
+  @JsonKey(name: 'qi_ability2')
+  int qiAbility2;
 
-  @JsonKey(name: 'skill_3')
-  Skill_3 skill3;
+  @JsonKey(name: 'qi_ability3')
+  int qiAbility3;
 
-  @JsonKey(name: 'skill_4')
-  Skill_4 skill4;
+  @JsonKey(name: 'qi_ability4')
+  int qiAbility4;
 
-  @JsonKey(name: 'skill_5')
-  Skill_5 skill5;
+  @JsonKey(name: 'qi_ability5')
+  int qiAbility5;
 
-  @JsonKey(name: 'skill_6')
-  Skill_6 skill6;
+  @JsonKey(name: 'qi_ability6')
+  int qiAbility6;
 
-  @JsonKey(name: 'skill_7')
-  Skill_7 skill7;
+  @JsonKey(name: 'qi_ability7')
+  int qiAbility7;
 
-  Qi_skills(this.skill1,this.skill2,this.skill3,this.skill4,this.skill5,this.skill6,this.skill7,);
+  Qi_skills(this.qiAbility1,this.qiAbility2,this.qiAbility3,this.qiAbility4,this.qiAbility5,this.qiAbility6,this.qiAbility7,);
 
   factory Qi_skills.fromJson(Map<String, dynamic> srcJson) => _$Qi_skillsFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$Qi_skillsToJson(this);
-
-}
-
-
-@JsonSerializable()
-class Skill_1 extends Object {
-
-  @JsonKey(name: 'score')
-  int score;
-
-  @JsonKey(name: 'max_score')
-  int maxScore;
-
-  @JsonKey(name: 'percent')
-  int percent;
-
-  Skill_1(this.score,this.maxScore,this.percent,);
-
-  factory Skill_1.fromJson(Map<String, dynamic> srcJson) => _$Skill_1FromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$Skill_1ToJson(this);
-
-}
-
-
-@JsonSerializable()
-class Skill_2 extends Object {
-
-  @JsonKey(name: 'score')
-  int score;
-
-  @JsonKey(name: 'max_score')
-  int maxScore;
-
-  @JsonKey(name: 'percent')
-  int percent;
-
-  Skill_2(this.score,this.maxScore,this.percent,);
-
-  factory Skill_2.fromJson(Map<String, dynamic> srcJson) => _$Skill_2FromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$Skill_2ToJson(this);
-
-}
-
-
-@JsonSerializable()
-class Skill_3 extends Object {
-
-  @JsonKey(name: 'score')
-  int score;
-
-  @JsonKey(name: 'max_score')
-  int maxScore;
-
-  @JsonKey(name: 'percent')
-  int percent;
-
-  Skill_3(this.score,this.maxScore,this.percent,);
-
-  factory Skill_3.fromJson(Map<String, dynamic> srcJson) => _$Skill_3FromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$Skill_3ToJson(this);
-
-}
-
-
-@JsonSerializable()
-class Skill_4 extends Object {
-
-  @JsonKey(name: 'score')
-  int score;
-
-  @JsonKey(name: 'max_score')
-  int maxScore;
-
-  @JsonKey(name: 'percent')
-  int percent;
-
-  Skill_4(this.score,this.maxScore,this.percent,);
-
-  factory Skill_4.fromJson(Map<String, dynamic> srcJson) => _$Skill_4FromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$Skill_4ToJson(this);
-
-}
-
-
-@JsonSerializable()
-class Skill_5 extends Object {
-
-  @JsonKey(name: 'score')
-  int score;
-
-  @JsonKey(name: 'max_score')
-  int maxScore;
-
-  @JsonKey(name: 'percent')
-  int percent;
-
-  Skill_5(this.score,this.maxScore,this.percent,);
-
-  factory Skill_5.fromJson(Map<String, dynamic> srcJson) => _$Skill_5FromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$Skill_5ToJson(this);
-
-}
-
-
-@JsonSerializable()
-class Skill_6 extends Object {
-
-  @JsonKey(name: 'score')
-  int score;
-
-  @JsonKey(name: 'max_score')
-  int maxScore;
-
-  @JsonKey(name: 'percent')
-  int percent;
-
-  Skill_6(this.score,this.maxScore,this.percent,);
-
-  factory Skill_6.fromJson(Map<String, dynamic> srcJson) => _$Skill_6FromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$Skill_6ToJson(this);
-
-}
-
-
-@JsonSerializable()
-class Skill_7 extends Object {
-
-  @JsonKey(name: 'score')
-  int score;
-
-  @JsonKey(name: 'max_score')
-  int maxScore;
-
-  @JsonKey(name: 'percent')
-  int percent;
-
-  Skill_7(this.score,this.maxScore,this.percent,);
-
-  factory Skill_7.fromJson(Map<String, dynamic> srcJson) => _$Skill_7FromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$Skill_7ToJson(this);
 
 }
 

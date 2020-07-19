@@ -8,10 +8,11 @@ import 'package:flutter_custom_dialog/components/bean/dialog_gravity.dart';
 import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
 import 'package:flutter_module/components/expansion_tile.dart';
 import 'package:flutter_module/components/screen_fit.dart';
-import 'package:flutter_module/components/student_course.dart';
-import 'package:flutter_module/entity/school_course.dart';
+import 'package:flutter_module/components/student_semester.dart';
 import 'package:flutter_module/model/main_model.dart';
 import 'package:scoped_model/scoped_model.dart';
+
+import '../main.dart';
 
 class Item {
   Item({
@@ -40,13 +41,32 @@ class EvaluationReportPage extends StatefulWidget {
 }
 
 class EvaluationReportPageState extends State<EvaluationReportPage> {
-  TextStyle fontTitle = TextStyle(fontSize: ScreenUtil().setSp(40), color: Colors.white);
 
-  TextStyle nameFont = TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(32));
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    initializeRequest();
+  }
+
+  //  请求学期以及学生评估数据
+  initializeRequest () async {
+
+    //  请求学生课程
+    await mainModel.getSemester();
+
+    await mainModel.getStages();
+  }
 
   @override
   Widget build(BuildContext context) {
     final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
+    ScreenUtil.instance = ScreenUtil(width: 750, height: 1624)
+      ..init(context);
+
+    TextStyle fontTitle = TextStyle(fontSize: ScreenUtil().setSp(40), color: Colors.white);
+    TextStyle nameFont = TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(32));
 
     YYDialog.init(context);
 
@@ -56,7 +76,7 @@ class EvaluationReportPageState extends State<EvaluationReportPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text('2019下学期', style: fontTitle),
+              Text(mainModel.currentSemester?.name ?? '', style: fontTitle),
               Container(
                 child: Image.asset('lib/assets/icon_updown.png',
                   width: ScreenUtil().setWidth(16),
@@ -181,9 +201,9 @@ class EvaluationReportPageState extends State<EvaluationReportPage> {
       ..gravity = gravity
       ..gravityAnimationEnable = true
       ..borderRadius = 8.0
-      ..height = ScreenUtil().setHeight(1000)
+//      ..height = ScreenUtil().setHeight(1000)
       ..widget(
-          StudentCourse()
+          StudentSemester()
       )
       ..show();
   }

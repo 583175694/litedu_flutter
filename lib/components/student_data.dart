@@ -18,14 +18,13 @@ class StudentDataState extends State<StudentData> {
   TextStyle fontTitle = TextStyle(fontSize: ScreenUtil().setSp(28), color: Color(0xff6D7993));
   TextStyle fontValue = TextStyle(fontSize: ScreenUtil().setSp(28), color: Color(0xff29D9D6));
 
-  Basics basics = Basics(0.0, 0.0, 0.0, '');
+  Basics basics = Basics(0, 0, 0, '');
 
   @override
   Widget build(BuildContext context) {
     final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
 
-    basics = mainModel.studentArchive == null ? Basics(0.0, 0.0, 0.0, '') : mainModel.studentArchive.basics;
-
+    basics = mainModel.studentArchive == null ? Basics(0, 0, 0, '') : mainModel.studentArchive.basics;
     return Container(
       width: MediaQuery.of(context).size.width,
       height: ScreenUtil().setWidth(348),

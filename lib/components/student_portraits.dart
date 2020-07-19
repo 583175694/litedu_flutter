@@ -10,13 +10,18 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/screen_fit.dart';
+import 'package:flutter_module/entity/semester.dart';
 import 'package:flutter_module/entity/student_archive.dart';
+import 'package:flutter_module/entity/student_evaluation_stages.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter_module/model/main_model.dart';
 
 import '../main.dart';
 
 class StudentPortraits extends StatefulWidget {
+  StudentPortraits({Key key, this.origin}) : super(key: key);
+  final String origin;
+
   @override
   State<StatefulWidget> createState() => StudentPortraitsState();
 }
@@ -32,12 +37,12 @@ class StudentPortraitsState extends State<StudentPortraits> {
     return LayoutBuilder(
         builder: (context, constraints){
           return Container(
-            height: ScreenUtil().setWidth(500),
+            height: ScreenUtil().setWidth(600),
             width: MediaQuery.of(context).size.width,
             child: Stack(
               children: <Widget>[
                 Positioned(
-                  top: ScreenUtil().setWidth(70),
+                  top: ScreenUtil().setWidth(120),
                   width: constraints.maxWidth,
                   height: ScreenUtil().setWidth(360),
                   child: Row(
@@ -49,7 +54,7 @@ class StudentPortraitsState extends State<StudentPortraits> {
                 ),
                 Center(
                   child: CustomPaint(
-                    painter: SpiderView(edge),
+                    painter: SpiderView(edge, widget.origin),
                     size: Size(ScreenUtil().setWidth(360), ScreenUtil().setWidth(360)),
                   ),
                 ),
@@ -76,6 +81,8 @@ class SpiderView extends CustomPainter {
   // 绘制边数默认为6
   int mEdgeSize = 6;
 
+  String origin;
+
   List<String> item = [ '思维', '艺术', '语言', '体能', '社交', '认知'];
 
   final double CIRCLE_ANGLE = 360;
@@ -85,12 +92,15 @@ class SpiderView extends CustomPainter {
   double mCenterY = 0;
 
   Six_skills sixSkills;
+  StudentEvaluationStages stages;
+
   List skillList = new List();
 
-  SpiderView(this.mEdgeSize) {
+  SpiderView(this.mEdgeSize, this.origin) {
+
     if (mainModel.studentArchive == null) {
       sixSkills = null;
-    } else {
+    } else if (origin == 'archive') {
       sixSkills = mainModel.studentArchive.sixSkills;
 
       skillList = [
@@ -98,6 +108,22 @@ class SpiderView extends CustomPainter {
         sixSkills.abilityTest3, sixSkills.abilityTest4,
         sixSkills.abilityTest5, sixSkills.abilityTest6
       ];
+    }
+
+    if (mainModel.studentEvaluationStages == null) {
+      stages = null;
+    } else if (origin == 'evaluationReport') {
+      stages = mainModel.studentEvaluationStages;
+
+      if (stages.results.isEmpty) {
+        skillList = List(6);
+      } else {
+        skillList = [
+          stages.results[0].abilityTest1Score, stages.results[0].abilityTest2Score,
+          stages.results[0].abilityTest3Score, stages.results[0].abilityTest4Score,
+          stages.results[0].abilityTest5Score, stages.results[0].abilityTest6Score
+        ];
+      }
     }
 
     // 初始化画笔
@@ -193,7 +219,7 @@ class SpiderView extends CustomPainter {
     double angle = CIRCLE_ANGLE / mEdgeSize;
     double radiusMaxLimit = min(mCenterY, mCenterY);
     for (int i = 0; i < mEdgeSize; i++) {
-      double value = skillList.isEmpty ? 0 : skillList[i].score.toDouble();  // 满分为1
+      double value = skillList.isEmpty ? 0 : skillList[i].percent;  // 满分为1
       double x = mCenterX + radiusMaxLimit * cos(degToRad(angle * i)) * value;
       double y = mCenterY + radiusMaxLimit * sin(degToRad(angle * i)) * value;
       if (i == 0) {

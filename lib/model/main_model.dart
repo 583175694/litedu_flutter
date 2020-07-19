@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:flutter_module/entity/class_team.dart';
 import 'package:flutter_module/entity/school_course.dart';
+import 'package:flutter_module/entity/semester.dart';
 import 'package:flutter_module/entity/student_archive.dart';
 import 'package:flutter_module/entity/student_evaluation.dart';
+import 'package:flutter_module/entity/student_evaluation_stages.dart';
 import 'package:flutter_module/main.dart';
 import 'package:flutter_module/model/home_model.dart';
 import 'package:flutter_module/model/school_model.dart';
@@ -23,7 +25,7 @@ import 'calendar_model.dart';
 class MainModel extends Model with HomeModel, CalendarModel, StudentModel, SchoolModel {
 
   Map<String, dynamic> HEADER = {
-    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImV4cCI6MTYyNjU0NDg5NiwiaWF0IjoxNTk1MDA4ODk2LCJuYmYiOjE1OTUwMDg4OTYsImp0aSI6IjhlOTgxYThhLWM4NTctMTFlYS1hODc5LTAyNDJhYzE0MDAwNCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJpc3MiOiJodHRwczovL2FwaS1kZXYubGl0LWVkdS5jb20vYXBpL2Zyb250ZW5kL2F1dGgvbG9naW4ifQ.5uzWVtY2a2OjSh2pYg1VgvaZU39UabpZXGKaAuPLJ1o"
+    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImV4cCI6MTYyNjEwODg4MywiaWF0IjoxNTk0NTcyODgzLCJuYmYiOjE1OTQ1NzI4ODMsImp0aSI6IjYyMjUzZDM0LWM0NjAtMTFlYS05ODUwLTAyNDJhYzE0MDAwNCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJpc3MiOiJodHRwczovL2FwaS1kZXYubGl0LWVkdS5jb20vYXBpL2Zyb250ZW5kL2F1dGgvbG9naW4ifQ.GS-kairdnvZLFUAEiZljG2Z0IW3G7L1IEm4pjpBuAuI"
   };
 
   //  学生档案详情
@@ -114,7 +116,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       });
   }
 
-  //  孩子课程
+  //  学期课程列表
   getSchoolCourse() async {
     String endDate = '2020-11-11';
     String startDate = '2019-01-01';
@@ -128,6 +130,37 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
     SchoolCourse data = SchoolCourse.fromJson(response);
 
     mainModel.schoolCourse = data;
+  }
+
+  //  学期列表
+  getSemester() async {
+    int schoolId = 10;
+    var response = await HttpUtils.request(
+        '/papi/api/frontend/semester?school_id=${schoolId}',
+        method: HttpUtils.GET,
+        headers: HEADER
+    );
+
+    Semester data = Semester.fromJson(response["data"]);
+
+    mainModel.semester = data;
+    mainModel.currentSemester = data.results[0];
+  }
+
+  //  学生阶段评价详情(六边形)
+  getStages() async {
+    int sid = 70;
+    String endDate = mainModel.currentSemester.endDate;
+    String startDate = mainModel.currentSemester.strDate;
+    var response = await HttpUtils.request(
+        '/papi/api/frontend/student_evaluation/${sid}/stages?end_date=${endDate}&str_date=${startDate}',
+        method: HttpUtils.GET,
+        headers: HEADER
+    );
+
+    StudentEvaluationStages data = StudentEvaluationStages.fromJson(response["data"]);
+
+    mainModel.studentEvaluationStages = data;
   }
 
 

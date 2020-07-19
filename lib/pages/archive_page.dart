@@ -49,11 +49,12 @@ class ArchivePageState extends State<ArchivePage> {
         });
         //  请求学生档案
         mainModel.getStudentArchive(handler.arguments['studentId'], handler.arguments['strDate'], handler.arguments['endDate']);
-      } 
+      }
       return Future.value('done');
     });
-    //  请求学生课程
-    mainModel.getSchoolCourse();
+
+    //  请求学生档案
+//    mainModel.getStudentArchive('70', '2020-01-01', '2020-12-31');
   }
 
   @override
@@ -121,7 +122,7 @@ class ArchivePageState extends State<ArchivePage> {
                 children: <Widget>[
                   title('学生画像'),
                   Container(
-                    child: StudentPortraits(),
+                    child: StudentPortraits(origin: 'archive'),
                     margin: EdgeInsets.only(top: ScreenUtil().setWidth(126)),
                   ),
                 ],

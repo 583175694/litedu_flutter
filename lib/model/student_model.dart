@@ -6,6 +6,7 @@ import 'package:flutter_module/entity/student_archive.dart';
  * @Date 2020/7/11
  **/
 import 'package:flutter_module/entity/student_evaluation.dart';
+import 'package:flutter_module/entity/student_evaluation_stages.dart';
 /**
  * @ClassName calendar_model
  * @Author wushaohang
@@ -17,7 +18,14 @@ class StudentModel extends Model {
   StudentArchive _studentArchive;
   StudentEvaluation _studentEvaluation;
   SchoolCourse _schoolCourse;
+  StudentEvaluationStages _studentEvaluationStages;
 
+  StudentEvaluationStages get studentEvaluationStages => _studentEvaluationStages;
+
+  set studentEvaluationStages(StudentEvaluationStages value) {
+    _studentEvaluationStages = value;
+    notifyListeners();
+  }
 
   SchoolCourse get schoolCourse => _schoolCourse;
 

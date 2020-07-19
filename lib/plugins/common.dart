@@ -59,4 +59,17 @@ class Common {
       return -1;
     }
   }
+
+  //  判断七边形区间
+  int getQiSkills(int score) {
+    if (score > 1 && score <= 4) {
+      return 1;
+    } else if (score > 4 && score <= 8) {
+      return 2;
+    } else if (score > 8) {
+      return 3;
+    } else {
+      return 0;
+    }
+  }
 }

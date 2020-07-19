@@ -1,5 +1,5 @@
 /**
- * @ClassName 模板
+ * @ClassName 下拉课程列表
  * @Author wushaohang
  * @Date 2019-12-14
  **/
