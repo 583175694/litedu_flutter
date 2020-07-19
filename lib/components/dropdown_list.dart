@@ -61,13 +61,6 @@ class _DropdownListState extends State<DropdownList> {
       _bubble4 = res;
     });
 
-    studentEvaluation = mainModel.studentEvaluation;
-    List<ExpandState> list = new List();
-    for (int i = 0; i < studentEvaluation.results.length; i++) {
-      list.add(ExpandState(false, i));
-    }
-    expandStateList = list;
-
     setState(() {});
   }
 
@@ -118,6 +111,15 @@ class _DropdownListState extends State<DropdownList> {
       _image = res;
       setState(() {});
     });
+
+    if (studentEvaluation == null && mainModel.studentEvaluation != null) {
+      studentEvaluation = mainModel.studentEvaluation;
+      List<ExpandState> list = new List();
+      for (int i = 0; i < studentEvaluation.results.length; i++) {
+        list.add(ExpandState(false, i));
+      }
+      expandStateList = list;
+    }
 
     return Column(
       children: <Widget>[
