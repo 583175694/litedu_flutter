@@ -119,9 +119,9 @@ class SpiderView extends CustomPainter {
         skillList = List(6);
       } else {
         skillList = [
-          stages.results[0].abilityTest1Score, stages.results[0].abilityTest2Score,
-          stages.results[0].abilityTest3Score, stages.results[0].abilityTest4Score,
-          stages.results[0].abilityTest5Score, stages.results[0].abilityTest6Score
+          stages.results[0].abilityTest1, stages.results[0].abilityTest2,
+          stages.results[0].abilityTest3, stages.results[0].abilityTest4,
+          stages.results[0].abilityTest5, stages.results[0].abilityTest6
         ];
       }
     }

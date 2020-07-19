@@ -108,7 +108,7 @@ class ExpansionTileSampleState extends State<ExpansionTileSample> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                child: Text(item.evaluationStage ?? '', style: TextStyle(fontSize: ScreenUtil().setSp(28), color: Color(0xff6D7993)),),
+                child: Text(item.evaluationType ?? '', style: TextStyle(fontSize: ScreenUtil().setSp(28), color: Color(0xff6D7993)),),
                 margin: EdgeInsets.only(bottom: ScreenUtil().setWidth(20)),
               ),
               Container(
