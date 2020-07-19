@@ -44,8 +44,8 @@ class HttpUtils {
       String url,
       { data, method, headers }) async {
     
-//    var _headers = await FlutterBoost.singleton.channel.invokeMethod("app/getRequestHeader");
-//    print(_headers);
+    var _headers = await FlutterBoost.singleton.channel.invokeMethod("app/getRequestHeader");
+    print(_headers);
     data = data ?? {};
     method = method ?? 'GET';
     headers = headers ?? {};
@@ -67,7 +67,7 @@ class HttpUtils {
     var result;
 
     try {
-      Response response = await dio.request(url, data: data, options: new Options(method: method, headers: headers));
+      Response response = await dio.request(url, data: data, options: new Options(method: method, headers: _headers));
       result = response.data;
 
       print('响应数据：' + response.toString());
