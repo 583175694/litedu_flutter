@@ -19,6 +19,14 @@ class StudentModel extends Model {
   StudentEvaluation _studentEvaluation;
   SchoolCourse _schoolCourse;
   StudentEvaluationStages _studentEvaluationStages;
+  int _studentId;
+
+  int get studentId => _studentId;
+
+  set studentId(int value) {
+    _studentId = value;
+    notifyListeners();
+  }
 
   StudentEvaluationStages get studentEvaluationStages => _studentEvaluationStages;
 

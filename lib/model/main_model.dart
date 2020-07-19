@@ -118,9 +118,9 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
 
   //  学期课程列表
   getSchoolCourse() async {
-    String endDate = '2020-11-11';
-    String startDate = '2019-01-01';
-    int id = 70;
+    String endDate = mainModel.currentSemester.endDate;
+    String startDate = mainModel.currentSemester.strDate;
+    int id = mainModel.studentId;
     var response = await HttpUtils.request(
         '/papi/api/frontend/semester/school_course?end_date=${endDate}&student_id=${id}&str_date=${startDate}',
         method: HttpUtils.GET,
@@ -149,7 +149,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
 
   //  学生阶段评价详情(六边形)
   getStages() async {
-    int sid = 70;
+    int sid = mainModel.studentId;
     String endDate = mainModel.currentSemester.endDate;
     String startDate = mainModel.currentSemester.strDate;
     var response = await HttpUtils.request(
