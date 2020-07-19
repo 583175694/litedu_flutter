@@ -40,21 +40,25 @@ class ArchivePageState extends State<ArchivePage> {
   @override
   void initState() {
     super.initState();
-//    FlutterBoost.singleton.channel.addMethodHandler((handler) {
-//      if (handler.method == 'archivePage/reloadData') {
-//        setState(() {
-//          this.studentId = handler.arguments['studentId'];
-//          this.strDate = handler.arguments['strDate'];
-//          this.endDate = handler.arguments['endDate'];
-//        });
-//        //  请求学生档案
-//        mainModel.getStudentArchive(handler.arguments['studentId'], handler.arguments['strDate'], handler.arguments['endDate']);
-//      }
-//      return Future.value('done');
-//    });
+    FlutterBoost.singleton.channel.addMethodHandler((handler) {
+      if (handler.method == 'archivePage/reloadData') {
+        setState(() {
+          this.studentId = handler.arguments['studentId'];
+          this.strDate = handler.arguments['strDate'];
+          this.endDate = handler.arguments['endDate'];
+        });
+        //  请求学生档案
+        mainModel.getStudentArchive(handler.arguments['studentId'], handler.arguments['strDate'], handler.arguments['endDate']);
+        mainModel.studentId = handler.arguments['studentId'];
+        mainModel.currentSemester
+          ..endDate = handler.arguments['endDate']
+          ..strDate = handler.arguments['strDate'];
+      }
+      return Future.value('done');
+    });
 
     //  请求学生档案
-    mainModel.getStudentArchive('70', '2020-01-01', '2020-12-31');
+//    mainModel.getStudentArchive('70', '2020-01-01', '2020-12-31');
   }
 
   @override
