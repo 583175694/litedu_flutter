@@ -9,6 +9,7 @@ import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
 import 'package:flutter_module/components/expansion_tile.dart';
 import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/components/student_semester.dart';
+import 'package:flutter_module/entity/student_evaluation_stages.dart';
 import 'package:flutter_module/model/main_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -41,7 +42,7 @@ class EvaluationReportPage extends StatefulWidget {
 }
 
 class EvaluationReportPageState extends State<EvaluationReportPage> {
-
+  StudentEvaluationStages studentEvaluationStages;
   @override
   void initState() {
     // TODO: implement initState
@@ -67,6 +68,7 @@ class EvaluationReportPageState extends State<EvaluationReportPage> {
 
     TextStyle fontTitle = TextStyle(fontSize: ScreenUtil().setSp(40), color: Colors.white);
     TextStyle nameFont = TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(32));
+    studentEvaluationStages = mainModel.studentEvaluationStages;
 
     YYDialog.init(context);
 
@@ -106,7 +108,7 @@ class EvaluationReportPageState extends State<EvaluationReportPage> {
             Container(
               width: ScreenUtil().setWidth(686),
               height: ScreenUtil().setWidth(192),
-              child: Row(
+              child: studentEvaluationStages == null ? Container() : Row(
                 children: <Widget>[
                   Container(
                     child: Stack(
@@ -126,10 +128,10 @@ class EvaluationReportPageState extends State<EvaluationReportPage> {
                             width: ScreenUtil().setWidth(128),
                             height: ScreenUtil().setWidth(128),
                             decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage('lib/assets/avatar.JPG'),
+                                image: studentEvaluationStages.results.isNotEmpty ? DecorationImage(
+                                    image: NetworkImage(studentEvaluationStages.results[0].studentLogo),
                                     fit: BoxFit.contain
-                                ),
+                                ) : null,
                                 borderRadius: BorderRadius.all(Radius.circular(ScreenUtil().setWidth(64)))
                             ),
                           ),
@@ -139,7 +141,7 @@ class EvaluationReportPageState extends State<EvaluationReportPage> {
                           right: ScreenUtil().setWidth(-3.0),
                           width: ScreenUtil().setWidth(52),
                           height: ScreenUtil().setWidth(52),
-                          child: Image.asset('lib/assets/icon_sex_girl.png')
+                            child: Image.asset('lib/assets/icon_sex_girl.png')
                         ),
                       ],
                     ),
@@ -150,9 +152,9 @@ class EvaluationReportPageState extends State<EvaluationReportPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text('李丁丁', style: TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(40)),),
+                        Text(studentEvaluationStages.results.isNotEmpty ? studentEvaluationStages.results[0].studentName : '', style: TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(40)),),
                         Container(
-                          child: Text('深圳小学 | 01133973', style: TextStyle(color: Color(0xffB6BCC9), fontSize: ScreenUtil().setSp(28)),),
+                          child: Text(studentEvaluationStages.results.isNotEmpty ? studentEvaluationStages.results[0].studentId.toString() : '深圳小学 | 01133973', style: TextStyle(color: Color(0xffB6BCC9), fontSize: ScreenUtil().setSp(28)),),
                           margin: EdgeInsets.only(top: ScreenUtil().setWidth(8)),
                         )
                       ],
