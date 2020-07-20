@@ -134,7 +134,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
 
   //  学期列表
   getSemester() async {
-    int schoolId = 10;
+    int schoolId = mainModel.schoolId;
     var response = await HttpUtils.request(
         '/papi/api/frontend/semester?school_id=${schoolId}',
         method: HttpUtils.GET,

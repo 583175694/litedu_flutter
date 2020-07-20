@@ -37,17 +37,27 @@ List<Item> generateItems(int numberOfItems) {
 }
 
 class EvaluationReportPage extends StatefulWidget {
+  final String schoolId;
+  final String studentId;
+  EvaluationReportPage({Key key, @required this.schoolId, @required this.studentId}):super(key:key);
+
   @override
-  EvaluationReportPageState createState() => EvaluationReportPageState();
+  EvaluationReportPageState createState() => EvaluationReportPageState(this.schoolId, this.studentId);
 }
 
 class EvaluationReportPageState extends State<EvaluationReportPage> {
+  EvaluationReportPageState(this.schoolId, this.studentId);
+  final String schoolId;
+  final String studentId;
   StudentEvaluationStages studentEvaluationStages;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
+    mainModel.schoolId = int.parse(this.schoolId);
+    mainModel.studentId = int.parse(this.studentId);
     initializeRequest();
   }
 

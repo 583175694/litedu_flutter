@@ -12,7 +12,14 @@ class SchoolModel extends Model {
   List<Classes> _classTeam;
   Semester _semester;
   Results _currentSemester;
+  int _schoolId;
 
+  int get schoolId => _schoolId;
+
+  set schoolId(int value) {
+    _schoolId = value;
+    notifyListeners();
+  }
 
   Results get currentSemester => _currentSemester;
 
