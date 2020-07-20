@@ -49,6 +49,9 @@ class ArchivePageState extends State<ArchivePage> {
         });
         //  请求学生档案
         mainModel.getStudentArchive(handler.arguments['studentId'], handler.arguments['strDate'], handler.arguments['endDate']);
+        //  请求七边形
+        mainModel.getQis(handler.arguments['studentId'], handler.arguments['strDate'], handler.arguments['endDate']);
+
         mainModel.studentId = handler.arguments['studentId'];
         mainModel.currentSemester
           ..endDate = handler.arguments['endDate']

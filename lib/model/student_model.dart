@@ -1,3 +1,4 @@
+import 'package:flutter_module/entity/qis.dart';
 import 'package:flutter_module/entity/school_course.dart';
 import 'package:flutter_module/entity/student_archive.dart';
 /**
@@ -19,6 +20,14 @@ class StudentModel extends Model {
   StudentEvaluation _studentEvaluation;
   SchoolCourse _schoolCourse;
   StudentEvaluationStages _studentEvaluationStages;
+  Qis _studentEvaluationQis;
+
+  Qis get studentEvaluationQis => _studentEvaluationQis;
+
+  set studentEvaluationQis(Qis value) {
+    _studentEvaluationQis = value;
+  }
+
   int _studentId;
 
   int get studentId => _studentId;
