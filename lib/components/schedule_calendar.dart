@@ -71,6 +71,11 @@ class ScheduleCalendarState extends State<ScheduleCalendar> {
     return i < 5 || i > 6 ? false : true;
   }
 
+  //  跳转到课程教案
+  void toCourseDetail() {
+    //  TODO
+  }
+
   @override
   Widget build(BuildContext context) {
     final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
@@ -121,24 +126,27 @@ class ScheduleCalendarState extends State<ScheduleCalendar> {
         //  可拖动列表
         if (!isLunchBreak(i) && titleItems[i] != null) {
           tiles.add(
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: ScreenUtil().setWidth(124),
-                    child: Column(
-                      children: <Widget>[
-                        Text(timeItems[i]["class"], style: timeFont),
-                        Text(timeItems[i]["time"], style: timeFont)
-                      ],
+            GestureDetector(
+              child: Container(
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      width: ScreenUtil().setWidth(124),
+                      child: Column(
+                        children: <Widget>[
+                          Text(timeItems[i]["class"], style: timeFont),
+                          Text(timeItems[i]["time"], style: timeFont)
+                        ],
+                      ),
                     ),
-                  ),
-                  courseItem(i),
-                ],
+                    courseItem(i),
+                  ],
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                ),
               ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-              ),
+              onTap: () => toCourseDetail(),
             )
           );
         } else {
@@ -203,6 +211,13 @@ class ScheduleCalendarState extends State<ScheduleCalendar> {
           );
         }
       }
+
+      //  底部留白
+      tiles.addAll([Container(
+        color: Colors.white,
+      ), Container(
+        color: Colors.white,
+      )]);
 
       return tiles;
     }

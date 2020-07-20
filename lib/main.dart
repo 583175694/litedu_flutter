@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'package:flutter_module/pages/assessment_page.dart';
+import 'package:flutter_module/pages/calendar_demo.dart';
 import 'package:flutter_module/pages/calendar_page.dart';
 import 'package:flutter_module/pages/archive_page.dart';
 import 'package:flutter_module/pages/evaluation_page.dart';
@@ -50,7 +51,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: '',
         builder: FlutterBoost.init(postPush: _onRoutePushed),
-        home: CalendarPage(),
+        home: SlideUpPanelDemo(), //  SlideUpPanelDemo
         routes: {
           "calendar_page": (context) => CalendarPage(),
           "evaluation_page": (context) => EvaluationPage(),
