@@ -49,6 +49,9 @@ class AssessmentPageState extends State<AssessmentPage> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.instance = ScreenUtil(width: 750, height: 1624)
+      ..init(context);
+
     final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
     DateModel date = mainModel.currentDateModel;
     TextStyle selectFont = TextStyle(color: Color(0xff29D9D6), fontSize: ScreenUtil().setSp(32));

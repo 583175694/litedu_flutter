@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_module/entity/class_team.dart';
+import 'package:flutter_module/entity/qis.dart';
 import 'package:flutter_module/entity/school_course.dart';
 import 'package:flutter_module/entity/semester.dart';
 import 'package:flutter_module/entity/student_archive.dart';
@@ -161,6 +162,22 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
     StudentEvaluationStages data = StudentEvaluationStages.fromJson(response["data"]);
 
     mainModel.studentEvaluationStages = data;
+  }
+
+  //  学生阶段评价详情(七边形)
+  getQis(String studentId, [String strDate, String endDate]) async {
+//    int sid = mainModel.studentId;
+//    String endDate = mainModel.currentSemester.endDate;
+//    String startDate = mainModel.currentSemester.strDate;
+    var response = await HttpUtils.request(
+        '/papi/api/frontend/student_evaluation/${studentId}/qis?end_date=${endDate}&str_date=${strDate}',
+        method: HttpUtils.GET,
+        headers: HEADER
+    );
+
+    Qis data = Qis.fromJson(response["data"]);
+
+    mainModel.studentEvaluationQis = data;
   }
 
 

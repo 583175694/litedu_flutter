@@ -379,11 +379,12 @@ class _DropdownListState extends State<DropdownList> {
   //  前期评估
   Container SeekbarSix(Questions item) {
     return Container(
-      child: Column(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
               margin: EdgeInsets.fromLTRB(ScreenUtil().setWidth(40), ScreenUtil().setWidth(40), ScreenUtil().setWidth(40), ScreenUtil().setWidth(40)),
-              width: ScreenUtil().setWidth(558),
+              width: ScreenUtil().setWidth(528),
               child: SeekBar(
                 progressHeight: ScreenUtil().setWidth(32),
                 value: item.score == -1 ? 0 : ((item.score - 2) / 8 * 100).toDouble(), //  换算成 0~100
@@ -405,53 +406,78 @@ class _DropdownListState extends State<DropdownList> {
                   setState(() {
                     //  2，4，6，8，10 五段
                     item.score = ((res.value * 8 / 100) + 2).toInt();
-                    print(item.score);
+                    if (item.score <= 4) {
+                      item.typeName = '一般';
+                    } else if (item.score > 4 && item.score <= 8) {
+                      item.typeName = '良好';
+                    } else if (item.score > 8 && item.score <= 10) {
+                      item.typeName = '优秀';
+                    }
                   });
                 },
               )
           ),
+          Container(
+            child: Text(item.typeName == "" ? '一般' : item.typeName, style: TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(32))),
+          )
         ],
       ),
     );
   }
 
   //  中期评估
-  Container SeekbarSeven(Questions item) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Container(
-              margin: EdgeInsets.fromLTRB(ScreenUtil().setWidth(40), ScreenUtil().setWidth(40), ScreenUtil().setWidth(40), ScreenUtil().setWidth(40)),
-              width: ScreenUtil().setWidth(558),
-              child: SeekBar(
-                progressHeight: ScreenUtil().setWidth(32),
-                value: item.score == -1 ? 0 : ((item.score - 2) / 8 * 100).toDouble(), //  换算成 0~100
-                sectionCount: 3,
-                sectionRadius: ScreenUtil().setWidth(16),
-                isRound: true,
-                showSectionText: false,
-                progressColor: Color(0xffFFAB3B),
-                backgroundColor: Color(0xffF0F1F4),
-                sectionTextMarginTop: 2,
-                sectionDecimal: 0,
-                sectionTextSize: 14,
-                hideBubble: true,
-                afterDragShowSectionText: false,
-                progressImage: _image,
-                onValueChanged: (res) {
-                  setState(() {
-                    //  2，4，6，8，10 五段
-                    item.score = ((res.value * 8 / 100) + 2).toInt();
-                    print(item.score);
-                  });
-                },
-              )
-          ),
-          Row(
+  Widget SeekbarSeven(Questions item) {
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+                margin: EdgeInsets.fromLTRB(ScreenUtil().setWidth(40), ScreenUtil().setWidth(40), ScreenUtil().setWidth(40), ScreenUtil().setWidth(40)),
+                width: ScreenUtil().setWidth(476),
+                child: SeekBar(
+                  progressHeight: ScreenUtil().setWidth(32),
+                  value: item.score == -1 ? 0 : ((item.score - 2) / 8 * 100).toDouble(), //  换算成 0~100
+                  sectionCount: 3,
+                  sectionRadius: ScreenUtil().setWidth(16),
+                  isRound: true,
+                  showSectionText: false,
+                  progressColor: Color(0xffFFAB3B),
+                  backgroundColor: Color(0xffF0F1F4),
+                  sectionTextMarginTop: 2,
+                  sectionDecimal: 0,
+                  sectionTextSize: 14,
+                  hideBubble: true,
+                  afterDragShowSectionText: false,
+                  progressImage: _image,
+                  onValueChanged: (res) {
+                    setState(() {
+                      //  2，4，6，8，10 五段
+                      item.score = ((res.value * 8 / 100) + 2).toInt();
+
+                      if (item.score <= 4) {
+                        item.typeName = '有待进步';
+                      } else if (item.score > 4 && item.score <= 7) {
+                        item.typeName = '勉强凑合';
+                      } else if (item.score > 8 && item.score <= 10) {
+                        item.typeName = '精妙绝伦';
+                      }
+                    });
+                  },
+                )
+            ),
+            Container(
+              child: Text(item.typeName == "" ? '有待进步' : item.typeName, style: TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(32))),
+            )
+          ],
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          child: Row(
             children: <Widget>[
               Container(
                 child: starIcon(),
-                margin: EdgeInsets.only(left: ScreenUtil().setWidth(210)),
+                margin: EdgeInsets.only(left: ScreenUtil().setWidth(168)),
               ),
               Container(
                 child: Row(
@@ -460,7 +486,7 @@ class _DropdownListState extends State<DropdownList> {
                     starIcon()
                   ],
                 ),
-                margin: EdgeInsets.only(left: ScreenUtil().setWidth(140)),
+                margin: EdgeInsets.only(left: ScreenUtil().setWidth(100)),
               ),
               Container(
                 child: Row(
@@ -470,12 +496,12 @@ class _DropdownListState extends State<DropdownList> {
                     starIcon()
                   ],
                 ),
-                margin: EdgeInsets.only(left: ScreenUtil().setWidth(90)),
+                      margin: EdgeInsets.only(left: ScreenUtil().setWidth(80)),
               )
             ],
-          )
-        ],
-      ),
+          ),
+        )
+      ],
     );
   }
 
