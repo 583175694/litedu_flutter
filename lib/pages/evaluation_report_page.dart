@@ -70,6 +70,9 @@ class EvaluationReportPageState extends State<EvaluationReportPage> {
     await mainModel.getStages();
   }
 
+  //  返回学生档案
+  void toArchive() {}
+
   @override
   Widget build(BuildContext context) {
     final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
@@ -86,8 +89,17 @@ class EvaluationReportPageState extends State<EvaluationReportPage> {
       appBar: AppBar(
         title: GestureDetector(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              GestureDetector(
+                child: Container(
+                  child: Icon(
+                    Icons.keyboard_arrow_left, color: Colors.white,
+                  ),
+                  margin: EdgeInsets.only(right: ScreenUtil().setWidth(220)),
+                ),
+                onTap: () => toArchive(),
+              ),
               Text(mainModel.currentSemester?.name ?? '', style: fontTitle),
               Container(
                 child: Image.asset('lib/assets/icon_updown.png',
@@ -213,10 +225,10 @@ class EvaluationReportPageState extends State<EvaluationReportPage> {
       ..gravity = gravity
       ..gravityAnimationEnable = true
       ..borderRadius = 8.0
-//      ..height = ScreenUtil().setHeight(1000)
       ..widget(
           StudentSemester()
       )
       ..show();
   }
+
 }
