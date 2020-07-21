@@ -31,153 +31,223 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
 
   //  学生档案详情
   getStudentArchive(String studentId, [String strDate, String endDate]) async {
-    var response = await HttpUtils.request(
-      '/papi/api/frontend/student_archive/',
-      method: HttpUtils.POST,
-      headers: HEADER,
-      data: {
-        "student_id": studentId,
-        "str_date": strDate,
-        "end_date": endDate
-      });
-    StudentArchive data = StudentArchive.fromJson(response["data"]);
+    mainModel.loading = true;
 
-    mainModel.studentArchive = data;
+    try {
+      var response = await HttpUtils.request(
+          '/papi/api/frontend/student_archive/',
+          method: HttpUtils.POST,
+          headers: HEADER,
+          data: {
+            "student_id": studentId,
+            "str_date": strDate,
+            "end_date": endDate
+          });
+      StudentArchive data = StudentArchive.fromJson(response["data"]);
+
+      mainModel.studentArchive = data;
+      mainModel.loading = false;
+    } catch (err) {
+      mainModel.loading = false;
+      print(err);
+    }
   }
 
   //  学生评价列表
   getStudentEvaluation(int id) async {
-    var response = await HttpUtils.request(
-      '/papi/api/frontend/student_evaluation/?school_course_schedule_id=$id',
-      method: HttpUtils.GET,
-      headers: HEADER,
-    );
-    StudentEvaluation data = StudentEvaluation.fromJson(response["data"]);
+    mainModel.loading = true;
 
-    mainModel.studentEvaluation = data;
+    try {
+      var response = await HttpUtils.request(
+        '/papi/api/frontend/student_evaluation/?school_course_schedule_id=$id',
+        method: HttpUtils.GET,
+        headers: HEADER,
+      );
+      StudentEvaluation data = StudentEvaluation.fromJson(response["data"]);
+
+      mainModel.studentEvaluation = data;
+      mainModel.loading = false;
+    } catch (err) {
+      mainModel.loading = false;
+      print(err);
+    }
   }
 
   //  学生评价更新
   submitStudentEvaluation(int id, String content, List<int> questionScores, List<int> attributeLabels) async {
-    var response = await HttpUtils.request(
-      '/papi/api/frontend/student_evaluation/$id/',
-      method: HttpUtils.PATCH,
-      headers: HEADER,
-      data: {
-        "drafts": [],
-        "content": content,
-        "attribute_labels": attributeLabels,
-        "question_scores": questionScores
-      }
-    );
+    mainModel.loading = true;
+
+    try {
+      var response = await HttpUtils.request(
+          '/papi/api/frontend/student_evaluation/$id/',
+          method: HttpUtils.PATCH,
+          headers: HEADER,
+          data: {
+            "drafts": [],
+            "content": content,
+            "attribute_labels": attributeLabels,
+            "question_scores": questionScores
+          }
+      );
+      mainModel.loading = false;
+    } catch (err) {
+      mainModel.loading = false;
+      print(err);
+    }
   }
 
   //  获取班级
   Future getClassTeam() async {
-    var response = await HttpUtils.request(
-        '/api/frontend/classTeam/index/',
-        method: HttpUtils.GET,
-        headers: HEADER
-    );
+    mainModel.loading = true;
 
-    ClassTeam data = ClassTeam.fromJson(response);
+    try {
+      var response = await HttpUtils.request(
+          '/api/frontend/classTeam/index/',
+          method: HttpUtils.GET,
+          headers: HEADER
+      );
 
-    mainModel.classTeam = data.data;
+      ClassTeam data = ClassTeam.fromJson(response);
 
-    return data;
+      mainModel.classTeam = data.data;
+      mainModel.loading = false;
+
+      return data;
+    } catch (err) {
+      mainModel.loading = false;
+      print(err);
+    }
   }
 
   //  获取课程
   getSchoolCourseSchedules() async {
-    String endDate = '${mainModel.currentDateModel.year}-${mainModel.currentDateModel.month}-${mainModel.currentDateModel.day}';
-    String startDate = '${mainModel.currentDateModel.year}-${mainModel.currentDateModel.month}-${mainModel.currentDateModel.day}';
-    int id = mainModel.classTeam[0].id;
-    var response = await HttpUtils.request(
-        '/api/frontend/classTeam/schoolCourseSchedules?end_date=${endDate}&id=${id}&start_date=${startDate}',
-        method: HttpUtils.GET,
-        headers: HEADER
-    );
+    mainModel.loading = true;
 
-    mainModel.schoolCourseSchedules = response["data"];
+    try {
+      String endDate = '${mainModel.currentDateModel.year}-${mainModel.currentDateModel.month}-${mainModel.currentDateModel.day}';
+      String startDate = '${mainModel.currentDateModel.year}-${mainModel.currentDateModel.month}-${mainModel.currentDateModel.day}';
+      int id = mainModel.classTeam[0].id;
+      var response = await HttpUtils.request(
+          '/api/frontend/classTeam/schoolCourseSchedules?end_date=${endDate}&id=${id}&start_date=${startDate}',
+          method: HttpUtils.GET,
+          headers: HEADER
+      );
+
+      mainModel.schoolCourseSchedules = response["data"];
+      mainModel.loading = false;
+    } catch (err) {
+      mainModel.loading = false;
+      print(err);
+    }
   }
 
   //  调课
   reschedule(List courseList) async {
-    String date = '${mainModel.currentDateModel.year}-${mainModel.currentDateModel.month}-${mainModel.currentDateModel.day}';
+    mainModel.loading = true;
 
-    var response = await HttpUtils.request(
-      '/api/frontend/schoolCourseSchedule/reschedule/',
-      method: HttpUtils.POST,
-      headers: HEADER,
-      data: {
-        "end_date": date,
-        "start_date": date,
-        "class_team_id": mainModel.classTeam[0].id,
-        "course_schedules": courseList
-      });
+    try {
+      String date = '${mainModel.currentDateModel.year}-${mainModel.currentDateModel.month}-${mainModel.currentDateModel.day}';
+
+      var response = await HttpUtils.request(
+        '/api/frontend/schoolCourseSchedule/reschedule/',
+        method: HttpUtils.POST,
+        headers: HEADER,
+        data: {
+          "end_date": date,
+          "start_date": date,
+          "class_team_id": mainModel.classTeam[0].id,
+          "course_schedules": courseList
+        }
+      );
+      mainModel.loading = false;
+    } catch (err) {
+      mainModel.loading = false;
+      print(err);
+    }
   }
 
   //  学期课程列表
   getSchoolCourse() async {
-    String endDate = mainModel.currentSemester.endDate;
-    String startDate = mainModel.currentSemester.strDate;
-    int id = mainModel.studentId;
-    var response = await HttpUtils.request(
-        '/papi/api/frontend/semester/school_course?end_date=${endDate}&student_id=${id}&str_date=${startDate}',
-        method: HttpUtils.GET,
-        headers: HEADER
-    );
+    try {
+      String endDate = mainModel.currentSemester.endDate;
+      String startDate = mainModel.currentSemester.strDate;
+      int id = mainModel.studentId;
+      var response = await HttpUtils.request(
+          '/papi/api/frontend/semester/school_course?end_date=${endDate}&student_id=${id}&str_date=${startDate}',
+          method: HttpUtils.GET,
+          headers: HEADER
+      );
 
-    SchoolCourse data = SchoolCourse.fromJson(response);
+      SchoolCourse data = SchoolCourse.fromJson(response);
 
-    mainModel.schoolCourse = data;
+      mainModel.schoolCourse = data;
+      mainModel.loading = false;
+    } catch (err) {
+      mainModel.loading = false;
+      print(err);
+    }
   }
 
   //  学期列表
   getSemester() async {
-    int schoolId = mainModel.schoolId;
-    var response = await HttpUtils.request(
-        '/papi/api/frontend/semester?school_id=${schoolId}',
-        method: HttpUtils.GET,
-        headers: HEADER
-    );
+    try {
+      int schoolId = mainModel.schoolId;
+      var response = await HttpUtils.request(
+          '/papi/api/frontend/semester?school_id=${schoolId}',
+          method: HttpUtils.GET,
+          headers: HEADER
+      );
 
-    Semester data = Semester.fromJson(response["data"]);
+      Semester data = Semester.fromJson(response["data"]);
 
-    mainModel.semester = data;
-    mainModel.currentSemester = data.results[0];
+      mainModel.semester = data;
+      mainModel.currentSemester = data.results[0];
+      mainModel.loading = false;
+    } catch (err) {
+      mainModel.loading = false;
+      print(err);
+    }
   }
 
   //  学生阶段评价详情(六边形)
   getStages() async {
-    int sid = mainModel.studentId;
-    String endDate = mainModel.currentSemester.endDate;
-    String startDate = mainModel.currentSemester.strDate;
-    var response = await HttpUtils.request(
-        '/papi/api/frontend/student_evaluation/${sid}/stages?end_date=${endDate}&str_date=${startDate}',
-        method: HttpUtils.GET,
-        headers: HEADER
-    );
+    try {
+      int sid = mainModel.studentId;
+      String endDate = mainModel.currentSemester.endDate;
+      String startDate = mainModel.currentSemester.strDate;
+      var response = await HttpUtils.request(
+          '/papi/api/frontend/student_evaluation/${sid}/stages?end_date=${endDate}&str_date=${startDate}',
+          method: HttpUtils.GET,
+          headers: HEADER
+      );
 
-    StudentEvaluationStages data = StudentEvaluationStages.fromJson(response["data"]);
+      StudentEvaluationStages data = StudentEvaluationStages.fromJson(response["data"]);
 
-    mainModel.studentEvaluationStages = data;
+      mainModel.studentEvaluationStages = data;
+      mainModel.loading = false;
+    } catch (err) {
+      mainModel.loading = false;
+      print(err);
+    }
   }
 
   //  学生阶段评价详情(七边形)
   getQis(String studentId, [String strDate, String endDate]) async {
-//    int sid = mainModel.studentId;
-//    String endDate = mainModel.currentSemester.endDate;
-//    String startDate = mainModel.currentSemester.strDate;
-    var response = await HttpUtils.request(
-        '/papi/api/frontend/student_evaluation/${studentId}/qis?end_date=${endDate}&str_date=${strDate}',
-        method: HttpUtils.GET,
-        headers: HEADER
-    );
+    try {
+      var response = await HttpUtils.request(
+          '/papi/api/frontend/student_evaluation/${studentId}/qis?end_date=${endDate}&str_date=${strDate}',
+          method: HttpUtils.GET,
+          headers: HEADER
+      );
 
-    Qis data = Qis.fromJson(response["data"]);
+      Qis data = Qis.fromJson(response["data"]);
 
-    mainModel.studentEvaluationQis = data;
+      mainModel.studentEvaluationQis = data;
+      mainModel.loading = false;
+    } catch (err) {
+      mainModel.loading = false;
+      print(err);
+    }
   }
 
 

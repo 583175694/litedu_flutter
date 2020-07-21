@@ -5,6 +5,7 @@
  **/
 import 'package:flutter/material.dart';
 import 'package:flutter_boost/flutter_boost.dart';
+import 'package:flutter_module/components/loading.dart';
 import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/components/student_assessment.dart';
 import 'package:flutter_module/components/student_attendance.dart';
@@ -74,111 +75,116 @@ class ArchivePageState extends State<ArchivePage> {
     setState(() {});
 
     return Scaffold(
-      body: ListView(
+      body: Stack(
         children: <Widget>[
-          //  学生数据
-          GestureDetector(
-            child: Container(
-              height: ScreenUtil().setWidth(560),
-              child: Stack(
-                children: <Widget>[
-                  title('学生数据'),
-                  Positioned(
-                    child: StudentData(),
-                    top: ScreenUtil().setWidth(152),
+          ListView(
+            children: <Widget>[
+              //  学生数据
+              GestureDetector(
+                child: Container(
+                  height: ScreenUtil().setWidth(560),
+                  child: Stack(
+                    children: <Widget>[
+                      title('学生数据'),
+                      Positioned(
+                        child: StudentData(),
+                        top: ScreenUtil().setWidth(152),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              color: Colors.white,
-            ),
-            onTap: () {
-              FlutterBoost.singleton.channel.invokeMethod('archivePage/routeStudentData');
-            },
-          ),
-          //  学生评估
-          GestureDetector(
-            child: Container(
-              height: ScreenUtil().setWidth(662),
-              child: Stack(
-                children: <Widget>[
-                  title('学生评估'),
-                  Positioned(
-                    child: StudentAssessment(),
-                    top: ScreenUtil().setWidth(108),
-                    left: ScreenUtil().setWidth(286),
-                  ),
-                  Positioned(
-                    child: Text('- 最新评估 -', style: TextStyle(fontSize: ScreenUtil().setSp(22), color: Color(0xffB6BCC9))),
-                    bottom: ScreenUtil().setWidth(44),
-                    left: ScreenUtil().setWidth(314),
-                  )
-                ],
-              ),
-              color: Colors.white,
-              margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, 'evaluation_page');
-            },
-          ),
-          //  学生画像
-          GestureDetector(
-            child: Container(
-              height: ScreenUtil().setWidth(662),
-              child: Stack(
-                children: <Widget>[
-                  title('学生画像'),
-                  Container(
-                    child: StudentPortraits(origin: 'archive'),
-                    margin: EdgeInsets.only(top: ScreenUtil().setWidth(126)),
-                  ),
-                ],
-              ),
-              color: Colors.white,
-              margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
-            ),
-            onTap: () {
-              FlutterBoost.singleton.channel.invokeMethod('archivePage/routeEvaluationReport');
-            },
-          ),
-          //  学生考勤
-          Container(
-            height: ScreenUtil().setWidth(496),
-            child: Stack(
-              children: <Widget>[
-                title('考勤统计'),
-                Container(
-                  child: StudentAttendance(),
-                  margin: EdgeInsets.only(top: ScreenUtil().setWidth(118)),
+                  color: Colors.white,
                 ),
-              ],
-            ),
-            color: Colors.white,
-            margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
-          ),
-          //  注意事项
-          GestureDetector(
-            child: Container(
-              child: Stack(
-                children: <Widget>[
-                  title('注意事项'),
-                  Center(
-                    child: Container(
-                      padding: EdgeInsets.only(bottom: ScreenUtil().setWidth(56), top: ScreenUtil().setWidth(64)),
-                      width: ScreenUtil().setWidth(622),
-                      child: Text(studentArchive == null ? '' : studentArchive?.basics?.attentionMatters, style: TextStyle(fontSize: ScreenUtil().setSp(32), color: Color(0xffB6BCC9))),
-                      margin: EdgeInsets.only(top: ScreenUtil().setWidth(66)),
-                    ),
-                  ),
-                ],
+                onTap: () {
+                  FlutterBoost.singleton.channel.invokeMethod('archivePage/routeStudentData');
+                },
               ),
-              color: Colors.white,
-              margin: EdgeInsets.only(top: ScreenUtil().setHeight(20), bottom: ScreenUtil().setHeight(120)),
-            ),
-            onTap: () {
-              FlutterBoost.singleton.channel.invokeMethod('archivePage/routeStudentAttentions');
-            },
+              //  学生评估
+              GestureDetector(
+                child: Container(
+                  height: ScreenUtil().setWidth(662),
+                  child: Stack(
+                    children: <Widget>[
+                      title('学生评估'),
+                      Positioned(
+                        child: StudentAssessment(),
+                        top: ScreenUtil().setWidth(108),
+                        left: ScreenUtil().setWidth(286),
+                      ),
+                      Positioned(
+                        child: Text('- 最新评估 -', style: TextStyle(fontSize: ScreenUtil().setSp(22), color: Color(0xffB6BCC9))),
+                        bottom: ScreenUtil().setWidth(44),
+                        left: ScreenUtil().setWidth(314),
+                      )
+                    ],
+                  ),
+                  color: Colors.white,
+                  margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, 'evaluation_page');
+                },
+              ),
+              //  学生画像
+              GestureDetector(
+                child: Container(
+                  height: ScreenUtil().setWidth(662),
+                  child: Stack(
+                    children: <Widget>[
+                      title('学生画像'),
+                      Container(
+                        child: StudentPortraits(origin: 'archive'),
+                        margin: EdgeInsets.only(top: ScreenUtil().setWidth(126)),
+                      ),
+                    ],
+                  ),
+                  color: Colors.white,
+                  margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
+                ),
+                onTap: () {
+                  FlutterBoost.singleton.channel.invokeMethod('archivePage/routeEvaluationReport');
+                },
+              ),
+              //  学生考勤
+              Container(
+                height: ScreenUtil().setWidth(496),
+                child: Stack(
+                  children: <Widget>[
+                    title('考勤统计'),
+                    Container(
+                      child: StudentAttendance(),
+                      margin: EdgeInsets.only(top: ScreenUtil().setWidth(118)),
+                    ),
+                  ],
+                ),
+                color: Colors.white,
+                margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
+              ),
+              //  注意事项
+              GestureDetector(
+                child: Container(
+                  child: Stack(
+                    children: <Widget>[
+                      title('注意事项'),
+                      Center(
+                        child: Container(
+                          padding: EdgeInsets.only(bottom: ScreenUtil().setWidth(56), top: ScreenUtil().setWidth(64)),
+                          width: ScreenUtil().setWidth(622),
+                          child: Text(studentArchive == null ? '' : studentArchive?.basics?.attentionMatters, style: TextStyle(fontSize: ScreenUtil().setSp(32), color: Color(0xffB6BCC9))),
+                          margin: EdgeInsets.only(top: ScreenUtil().setWidth(66)),
+                        ),
+                      ),
+                    ],
+                  ),
+                  color: Colors.white,
+                  margin: EdgeInsets.only(top: ScreenUtil().setHeight(20), bottom: ScreenUtil().setHeight(120)),
+                ),
+                onTap: () {
+                  FlutterBoost.singleton.channel.invokeMethod('archivePage/routeStudentAttentions');
+                },
+              ),
+            ],
           ),
+          Loading()
         ],
       ),
     );
