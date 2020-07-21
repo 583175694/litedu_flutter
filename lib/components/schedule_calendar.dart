@@ -4,7 +4,9 @@
  * @Date 2020-6-14
  **/
 import 'package:flutter/material.dart';
+import 'package:flutter_boost/flutter_boost.dart';
 import 'package:flutter_module/components/screen_fit.dart';
+import 'package:flutter_module/entity/school_course_schedules.dart';
 import 'package:flutter_module/main.dart';
 import 'package:flutter_module/model/main_model.dart';
 import 'package:flutter_module/plugins/calendar_plugin/model/date_model.dart';
@@ -72,8 +74,8 @@ class ScheduleCalendarState extends State<ScheduleCalendar> {
   }
 
   //  跳转到课程教案
-  void toCourseDetail() {
-    //  TODO
+  void toCourseDetail(titleItem) { 
+    FlutterBoost.singleton.channel.invokeMethod('calendarPage/routeCoursePlan', {'courseSchedule': titleItem});
   }
 
   @override
@@ -146,7 +148,7 @@ class ScheduleCalendarState extends State<ScheduleCalendar> {
                   color: Colors.white,
                 ),
               ),
-              onTap: () => toCourseDetail(),
+              onTap: () => toCourseDetail(titleItems[i]),
             )
           );
         } else {
