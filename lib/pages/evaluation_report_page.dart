@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_dialog/components/bean/dialog_gravity.dart';
 import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
 import 'package:flutter_module/components/expansion_tile.dart';
+import 'package:flutter_module/components/loading.dart';
 import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/components/student_semester.dart';
 import 'package:flutter_module/entity/student_evaluation_stages.dart';
@@ -109,100 +110,105 @@ class EvaluationReportPageState extends State<EvaluationReportPage> {
         backgroundColor: Color(0xff29D9D6),
         elevation: 0,
       ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        color: Color(0xff29D9D6),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              width: ScreenUtil().setWidth(686),
-              height: ScreenUtil().setWidth(192),
-              child: studentEvaluationStages == null ? Container() : Row(
-                children: <Widget>[
-                  Container(
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                          width: ScreenUtil().setWidth(144),
-                          height: ScreenUtil().setWidth(144),
-                          decoration: BoxDecoration(
-                            color: Color(0xffBEF3F2),
-                            borderRadius: BorderRadius.all(Radius.circular(ScreenUtil().setWidth(72)))
-                          ),
-                        ),
-                        Positioned(
-                          top: ScreenUtil().setWidth(8),
-                          left: ScreenUtil().setWidth(8),
-                          child: Container(
-                            width: ScreenUtil().setWidth(128),
-                            height: ScreenUtil().setWidth(128),
-                            decoration: BoxDecoration(
-                                image: studentEvaluationStages.results.isNotEmpty ? DecorationImage(
-                                    image: NetworkImage(studentEvaluationStages.results[0].studentLogo),
-                                    fit: BoxFit.contain
-                                ) : null,
-                                borderRadius: BorderRadius.all(Radius.circular(ScreenUtil().setWidth(64)))
+      body: Stack(
+        children: <Widget>[
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: Color(0xff29D9D6),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  width: ScreenUtil().setWidth(686),
+                  height: ScreenUtil().setWidth(192),
+                  child: studentEvaluationStages == null ? Container() : Row(
+                    children: <Widget>[
+                      Container(
+                        child: Stack(
+                          children: <Widget>[
+                            Container(
+                              width: ScreenUtil().setWidth(144),
+                              height: ScreenUtil().setWidth(144),
+                              decoration: BoxDecoration(
+                                color: Color(0xffBEF3F2),
+                                borderRadius: BorderRadius.all(Radius.circular(ScreenUtil().setWidth(72)))
+                              ),
                             ),
-                          ),
+                            Positioned(
+                              top: ScreenUtil().setWidth(8),
+                              left: ScreenUtil().setWidth(8),
+                              child: Container(
+                                width: ScreenUtil().setWidth(128),
+                                height: ScreenUtil().setWidth(128),
+                                decoration: BoxDecoration(
+                                    image: studentEvaluationStages.results.isNotEmpty ? DecorationImage(
+                                        image: NetworkImage(studentEvaluationStages.results[0].studentLogo),
+                                        fit: BoxFit.contain
+                                    ) : null,
+                                    borderRadius: BorderRadius.all(Radius.circular(ScreenUtil().setWidth(64)))
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: ScreenUtil().setWidth(0.0),
+                              right: ScreenUtil().setWidth(-3.0),
+                              width: ScreenUtil().setWidth(52),
+                              height: ScreenUtil().setWidth(52),
+                                child: Image.asset('lib/assets/icon_sex_girl.png')
+                            ),
+                          ],
                         ),
-                        Positioned(
-                          top: ScreenUtil().setWidth(0.0),
-                          right: ScreenUtil().setWidth(-3.0),
-                          width: ScreenUtil().setWidth(52),
-                          height: ScreenUtil().setWidth(52),
-                            child: Image.asset('lib/assets/icon_sex_girl.png')
+                        margin: EdgeInsets.only(left: ScreenUtil().setWidth(32)),
+                      ),
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(studentEvaluationStages.results.isNotEmpty ? studentEvaluationStages.results[0].studentName : '', style: TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(40)),),
+                            Container(
+                              child: Text(studentEvaluationStages.results.isNotEmpty ? studentEvaluationStages.results[0].studentId.toString() : '深圳小学 | 01133973', style: TextStyle(color: Color(0xffB6BCC9), fontSize: ScreenUtil().setSp(28)),),
+                              margin: EdgeInsets.only(top: ScreenUtil().setWidth(8)),
+                            )
+                          ],
                         ),
-                      ],
-                    ),
-                    margin: EdgeInsets.only(left: ScreenUtil().setWidth(32)),
+                        margin: EdgeInsets.only(left: ScreenUtil().setWidth(28)),
+                      )
+                    ],
                   ),
-                  Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(studentEvaluationStages.results.isNotEmpty ? studentEvaluationStages.results[0].studentName : '', style: TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(40)),),
-                        Container(
-                          child: Text(studentEvaluationStages.results.isNotEmpty ? studentEvaluationStages.results[0].studentId.toString() : '深圳小学 | 01133973', style: TextStyle(color: Color(0xffB6BCC9), fontSize: ScreenUtil().setSp(28)),),
-                          margin: EdgeInsets.only(top: ScreenUtil().setWidth(8)),
-                        )
-                      ],
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(16),
+                      topRight: Radius.circular(16)
                     ),
-                    margin: EdgeInsets.only(left: ScreenUtil().setWidth(28)),
-                  )
-                ],
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16)
+                  ),
                 ),
-              ),
-            ),
-            Container(
-              width: ScreenUtil().setWidth(686),
-              height: 1.0,
-              color: Color(0xffF0F1F4),
-            ),
+                Container(
+                  width: ScreenUtil().setWidth(686),
+                  height: 1.0,
+                  color: Color(0xffF0F1F4),
+                ),
 
-            //  报告
-            Container(
-              width: ScreenUtil().setWidth(686),
-              height: ScreenUtil().setHeight(1136),
-              padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(32)),
-              child: ExpansionTileSample(),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(16),
-                    bottomRight: Radius.circular(16)
+                //  报告
+                Container(
+                  width: ScreenUtil().setWidth(686),
+                  height: ScreenUtil().setHeight(1136),
+                  padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(32)),
+                  child: ExpansionTileSample(),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(16),
+                        bottomRight: Radius.circular(16)
+                    ),
+                    color: Colors.white,
+                  ),
                 ),
-                color: Colors.white,
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+          Loading()
+        ],
       ),
     );
   }

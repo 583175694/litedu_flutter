@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_module/components/dropdown_list.dart';
+import 'package:flutter_module/components/loading.dart';
 import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/model/main_model.dart';
 import 'package:flutter_module/plugins/calendar_plugin/model/date_model.dart';
@@ -62,25 +63,30 @@ class AssessmentPageState extends State<AssessmentPage> {
         title: Text('课堂表现', style: TextStyle(fontSize: ScreenUtil().setSp(40), color: Color(0xff6D7993))),
         elevation: 0.0,
       ),
-      body: ListView(
+      body: Stack(
         children: <Widget>[
-          Container(
-            height: ScreenUtil().setWidth(112),
-            width: MediaQuery.of(context).size.width,
-            child: Container(
-              color: Color.fromRGBO(41, 217, 214, 0.2),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text('${date.year}年${date.month}月${date.day}日 ', style: selectFont),
-                  Text('数学课', style: selectFont)
-                ],
+          ListView(
+            children: <Widget>[
+              Container(
+                height: ScreenUtil().setWidth(112),
+                width: MediaQuery.of(context).size.width,
+                child: Container(
+                  color: Color.fromRGBO(41, 217, 214, 0.2),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text('${date.year}年${date.month}月${date.day}日 ', style: selectFont),
+                      Text('数学课', style: selectFont)
+                    ],
+                  ),
+                  padding: EdgeInsets.only(left: ScreenUtil().setWidth(64), right: ScreenUtil().setWidth(64)),
+                ),
               ),
-              padding: EdgeInsets.only(left: ScreenUtil().setWidth(64), right: ScreenUtil().setWidth(64)),
-            ),
+              mainModel.studentEvaluation != null ? DropdownList() : Container()
+            ],
           ),
-          mainModel.studentEvaluation != null ? DropdownList() : Container()
+          Loading()
         ],
       ),
     );

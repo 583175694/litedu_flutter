@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/bar_chart.dart';
 import 'package:flutter_module/components/line_chart.dart';
+import 'package:flutter_module/components/loading.dart';
 import 'package:flutter_module/components/screen_fit.dart';
 
 class EvaluationPage extends StatefulWidget {
@@ -25,41 +26,46 @@ class EvaluationPageState extends State<EvaluationPage> {
         title: Text('学生评估', style: TextStyle(fontSize: ScreenUtil().setSp(40), color: Color(0xff6D7993))),
         elevation: 0.4,
       ),
-      body: ListView(
+      body: Stack(
         children: <Widget>[
-          //  学生分数
-          Container(
-            height: ScreenUtil().setWidth(664),
-            child: Stack(
-              children: <Widget>[
-                title('七边形分数'),
-                subtitle('本学期累积平均分'),
-                Positioned(
-                  width: MediaQuery.of(context).size.width,
-                  child: BarChart(),
-                  top: ScreenUtil().setWidth(110),
+          ListView(
+            children: <Widget>[
+              //  学生分数
+              Container(
+                height: ScreenUtil().setWidth(664),
+                child: Stack(
+                  children: <Widget>[
+                    title('七边形分数'),
+                    subtitle('本学期累积平均分'),
+                    Positioned(
+                      width: MediaQuery.of(context).size.width,
+                      child: BarChart(),
+                      top: ScreenUtil().setWidth(110),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            color: Colors.white,
-          ),
-          //  趋势
-          Container(
-            height: ScreenUtil().setWidth(600),
-            child: Stack(
-              children: <Widget>[
-                title('data4'),
-                subtitle('本学期data4变化趋势'),
-                Positioned(
-                  width: MediaQuery.of(context).size.width,
-                  child: LineChart(),
-                  top: ScreenUtil().setWidth(116),
+                color: Colors.white,
+              ),
+              //  趋势
+              Container(
+                height: ScreenUtil().setWidth(600),
+                child: Stack(
+                  children: <Widget>[
+                    title('data4'),
+                    subtitle('本学期data4变化趋势'),
+                    Positioned(
+                      width: MediaQuery.of(context).size.width,
+                      child: LineChart(),
+                      top: ScreenUtil().setWidth(116),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            color: Colors.white,
-            margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
+                color: Colors.white,
+                margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
+              ),
+            ],
           ),
+          Loading()
         ],
       ),
     );

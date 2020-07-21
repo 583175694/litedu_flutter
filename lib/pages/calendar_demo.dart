@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/calendar_month.dart';
 import 'package:flutter_module/components/calendar_week.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_module/plugins/calendar_plugin/constants/constants.dart'
 import 'package:flutter_module/plugins/calendar_plugin/controller.dart';
 import 'package:flutter_module/plugins/calendar_plugin/widget/calendar_view.dart';
 import 'package:flutter_module/plugins/panel.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SlideUpPanelDemo extends StatefulWidget {
   SlideUpPanelDemo({Key key}) : super(key: key);
@@ -15,7 +17,7 @@ class SlideUpPanelDemo extends StatefulWidget {
   _SlideUpPanelDemoState createState() => _SlideUpPanelDemoState();
 }
 
-class _SlideUpPanelDemoState extends State<SlideUpPanelDemo> {
+class _SlideUpPanelDemoState extends State<SlideUpPanelDemo> with TickerProviderStateMixin{
   bool showCollapsed = false; //是否显示折叠时的内容
   double maxHeight = 368; //最大展开高度
   double minHeight = 152; //最小收缩高度

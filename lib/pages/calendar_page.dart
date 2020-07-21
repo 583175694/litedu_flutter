@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_module/components/custom_style.dart';
 import 'package:flutter_module/components/date_choice_model.dart';
 import 'package:flutter_module/components/grade_choice_model.dart';
+import 'package:flutter_module/components/loading.dart';
 import 'package:flutter_module/components/schedule_calendar.dart';
 import 'package:flutter_module/components/schedule_list.dart';
 import 'package:flutter_module/components/screen_fit.dart';
@@ -156,6 +157,7 @@ class CalendarPageState extends State<CalendarPage> {
                 ScheduleCalendar(selectText: selectText)
               ],
             ),
+            Loading()
           ],
         )
     );
