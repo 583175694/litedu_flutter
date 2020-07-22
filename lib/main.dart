@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: '',
         builder: FlutterBoost.init(postPush: _onRoutePushed),
-        home: SlideUpPanelDemo(), //  SlideUpPanelDemo
+        home: CalendarPage(), //  SlideUpPanelDemo
         routes: {
           "calendar_page": (context) => CalendarPage(),
           "evaluation_page": (context) => EvaluationPage(),

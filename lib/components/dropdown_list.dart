@@ -30,7 +30,6 @@ class _DropdownListState extends State<DropdownList> {
   ui.Image _bubble3;
   ui.Image _bubble4;
   List<ui.Image> _imageBubbles;
-  final TextEditingController _textController = new TextEditingController();
   String assessment;  //  前期评估
 
   StudentEvaluation studentEvaluation;
@@ -40,6 +39,7 @@ class _DropdownListState extends State<DropdownList> {
   TextStyle textFont = TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(28));
   TextStyle btnFont = TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(40));
   TextStyle saveFont = TextStyle(color: Color(0xff29D9D6), fontSize: ScreenUtil().setSp(40));
+  TextStyle selectFont = TextStyle(color: Color(0xff29D9D6), fontSize: ScreenUtil().setSp(32));
 
   @override
   void initState() {
@@ -92,8 +92,8 @@ class _DropdownListState extends State<DropdownList> {
       list.add(res.score);
     });
 
-    print(item.content);
     await mainModel.submitStudentEvaluation(item.id, item.content, list, new List());
+    await mainModel.getStudentEvaluation(mainModel.studentId);
     expandStateList.forEach((res) {
       res.isOpen = false;
     });
@@ -134,6 +134,7 @@ class _DropdownListState extends State<DropdownList> {
     Widget content;
     for(int i = 0; i < studentEvaluation.results.length; i++) {
       Results item = studentEvaluation.results[i];
+
       tiles.add(
         ExpansionPanel(
           headerBuilder: (BuildContext context, bool isExpanded) {
@@ -151,7 +152,11 @@ class _DropdownListState extends State<DropdownList> {
                     ),
                     margin: EdgeInsets.only(left: ScreenUtil().setWidth(48), right: ScreenUtil().setWidth(48)),
                   ),
-                  Text(item.studentName, style: nameFont,)
+                  Text(item.studentName, style: nameFont),
+                  Container(
+                    child: Text(item.evaluateDatetime == null ? '' : '已提交', style: selectFont),
+                      margin: EdgeInsets.only(left: ScreenUtil().setWidth(268)),
+                    )
                 ],
               ),
               decoration: BoxDecoration(
@@ -217,26 +222,7 @@ class _DropdownListState extends State<DropdownList> {
                 ),
                 child: Padding(
                   padding: EdgeInsets.all(ScreenUtil().setWidth(8.0)),
-                  child: TextField(
-                    controller: _textController,
-                    decoration: InputDecoration(
-                      filled: true,
-                      hintText: '请输入评语',
-                      hintStyle: TextStyle(color: Color.fromRGBO(0, 0, 0, 0.25), height: ScreenUtil().setWidth(0.8)),
-                      fillColor: Color(0xffF8F8FA),
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none
-                      ),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        item.content = value;
-                      });
-                    },
-                  ),
+                  child: MyTextField(item: item)
                 ),
               ),
             ),
@@ -406,19 +392,14 @@ class _DropdownListState extends State<DropdownList> {
                   setState(() {
                     //  2，4，6，8，10 五段
                     item.score = ((res.value * 8 / 100) + 2).toInt();
-                    if (item.score <= 4) {
-                      item.typeName = '一般';
-                    } else if (item.score > 4 && item.score <= 8) {
-                      item.typeName = '良好';
-                    } else if (item.score > 8 && item.score <= 10) {
-                      item.typeName = '优秀';
-                    }
                   });
                 },
               )
           ),
           Container(
-            child: Text(item.typeName == "" ? '一般' : item.typeName, style: TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(32))),
+            child: Text(
+                item.score <= 4 ? '一般' : item.score > 4 && item.score <= 8 ? '良好' : item.score > 8 && item.score <= 10 ? '优秀' : '',
+                style: TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(32))),
           )
         ],
       ),
@@ -506,5 +487,48 @@ class _DropdownListState extends State<DropdownList> {
   }
 
   Image starIcon() => Image.asset('lib/assets/icon_star_evaluation.png', width: ScreenUtil().setWidth(48), height: ScreenUtil().setWidth(48),);
+}
 
+
+class MyTextField extends StatefulWidget {
+  MyTextField({Key key, @required this.item}):super(key:key);
+  final Results item;
+
+  @override
+  MyTextFieldState createState() => MyTextFieldState();
+}
+
+class MyTextFieldState extends State<MyTextField> {
+  final TextEditingController _textController = new TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _textController.text = widget.item.content;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: _textController,
+      decoration: InputDecoration(
+        filled: true,
+        hintText: '请输入评语',
+        hintStyle: TextStyle(color: Color.fromRGBO(0, 0, 0, 0.25), height: ScreenUtil().setWidth(0.8)),
+        fillColor: Color(0xffF8F8FA),
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide.none
+        ),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide.none
+        ),
+      ),
+      onChanged: (value) {
+        setState(() {
+          widget.item.content = value;
+          _textController.text = value;
+        });
+      },
+    );
+  }
 }

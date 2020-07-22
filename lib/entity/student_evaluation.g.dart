@@ -27,6 +27,7 @@ Results _$ResultsFromJson(Map<String, dynamic> json) {
     json['id'] as int,
     json['created_at'] as String,
     json['updated_at'] as String,
+    json['evaluate_datetime'] as String,
     json['attribute_labels'] as List,
     json['drafts'] as List,
     json['student_name'] as String,
@@ -39,7 +40,6 @@ Results _$ResultsFromJson(Map<String, dynamic> json) {
     json['teacher_id'] as int,
     json['school_course_schedule_id'] as int,
     json['content'] as String,
-    json['ability_test7_score'] as int,
     json['evaluation_type'] as String,
   );
 }
@@ -48,6 +48,7 @@ Map<String, dynamic> _$ResultsToJson(Results instance) => <String, dynamic>{
       'id': instance.id,
       'created_at': instance.createdAt,
       'updated_at': instance.updatedAt,
+      'evaluate_datetime': instance.evaluateDatetime,
       'attribute_labels': instance.attributeLabels,
       'drafts': instance.drafts,
       'student_name': instance.studentName,
@@ -57,7 +58,6 @@ Map<String, dynamic> _$ResultsToJson(Results instance) => <String, dynamic>{
       'teacher_id': instance.teacherId,
       'school_course_schedule_id': instance.schoolCourseScheduleId,
       'content': instance.content,
-      'ability_test7_score': instance.abilityTest7Score,
       'evaluation_type': instance.evaluationType,
     };
 
