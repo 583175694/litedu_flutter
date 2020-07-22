@@ -25,10 +25,6 @@ import 'calendar_model.dart';
 
 class MainModel extends Model with HomeModel, CalendarModel, StudentModel, SchoolModel {
 
-  Map<String, dynamic> HEADER = {
-    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImV4cCI6MTYyNjEwODg4MywiaWF0IjoxNTk0NTcyODgzLCJuYmYiOjE1OTQ1NzI4ODMsImp0aSI6IjYyMjUzZDM0LWM0NjAtMTFlYS05ODUwLTAyNDJhYzE0MDAwNCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJpc3MiOiJodHRwczovL2FwaS1kZXYubGl0LWVkdS5jb20vYXBpL2Zyb250ZW5kL2F1dGgvbG9naW4ifQ.GS-kairdnvZLFUAEiZljG2Z0IW3G7L1IEm4pjpBuAuI"
-  };
-
   //  学生档案详情
   getStudentArchive(String studentId, [String strDate, String endDate]) async {
     mainModel.loading = true;
@@ -37,7 +33,6 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       var response = await HttpUtils.request(
           '/papi/api/frontend/student_archive/',
           method: HttpUtils.POST,
-          headers: HEADER,
           data: {
             "student_id": studentId,
             "str_date": strDate,
@@ -61,7 +56,6 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       var response = await HttpUtils.request(
         '/papi/api/frontend/student_evaluation/?school_course_schedule_id=$id',
         method: HttpUtils.GET,
-        headers: HEADER,
       );
       StudentEvaluation data = StudentEvaluation.fromJson(response["data"]);
 
@@ -81,7 +75,6 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       var response = await HttpUtils.request(
           '/papi/api/frontend/student_evaluation/$id/',
           method: HttpUtils.PATCH,
-          headers: HEADER,
           data: {
             "drafts": [],
             "content": content,
@@ -104,7 +97,6 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       var response = await HttpUtils.request(
           '/api/frontend/classTeam/index/',
           method: HttpUtils.GET,
-          headers: HEADER
       );
 
       ClassTeam data = ClassTeam.fromJson(response);
@@ -130,7 +122,6 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       var response = await HttpUtils.request(
           '/api/frontend/classTeam/schoolCourseSchedules?end_date=${endDate}&id=${id}&start_date=${startDate}',
           method: HttpUtils.GET,
-          headers: HEADER
       );
 
       mainModel.schoolCourseSchedules = response["data"];
@@ -151,7 +142,6 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       var response = await HttpUtils.request(
         '/api/frontend/schoolCourseSchedule/reschedule/',
         method: HttpUtils.POST,
-        headers: HEADER,
         data: {
           "end_date": date,
           "start_date": date,
@@ -175,7 +165,6 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       var response = await HttpUtils.request(
           '/papi/api/frontend/semester/school_course?end_date=${endDate}&student_id=${id}&str_date=${startDate}',
           method: HttpUtils.GET,
-          headers: HEADER
       );
 
       SchoolCourse data = SchoolCourse.fromJson(response);
@@ -195,7 +184,6 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       var response = await HttpUtils.request(
           '/papi/api/frontend/semester?school_id=${schoolId}',
           method: HttpUtils.GET,
-          headers: HEADER
       );
 
       Semester data = Semester.fromJson(response["data"]);
@@ -218,7 +206,6 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       var response = await HttpUtils.request(
           '/papi/api/frontend/student_evaluation/${sid}/stages?end_date=${endDate}&str_date=${startDate}',
           method: HttpUtils.GET,
-          headers: HEADER
       );
 
       StudentEvaluationStages data = StudentEvaluationStages.fromJson(response["data"]);
@@ -237,7 +224,6 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       var response = await HttpUtils.request(
           '/papi/api/frontend/student_evaluation/${studentId}/qis?end_date=${endDate}&str_date=${strDate}',
           method: HttpUtils.GET,
-          headers: HEADER
       );
 
       Qis data = Qis.fromJson(response["data"]);
@@ -273,11 +259,15 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
     });
 
     courseList.forEach((res) {
-      titleItems[res];
+      if (res != -1) {
+        titleItems[res];
+      }
     });
 
     for (int i =0; i < courseList.length; i++) {
-      titleItems[courseList[i]] = schedules[i];
+      if (courseList[i] != -1) {
+        titleItems[courseList[i]] = schedules[i];
+      }
     }
 
     mainModel.currentCourse = titleItems;

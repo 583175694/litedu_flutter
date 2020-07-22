@@ -215,11 +215,9 @@ class ScheduleCalendarState extends State<ScheduleCalendar> {
       }
 
       //  底部留白
-      tiles.addAll([Container(
+      tiles.add(Container(
         color: Colors.white,
-      ), Container(
-        color: Colors.white,
-      )]);
+      ));
 
       return tiles;
     }
@@ -269,7 +267,7 @@ class ScheduleCalendarState extends State<ScheduleCalendar> {
                   ),
                   margin: EdgeInsets.only(right: 8),
                 ),
-                onTap: () => toEvaluation(titleItems[i]["id"]),
+                onTap: () => toEvaluation(titleItems[i]["id"], titleItems[i]['name']),
               )
             ],
           ),
@@ -297,8 +295,8 @@ class ScheduleCalendarState extends State<ScheduleCalendar> {
   }
 
   //  跳转到评价列表
-  void toEvaluation(int id) {
-    mainModel.getStudentEvaluation(id);
-    Navigator.pushNamed(context, "assessment_page");
+  void toEvaluation(int id, String name) async {
+    await mainModel.getStudentEvaluation(id);
+    Navigator.pushNamed(context, "assessment_page", arguments: name);
   }
 }
