@@ -6,11 +6,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/entity/student_archive.dart';
-import 'package:flutter_module/model/main_model.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 import '../main.dart';
-import 'bar_chart.dart';
 
 class BarChart extends StatefulWidget {
   @override
@@ -19,10 +16,36 @@ class BarChart extends StatefulWidget {
 
 class BarChartState extends State<BarChart> {
   List<String> iconStar = ["lib/assets/icon_star3.png", "lib/assets/icon_star2.png", "lib/assets/icon_star1.png"];
+  Qi_skills qiSkills;
+
+  Offset clickOffset; //  点击位置
+  List<Map> listBar = new List();
+
+  int clickIndex;  //  当前选中索引
 
   @override
   Widget build(BuildContext context) {
-    final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
+    List<int> qiSkillsList = new List();
+
+    if (mainModel.studentArchive == null) {
+      qiSkills = null;
+    } else {
+      qiSkills = mainModel.studentArchive.qiSkills;
+      qiSkillsList.addAll([
+        qiSkills.qiAbility1, qiSkills.qiAbility2,
+        qiSkills.qiAbility3, qiSkills.qiAbility4,
+        qiSkills.qiAbility5, qiSkills.qiAbility6,
+        qiSkills.qiAbility7
+      ]);
+
+      for (int index = 0; index < 7; index++) {
+        Offset barOffset = Offset((ScreenUtil().setWidth(567) / 7 * index) + ScreenUtil().setWidth(40), (index / 10) * ScreenUtil().setWidth(288));
+        listBar.add({
+          "offset": barOffset,
+          "key": index
+        });
+      }
+    }
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -43,9 +66,12 @@ class BarChartState extends State<BarChart> {
         ),
         Column(
           children: <Widget>[
-            CustomPaint(
-              size:  Size(ScreenUtil().setWidth(567), ScreenUtil().setWidth(360)), //指定画布大小
-              painter: MyPainter(),
+            GestureDetector(
+              child: CustomPaint(
+                size:  Size(ScreenUtil().setWidth(567), ScreenUtil().setWidth(360)), //指定画布大小
+                painter: MyPainter(qiSkillsList, clickIndex),
+              ),
+              onTapUp: (TapUpDetails details) => switchBar(details),
             ),
             Container(
               width: ScreenUtil().setWidth(567),
@@ -64,30 +90,38 @@ class BarChartState extends State<BarChart> {
       ],
     );
   }
+
+  switchBar(TapUpDetails details) {
+    clickOffset = Offset(details.localPosition.dx, details.localPosition.dy);
+
+    listBar.sort((a, b) {
+      var distanceA = (clickOffset.dx - a["offset"].dx).abs();
+      var distanceB = (clickOffset.dx - b["offset"].dx).abs();
+      return (distanceA - distanceB).floor();
+    });
+
+    var distance = (clickOffset.dx - listBar.first["offset"].dx).abs();
+    clickIndex = listBar.first["key"];
+    mainModel.currentQis = clickIndex;
+    setState(() {});
+  }
 }
 
 
 class MyPainter extends CustomPainter {
+  MyPainter(List<int> qiSkillsList, int clickIndex)
+      : _qiSkillsList = qiSkillsList,
+        _clickIndex = clickIndex
+  ;
+
+  List<int> _qiSkillsList;
+  int _clickIndex; //  点击位置
+
   @override
   void paint(Canvas canvas, Size size) {
     double eWidth = size.width / 5;
     double eHeight = size.height / 6;
     double bWidth = size.width / 7;
-
-    Qi_skills qiSkills;
-    List<int> qiSkillsList = new List();
-
-    if (mainModel.studentArchive == null) {
-      qiSkills = null;
-    } else {
-      qiSkills = mainModel.studentArchive.qiSkills;
-      qiSkillsList.addAll([
-        qiSkills.qiAbility1, qiSkills.qiAbility2,
-        qiSkills.qiAbility3, qiSkills.qiAbility4,
-        qiSkills.qiAbility5, qiSkills.qiAbility6,
-        qiSkills.qiAbility7
-      ]);
-    }
 
     //画棋盘背景
     var paint = new Paint();
@@ -115,12 +149,12 @@ class MyPainter extends CustomPainter {
     double borderSide = ScreenUtil().setWidth(20);
 
     //  画柱状图
-    for (int i = 0; i < qiSkillsList.length; ++i) {
+    for (int i = 0; i < _qiSkillsList.length; ++i) {
       var rrect = RRect.fromLTRBAndCorners(
           point(i).dx - borderSide / 2.0, //  left
           size.height,  //  top
           point(i).dx + borderSide / 2.0,  //  right
-          150.0 - ((qiSkillsList[i] > 10 ? 10 : qiSkillsList[i]) * 15),  //  bottom
+          150.0 - ((_qiSkillsList[i] > 10 ? 10 : _qiSkillsList[i]) * 15),  //  bottom
           topLeft: Radius.circular(64.0),
           topRight: Radius.circular(64.0),
           bottomRight: Radius.circular(0),
@@ -128,7 +162,7 @@ class MyPainter extends CustomPainter {
       canvas.drawRRect(
           rrect,
           Paint()
-            ..color = Color(0xff29D9D6)
+            ..color = _clickIndex == i ? Color(0xff29D9D6) : Colors.black12
             ..style = PaintingStyle.fill
       );
     }
