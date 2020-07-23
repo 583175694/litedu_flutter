@@ -30,7 +30,7 @@ class EvaluationPageState extends State<EvaluationPage> {
             GestureDetector(
               child: Container(
                 child: Icon(
-                  Icons.keyboard_arrow_left, color: Colors.white,
+                  Icons.keyboard_arrow_left, color: Colors.black,
                 ),
                 margin: EdgeInsets.only(right: ScreenUtil().setWidth(220)),
               ),
