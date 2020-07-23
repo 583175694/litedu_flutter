@@ -15,14 +15,14 @@ class StudentData extends StatefulWidget {
 }
 
 class StudentDataState extends State<StudentData> {
-  TextStyle fontTitle = TextStyle(fontSize: ScreenUtil().setSp(28), color: Color(0xff6D7993));
-  TextStyle fontValue = TextStyle(fontSize: ScreenUtil().setSp(28), color: Color(0xff29D9D6));
 
   Basics basics = Basics(0, 0, 0, '');
 
   @override
   Widget build(BuildContext context) {
     final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
+    TextStyle fontTitle = TextStyle(fontSize: ScreenUtil().setSp(28), color: Color(0xff6D7993));
+    TextStyle fontValue = TextStyle(fontSize: ScreenUtil().setSp(28), color: Color(0xff29D9D6));
 
     basics = mainModel.studentArchive == null ? Basics(0, 0, 0, '') : mainModel.studentArchive.basics;
     return Container(
@@ -39,40 +39,31 @@ class StudentDataState extends State<StudentData> {
           Positioned(
             top: 0,
             left: ScreenUtil().setWidth(502),
-            child: RichText(
-              text: TextSpan(
-                text: '身高：',
-                style: fontTitle,
-                children: <TextSpan>[
-                  TextSpan(text: '${basics.height}cm', style: fontValue),
-                ],
-              ),
+            child: Row(
+              children: <Widget>[
+                Text('身高：', style: fontTitle),
+                Text('${basics.height}cm', style: fontValue),
+              ],
             ),
           ),
           Positioned(
             top: ScreenUtil().setWidth(142),
             left: ScreenUtil().setWidth(24),
-            child: RichText(
-              text: TextSpan(
-                text: '体重：',
-                style: fontTitle,
-                children: <TextSpan>[
-                  TextSpan(text: '${basics.weight}kg', style: fontValue),
-                ],
-              ),
+            child: Row(
+              children: <Widget>[
+                Text('体重：', style: fontTitle),
+                Text('${basics.weight}kg', style: fontValue),
+              ],
             ),
           ),
           Positioned(
             top: ScreenUtil().setWidth(314),
             left: ScreenUtil().setWidth(496),
-            child: RichText(
-              text: TextSpan(
-                text: '脚掌：',
-                style: fontTitle,
-                children: <TextSpan>[
-                  TextSpan(text: '${basics.soles}cm', style: fontValue),
-                ],
-              ),
+            child: Row(
+              children: <Widget>[
+                Text('脚掌：', style: fontTitle),
+                Text('${basics.soles}cm', style: fontValue),
+              ],
             ),
           ),
         ],

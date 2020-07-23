@@ -4,6 +4,7 @@
  * @Date 2020-06-08
  **/
 import 'package:flutter/material.dart';
+import 'package:flutter_boost/flutter_boost.dart';
 import 'package:flutter_module/components/bar_chart.dart';
 import 'package:flutter_module/components/line_chart.dart';
 import 'package:flutter_module/components/loading.dart';
@@ -23,7 +24,23 @@ class EvaluationPageState extends State<EvaluationPage> {
     return Scaffold(
       backgroundColor: Color(0xffF0F1F4),
       appBar: AppBar(
-        title: Text('学生评估', style: TextStyle(fontSize: ScreenUtil().setSp(40), color: Color(0xff6D7993))),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            GestureDetector(
+              child: Container(
+                child: Icon(
+                  Icons.keyboard_arrow_left, color: Colors.black,
+                ),
+                margin: EdgeInsets.only(right: ScreenUtil().setWidth(220)),
+              ),
+              onTap: () => {
+                FlutterBoost.singleton.channel.invokeMethod('app/navBack')
+              },
+            ),
+            Text('学生评估', style: TextStyle(fontSize: ScreenUtil().setSp(40), color: Color(0xff6D7993))),
+          ],
+        ),
         elevation: 0.4,
       ),
       body: Stack(

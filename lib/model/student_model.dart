@@ -27,7 +27,8 @@ class StudentModel extends Model {
   //  七边形数据
   Qis _studentEvaluationQis;
   //  当前选中七边形索引
-  int _currentQis;
+  int _currentQis = 0;
+
   //  学生id
   int _studentId;
 

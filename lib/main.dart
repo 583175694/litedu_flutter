@@ -40,6 +40,8 @@ class _MyAppState extends State<MyApp> {
           CalendarPage(),
       'evaluationReportPage': (String pageName, Map<dynamic, dynamic> params, String _) =>
           EvaluationReportPage(schoolId: params['schoolId'], studentId: params['studentId']),
+      'evaluationPage': (String pageName, Map<dynamic, dynamic> params, String _) =>
+          EvaluationPage(),
     });
     FlutterBoost.singleton.addBoostNavigatorObserver(TestBoostNavigatorObserver());
   }

@@ -61,8 +61,10 @@ class ArchivePageState extends State<ArchivePage> {
       return Future.value('done');
     });
 
-    //  请求学生档案
-//    mainModel.getStudentArchive('70', '2020-01-01', '2020-12-31');
+//    //  请求学生档案
+//    mainModel.getStudentArchive('70', '2020-01-01', '2020-12-31');//  请求七边形
+//    //  请求七边形
+//    mainModel.getQis('70', '2020-01-01', '2020-12-31');
   }
 
   @override
@@ -121,13 +123,14 @@ class ArchivePageState extends State<ArchivePage> {
                   margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, 'evaluation_page');
+                  FlutterBoost.singleton.channel.invokeMethod('archivePage/routeEvaluation');
+                  // Navigator.pushNamed(context, 'evaluation_page');
                 },
               ),
               //  学生画像
               GestureDetector(
                 child: Container(
-                  height: ScreenUtil().setWidth(662),
+                  height: ScreenUtil().setWidth(762),
                   child: Stack(
                     children: <Widget>[
                       title('学生画像'),

@@ -4,6 +4,7 @@
  * @Date 2019-12-14
  **/
 import 'package:flutter/material.dart';
+import 'package:flutter_boost/flutter_boost.dart';
 import 'package:flutter_custom_dialog/components/bean/dialog_gravity.dart';
 import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
 import 'package:flutter_module/components/expansion_tile.dart';
@@ -71,9 +72,6 @@ class EvaluationReportPageState extends State<EvaluationReportPage> {
     await mainModel.getStages();
   }
 
-  //  返回学生档案
-  void toArchive() {}
-
   @override
   Widget build(BuildContext context) {
     final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
@@ -99,7 +97,9 @@ class EvaluationReportPageState extends State<EvaluationReportPage> {
                   ),
                   margin: EdgeInsets.only(right: ScreenUtil().setWidth(220)),
                 ),
-                onTap: () => toArchive(),
+                onTap: () => {
+                  FlutterBoost.singleton.channel.invokeMethod('app/navBack')
+                },
               ),
               Text(mainModel.currentSemester?.name ?? '', style: fontTitle),
               Container(
