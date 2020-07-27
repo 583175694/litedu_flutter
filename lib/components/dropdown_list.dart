@@ -226,8 +226,9 @@ class _DropdownListState extends State<DropdownList> {
                 ),
               ),
             ),
+            margin: EdgeInsets.only(bottom: ScreenUtil().setWidth(48)),
           ),  //  评语
-          Container(
+          item.evaluateDatetime == null ? Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -260,8 +261,8 @@ class _DropdownListState extends State<DropdownList> {
                 ),
               ],
             ),
-            margin: EdgeInsets.only(top: ScreenUtil().setWidth(48), bottom: ScreenUtil().setWidth(80)),
-          ),  //  提交
+            margin: EdgeInsets.only(top: ScreenUtil().setWidth(0), bottom: ScreenUtil().setWidth(80)),
+          ) : Container(),  //  提交
         ],
       ),
     );
@@ -291,7 +292,7 @@ class _DropdownListState extends State<DropdownList> {
             ),
           ),
           questionList(item),
-          Container(
+          item.evaluateDatetime == null ? Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -325,7 +326,7 @@ class _DropdownListState extends State<DropdownList> {
               ],
             ),
             margin: EdgeInsets.only(top: ScreenUtil().setWidth(48), bottom: ScreenUtil().setWidth(80)),
-          ),  //  提交
+          ) : Container(),  //  提交
         ],
       ),
     );

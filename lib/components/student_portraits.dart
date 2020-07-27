@@ -10,7 +10,6 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/screen_fit.dart';
-import 'package:flutter_module/entity/semester.dart';
 import 'package:flutter_module/entity/student_archive.dart';
 import 'package:flutter_module/entity/student_evaluation_stages.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -219,7 +218,7 @@ class SpiderView extends CustomPainter {
     double angle = CIRCLE_ANGLE / mEdgeSize;
     double radiusMaxLimit = min(mCenterY, mCenterY);
     for (int i = 0; i < mEdgeSize; i++) {
-      double value = skillList.isEmpty ? 0 : skillList[i].percent;  // 满分为1
+      double value = skillList.isEmpty ? 0 : skillList[i].percent > 1.0 ? 1.0 : skillList[i].percent;  // 满分为1
       double x = mCenterX + radiusMaxLimit * cos(degToRad(angle * i)) * value;
       double y = mCenterY + radiusMaxLimit * sin(degToRad(angle * i)) * value;
       if (i == 0) {

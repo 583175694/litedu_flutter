@@ -5,6 +5,7 @@
  **/
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_boost/flutter_boost.dart';
 import 'package:flutter_module/components/dropdown_list.dart';
 import 'package:flutter_module/components/loading.dart';
 import 'package:flutter_module/components/screen_fit.dart';
@@ -21,11 +22,17 @@ class ExpandState{
 }
 
 class AssessmentPage extends StatefulWidget {
+  final String courseName;
+  AssessmentPage({Key key, @required this.courseName}):super(key:key);
+
   @override
-  AssessmentPageState createState() => AssessmentPageState();
+  AssessmentPageState createState() => AssessmentPageState(this.courseName);
 }
 
 class AssessmentPageState extends State<AssessmentPage> {
+  AssessmentPageState(this.courseName);
+  final String courseName;
+
   List<ExpandState> expandStateList;    //开展开的状态列表， ExpandStateBean是自定义的类
   List<int> mList;   // 组成一个int类型数组，用来控制索引
 
@@ -56,12 +63,28 @@ class AssessmentPageState extends State<AssessmentPage> {
     final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
     DateModel date = mainModel.currentDateModel;
     TextStyle selectFont = TextStyle(color: Color(0xff29D9D6), fontSize: ScreenUtil().setSp(32));
-    String _courseName = ModalRoute.of(context).settings.arguments;
+    String _courseName = this.courseName;
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('课堂表现', style: TextStyle(fontSize: ScreenUtil().setSp(40), color: Color(0xff6D7993))),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            GestureDetector(
+              child: Container(
+                child: Icon(
+                  Icons.keyboard_arrow_left, color: Colors.white,
+                ),
+                margin: EdgeInsets.only(right: ScreenUtil().setWidth(220)),
+              ),
+              onTap: () => {
+                FlutterBoost.singleton.channel.invokeMethod('app/navBack')
+              },
+            ),
+            Text('课堂表现', style: TextStyle(fontSize: ScreenUtil().setSp(40), color: Color(0xff6D7993))),
+          ],
+        ),
         elevation: 0.0,
       ),
       body: Stack(

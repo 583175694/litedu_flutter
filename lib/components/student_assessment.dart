@@ -18,8 +18,6 @@ class StudentAssessment extends StatefulWidget {
 }
 
 class StudentAssessmentState extends State<StudentAssessment> {
-  TextStyle fontCenter = TextStyle(fontSize: ScreenUtil().setSp(32), color: Color(0xff6D7993));
-
   Qi_skills qiSkills;
   List<int> qiSkillsList = new List();
   Common common = new Common();
@@ -38,6 +36,7 @@ class StudentAssessmentState extends State<StudentAssessment> {
   @override
   Widget build(BuildContext context) {
     final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
+    TextStyle fontCenter = TextStyle(fontSize: ScreenUtil().setSp(32), color: Color(0xff6D7993));
 
     if (mainModel.studentArchive == null) {
       qiSkills = null;

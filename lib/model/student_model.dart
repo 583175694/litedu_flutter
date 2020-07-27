@@ -16,40 +16,21 @@ import 'package:flutter_module/entity/student_evaluation_stages.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class StudentModel extends Model {
+  //  学生档案
   StudentArchive _studentArchive;
+  //  学生评估
   StudentEvaluation _studentEvaluation;
+  //  学校课程
   SchoolCourse _schoolCourse;
+  //  学生评估阶段
   StudentEvaluationStages _studentEvaluationStages;
+  //  七边形数据
   Qis _studentEvaluationQis;
+  //  当前选中七边形索引
+  int _currentQis = 0;
 
-  Qis get studentEvaluationQis => _studentEvaluationQis;
-
-  set studentEvaluationQis(Qis value) {
-    _studentEvaluationQis = value;
-  }
-
+  //  学生id
   int _studentId;
-
-  int get studentId => _studentId;
-
-  set studentId(int value) {
-    _studentId = value;
-    notifyListeners();
-  }
-
-  StudentEvaluationStages get studentEvaluationStages => _studentEvaluationStages;
-
-  set studentEvaluationStages(StudentEvaluationStages value) {
-    _studentEvaluationStages = value;
-    notifyListeners();
-  }
-
-  SchoolCourse get schoolCourse => _schoolCourse;
-
-  set schoolCourse(SchoolCourse value) {
-    _schoolCourse = value;
-    notifyListeners();
-  }
 
   StudentArchive get studentArchive => _studentArchive;
 
@@ -62,6 +43,41 @@ class StudentModel extends Model {
 
   set studentEvaluation(StudentEvaluation value) {
     _studentEvaluation = value;
+    notifyListeners();
+  }
+
+  SchoolCourse get schoolCourse => _schoolCourse;
+
+  set schoolCourse(SchoolCourse value) {
+    _schoolCourse = value;
+    notifyListeners();
+  }
+
+  StudentEvaluationStages get studentEvaluationStages => _studentEvaluationStages;
+
+  set studentEvaluationStages(StudentEvaluationStages value) {
+    _studentEvaluationStages = value;
+    notifyListeners();
+  }
+
+  Qis get studentEvaluationQis => _studentEvaluationQis;
+
+  set studentEvaluationQis(Qis value) {
+    _studentEvaluationQis = value;
+    notifyListeners();
+  }
+
+  int get currentQis => _currentQis;
+
+  set currentQis(int value) {
+    _currentQis = value;
+    notifyListeners();
+  }
+
+  int get studentId => _studentId;
+
+  set studentId(int value) {
+    _studentId = value;
     notifyListeners();
   }
 }

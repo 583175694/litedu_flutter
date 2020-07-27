@@ -42,6 +42,8 @@ class _MyAppState extends State<MyApp> {
           EvaluationReportPage(schoolId: params['schoolId'], studentId: params['studentId']),
       'evaluationPage': (String pageName, Map<dynamic, dynamic> params, String _) =>
           EvaluationPage(),
+      'assessmentPage': (String pageName, Map<dynamic, dynamic> params, String _) =>
+          AssessmentPage(courseName: params['courseName']),
     });
     FlutterBoost.singleton.addBoostNavigatorObserver(TestBoostNavigatorObserver());
   }
@@ -58,7 +60,7 @@ class _MyAppState extends State<MyApp> {
           "calendar_page": (context) => CalendarPage(),
           "evaluation_page": (context) => EvaluationPage(),
           // "evaluation_report_page": (context) => EvaluationReportPage(),
-          "assessment_page": (context) => AssessmentPage(),
+          // "assessment_page": (context) => AssessmentPage(),
           "archive_page": (context) => ArchivePage(),
         },
         theme: ThemeData(

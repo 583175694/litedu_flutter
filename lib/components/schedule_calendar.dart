@@ -297,6 +297,7 @@ class ScheduleCalendarState extends State<ScheduleCalendar> {
   //  跳转到评价列表
   void toEvaluation(int id, String name) async {
     await mainModel.getStudentEvaluation(id);
-    Navigator.pushNamed(context, "assessment_page", arguments: name);
+    // Navigator.pushNamed(context, "assessment_page", arguments: name);
+    FlutterBoost.singleton.channel.invokeMethod('archivePage/routeAssessment', {'courseName': name});
   }
 }

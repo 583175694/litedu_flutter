@@ -61,8 +61,10 @@ class ArchivePageState extends State<ArchivePage> {
       return Future.value('done');
     });
 
-    //  请求学生档案
-//    mainModel.getStudentArchive('70', '2020-01-01', '2020-12-31');
+//    //  请求学生档案
+//    mainModel.getStudentArchive('70', '2020-01-01', '2020-12-31');//  请求七边形
+//    //  请求七边形
+//    mainModel.getQis('70', '2020-01-01', '2020-12-31');
   }
 
   @override
@@ -128,7 +130,7 @@ class ArchivePageState extends State<ArchivePage> {
               //  学生画像
               GestureDetector(
                 child: Container(
-                  height: ScreenUtil().setWidth(662),
+                  height: ScreenUtil().setWidth(762),
                   child: Stack(
                     children: <Widget>[
                       title('学生画像'),
