@@ -45,6 +45,10 @@ class _DropdownListState extends State<DropdownList> {
   void initState() {
     super.initState();
 
+    _loadImage('lib/assets/icon_switch.png').then((res) {
+      _image = res;
+    });
+
     _loadImage('lib/assets/bubble_smile1.png').then((res) {
       _bubble1 = res;
     });
@@ -106,11 +110,6 @@ class _DropdownListState extends State<DropdownList> {
       ..init(context);
 
     _imageBubbles = [_bubble1, _bubble2, _bubble3, _bubble4];
-
-    _loadImage('lib/assets/icon_switch.png').then((res) {
-      _image = res;
-      setState(() {});
-    });
 
     if (studentEvaluation == null && mainModel.studentEvaluation != null) {
       studentEvaluation = mainModel.studentEvaluation;
