@@ -42,7 +42,7 @@ class HttpUtils {
   /// request method
   static Future<Map> request (
       String url,
-      { data, method }) async {
+      { data, method, headers }) async {
     
    var _headers = await FlutterBoost.singleton.channel.invokeMethod("app/getRequestHeader");
    _headers = new Map<String, dynamic>.from(_headers);
@@ -53,6 +53,7 @@ class HttpUtils {
     // print(_headers);
     data = data ?? {};
     method = method ?? 'GET';
+    headers = headers ?? {};
 
     /// restful 请求处理
     /// /gysw/search/hist/:user_id        user_id=27
