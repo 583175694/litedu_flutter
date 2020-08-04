@@ -87,7 +87,7 @@ class ArchivePageState extends State<ArchivePage> {
                   height: ScreenUtil().setWidth(560),
                   child: Stack(
                     children: <Widget>[
-                      title('学生数据'),
+                      title('成长印记'),
                       Positioned(
                         child: StudentData(),
                         top: ScreenUtil().setWidth(152),
@@ -106,7 +106,7 @@ class ArchivePageState extends State<ArchivePage> {
                   height: ScreenUtil().setWidth(662),
                   child: Stack(
                     children: <Widget>[
-                      title('学生评估'),
+                      title('七大关键能力'),
                       Positioned(
                         child: StudentAssessment(),
                         top: ScreenUtil().setWidth(108),
@@ -133,7 +133,7 @@ class ArchivePageState extends State<ArchivePage> {
                   height: ScreenUtil().setWidth(762),
                   child: Stack(
                     children: <Widget>[
-                      title('学生画像'),
+                      title('六大领域'),
                       Container(
                         child: StudentPortraits(origin: 'archive'),
                         margin: EdgeInsets.only(top: ScreenUtil().setWidth(126)),

@@ -17,6 +17,7 @@ class BarChart extends StatefulWidget {
 class BarChartState extends State<BarChart> {
   List<String> iconStar = ["lib/assets/icon_star3.png", "lib/assets/icon_star2.png", "lib/assets/icon_star1.png"];
   Qi_skills qiSkills;
+  List<String> skills = ["自主力", "共感力", "探索力", "内驱力", "折腾力", "耐挫力", "创造力"];
 
   Offset clickOffset; //  点击位置
   List<Map> listBar = new List();
@@ -79,7 +80,7 @@ class BarChartState extends State<BarChart> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   for (int i = 0; i < 7; i++) Container(
-                    child: Text('data${i + 1}', style: TextStyle(fontSize: ScreenUtil().setSp(22), color: Color(0xff6D7993)), softWrap: false),
+                    child: Text(skills[i], style: TextStyle(fontSize: ScreenUtil().setSp(22), color: Color(0xff6D7993)), softWrap: false),
                     margin: EdgeInsets.only(top: ScreenUtil().setWidth(6),),
                   )
                 ],

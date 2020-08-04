@@ -82,7 +82,7 @@ class SpiderView extends CustomPainter {
 
   String origin;
 
-  List<String> item = [ '思维', '艺术', '语言', '体能', '社交', '认知'];
+  List<String> item = ['语言发展', '身心健康', '社交与情感', '思维逻辑', '环境与世界', '文化与艺术'];
 
   final double CIRCLE_ANGLE = 360;
 
@@ -239,7 +239,7 @@ class SpiderView extends CustomPainter {
     double radius = mCenterX > mCenterY ? mCenterX : mCenterY;
     //  描述
     for (int i = 0; i < mEdgeSize; i++) {
-      double x = mCenterX + radius * 1.32 * cos(degToRad(angle * i)) - ScreenUtil().setWidth(12);
+      double x = mCenterX + radius * 1.32 * cos(degToRad(angle * i)) - ScreenUtil().setWidth(42);
       double y = mCenterY + radius * 1.32 * sin(degToRad(angle * i)) - ScreenUtil().setWidth(16);
 
       ParagraphBuilder pb = ParagraphBuilder(ParagraphStyle(
@@ -248,7 +248,7 @@ class SpiderView extends CustomPainter {
       ))
         ..pushStyle(ui.TextStyle(color: Color(0xff6D7993)))
         ..addText(item[i]);
-      ParagraphConstraints pc = ParagraphConstraints(width: ScreenUtil().setWidth(48));
+      ParagraphConstraints pc = ParagraphConstraints(width: ScreenUtil().setWidth(118));
       Paragraph paragraph = pb.build()..layout(pc);
 
       canvas.drawCircle(
