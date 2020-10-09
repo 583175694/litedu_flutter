@@ -245,7 +245,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
 
     List titleItems = new List(11);
 
-    if (mainModel.schoolCourseSchedules.isEmpty) {
+    if (mainModel.schoolCourseSchedules == null || mainModel.schoolCourseSchedules.isEmpty) {
       mainModel.currentCourse = titleItems;
       return;
     }

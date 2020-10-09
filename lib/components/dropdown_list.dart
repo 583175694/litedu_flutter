@@ -374,8 +374,8 @@ class _DropdownListState extends State<DropdownList> {
               child: SeekBar(
                 progressHeight: ScreenUtil().setWidth(32),
                 value: item.score == -1 ? 0 : ((item.score - 2) / 8 * 100).toDouble(), //  换算成 0~100
-                sectionCount: 4,
-                sectionRadius: ScreenUtil().setWidth(16),
+//                sectionCount: 4,
+//                sectionRadius: ScreenUtil().setWidth(16),
                 isRound: true,
                 showSectionText: false,
                 progressColor: Color(0xff29D9D6),
@@ -419,8 +419,8 @@ class _DropdownListState extends State<DropdownList> {
                 child: SeekBar(
                   progressHeight: ScreenUtil().setWidth(32),
                   value: item.score == -1 ? 0 : ((item.score - 2) / 8 * 100).toDouble(), //  换算成 0~100
-                  sectionCount: 3,
-                  sectionRadius: ScreenUtil().setWidth(16),
+//                  sectionCount: 3,
+//                  sectionRadius: ScreenUtil().setWidth(16),
                   isRound: true,
                   showSectionText: false,
                   progressColor: Color(0xffFFAB3B),
