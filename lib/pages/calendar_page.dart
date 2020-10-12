@@ -129,16 +129,6 @@ class CalendarPageState extends State<CalendarPage> {
               ),
               Text('课程安排', style: TextStyle(color: Color(0xff6D7993), fontSize: 20),),
               Container()
-//              GestureDetector(
-//                child: Container(
-//                  width: ScreenUtil().setWidth(48),
-//                  height: ScreenUtil().setWidth(48),
-//                  child: Image.asset('lib/assets/icon_setting.png'),
-//                ),
-//                onTap: () {
-//                  mainModel.isEdit ? _navigateDialog() : _selectClass();
-//                },
-//              ),
             ],
           ),
           backgroundColor: Colors.white,
