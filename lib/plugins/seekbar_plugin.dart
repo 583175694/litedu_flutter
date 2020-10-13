@@ -607,7 +607,7 @@ class _SeekBarState extends State<SeekBar> {
   bool _afterDragShowSectionText;
 
   ///高度
-  double progresseight;
+  double progressHeight;
 
   ///��高度
   double totalHeight;
@@ -645,8 +645,8 @@ class _SeekBarState extends State<SeekBar> {
   void initState() {
     super.initState();
     _value = (widget.value - widget.min) / (widget.max - widget.min);
-    progresseight = widget.progresseight ?? 5.0;
-    indicatorRadius = widget.indicatorRadius ?? progresseight + 2;
+    progressHeight = widget.progresseight ?? 5.0;
+    indicatorRadius = widget.indicatorRadius ?? progressHeight + 2;
     sectionCount = widget.sectionCount ?? 1;
     sectionRadius = widget.sectionRadius ?? 0.0;
     bubbleHeight = widget.bubbleHeight ?? widget.bubbleRadius * 3;
@@ -658,10 +658,10 @@ class _SeekBarState extends State<SeekBar> {
       end = 0.0;
     }
 
-    if (indicatorRadius >= progresseight) {
+    if (indicatorRadius >= progressHeight) {
       totalHeight = indicatorRadius * 2;
     } else {
-      totalHeight = progresseight;
+      totalHeight = progressHeight;
     }
     length = (widget.max - widget.min); //总���小
   }
@@ -685,8 +685,8 @@ class _SeekBarState extends State<SeekBar> {
             min: min,
             max: max,
             indicatorRadius: indicatorRadius,
-            progresseight: progresseight,
-            radius: widget.isRound ? progresseight / 2 : 0.0,
+            progresseight: progressHeight,
+            radius: widget.isRound ? progressHeight / 2 : 0.0,
             indicatorColor:
             widget.indicatorColor ?? widget._getProgressColor(context),
             sectionCount: sectionCount,

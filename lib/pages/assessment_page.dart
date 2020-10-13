@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_boost/flutter_boost.dart';
@@ -6,7 +7,7 @@ import 'package:flutter_module/entity/student_evaluation.dart';
 import 'package:flutter_module/plugins/calendar_plugin/model/date_model.dart';
 import 'package:flutter_module/plugins/seekbar_plugin.dart';
 import 'package:sticky_and_expandable_list/sticky_and_expandable_list.dart';
-//import 'package:giffy_dialog/giffy_dialog.dart';
+import 'package:giffy_dialog/giffy_dialog.dart';
 
 import 'dart:ui' as ui;
 
@@ -49,18 +50,20 @@ class _AssessmentPageState extends State<AssessmentPage> {
     _loadImageList(); //  初始化指示器
   }
 
+  //  加载进度条指示器、笑脸等图片
   _loadImageList() async {
     _image = await _loadImage('lib/assets/icon_switch.png');
     _bubble1 = await _loadImage('lib/assets/bubble_smile1.png');
     _bubble2 = await _loadImage('lib/assets/bubble_smile2.png');
     _bubble3 = await _loadImage('lib/assets/bubble_smile3.png');
     _bubble4 = await _loadImage('lib/assets/bubble_smile4.png');
+    print(_bubble1);
     _imageBubbles = [_bubble1, _bubble2, _bubble3, _bubble4];
 
     setState(() {});
   }
 
-  /// 加载图片
+  // 加载图片
   Future<ui.Image> _loadImage(String path) async {
     var data = await rootBundle.load(path);
     var codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
@@ -68,15 +71,44 @@ class _AssessmentPageState extends State<AssessmentPage> {
     return info.image;
   }
 
-  ///  提交
-  void onConfirm(Results item) async {
+  //  确认提交
+  void showCupertinoDialog(Results result) {
+    var dialog = CupertinoAlertDialog(
+      content: Text(
+        "确认提交评价",
+        style: TextStyle(fontSize: 20),
+      ),
+      actions: <Widget>[
+        CupertinoButton(
+          child: Text("取消"),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        CupertinoButton(
+          child: Text("确定"),
+          onPressed: () {
+            onConfirm(result);
+            Navigator.pop(context);
+          },
+        ),
+      ],
+    );
+
+    showDialog(context: context, builder: (_) => dialog);
+  }
+
+  //  提交
+  void onConfirm(Results result) async {
 
     List<int> list = new List();
-    item.questions.forEach((Questions res) {
+    result.questions.forEach((Questions res) {
       list.add(res.score);
     });
 
-    await mainModel.submitStudentEvaluation(item.id, item.content, list, new List());
+    //  请求提交评价接口
+    await mainModel.submitStudentEvaluation(result.id, result.content, list, new List());
+    //  重新请求评价列表接口
     await mainModel.getStudentEvaluation(mainModel.studentId);
     setState(() {});
   }
@@ -221,21 +253,8 @@ class _AssessmentPageState extends State<AssessmentPage> {
                                         ),
                                         margin: EdgeInsets.only(right: ScreenUtil().setWidth(46)),
                                       ),
-                                      onTap: () => onConfirm(result),
-//                                      onTap: () {
-//                                        showDialog(
-//                                          context: context,builder: (_) => NetworkGiffyDialog(
-//                                          image: Image.network("https://raw.githubusercontent.com/Shashank02051997/FancyGifDialog-Android/master/GIF's/gif14.gif"),
-//                                          title: Text('Granny Eating Chocolate',
-//                                            textAlign: TextAlign.center,
-//                                            style: TextStyle(
-//                                                fontSize: 22.0,
-//                                                fontWeight: FontWeight.w600)),
-//                                          description:Text('确认提交评价'),
-//                                          entryAnimation: EntryAnimation.BOTTOM,
-//                                          onOkButtonPressed: () => onConfirm(result),
-//                                        ) );
-//                                      },
+//                                      onTap: () => onConfirm(result),
+                                      onTap: () => showCupertinoDialog(result),
                                     ),
                                     Container(
                                       width: ScreenUtil().setWidth(304),
@@ -312,7 +331,7 @@ class _AssessmentPageState extends State<AssessmentPage> {
       );
   }
 
-  //  前期评估
+  //  六边形评估进度条
   Container SeekbarSix(Questions item) {
     return Container(
       child: Row(
@@ -354,7 +373,7 @@ class _AssessmentPageState extends State<AssessmentPage> {
     );
   }
 
-  //  中期评估
+  //  七边形评估进度条
   Widget SeekbarSeven(Questions item) {
     return Column(
       children: <Widget>[
@@ -472,7 +491,6 @@ class MyTextFieldState extends State<MyTextField> {
       onChanged: (value) {
         setState(() {
           widget.item.content = value;
-//          _textController.text = value;
         });
       },
     );

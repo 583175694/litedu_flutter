@@ -21,25 +21,25 @@ class CustomStyleWeekBarItem extends BaseWeekBar {
     List<Widget> children = List();
 
     var items = getWeekDayWidget();
-    children.add(Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Container(
-          width: 4,
-          height: 28,
-          decoration: BoxDecoration(
-              color: Color(0xff29D9D6),
-              borderRadius: BorderRadius.only(topRight: Radius.circular(77.0), bottomRight: Radius.circular(77.0))
-          ),
-          margin: EdgeInsets.only(right: 16.0),
-        ),
-        ValueListenableBuilder(
-            valueListenable: text,
-            builder: (context, value, child) {
-              return new Text(text.value, style: TextStyle(fontSize: ScreenUtil().setWidth(28), color: Color(0xff6D7993)),);
-            }),
-      ],
-    ));
+//    children.add(Row(
+//      mainAxisAlignment: MainAxisAlignment.start,
+//      children: <Widget>[
+//        Container(
+//          width: 4,
+//          height: 28,
+//          decoration: BoxDecoration(
+//              color: Color(0xff29D9D6),
+//              borderRadius: BorderRadius.only(topRight: Radius.circular(77.0), bottomRight: Radius.circular(77.0))
+//          ),
+//          margin: EdgeInsets.only(right: 16.0),
+//        ),
+//        ValueListenableBuilder(
+//            valueListenable: text,
+//            builder: (context, value, child) {
+//              return new Text(text.value, style: TextStyle(fontSize: ScreenUtil().setWidth(28), color: Color(0xff6D7993)),);
+//            }),
+//      ],
+//    ));
     children.add(Row(
       children: items,
     ));
