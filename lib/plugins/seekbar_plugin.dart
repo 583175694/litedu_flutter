@@ -438,7 +438,7 @@ class _SeekBarPainter extends CustomPainter {
         ..color = indicatorColor;
 
       if (image != null) canvas.drawImage(image,
-          Offset(value * size.width - ScreenUtil().setWidth(image.width.toDouble()), size.height - ScreenUtil().setWidth(image.height.toDouble()) - ScreenUtil().setWidth(10)),
+          Offset(value * size.width - ScreenUtil().setWidth(image.width.toDouble()), size.height - ScreenUtil().setWidth(image.height.toDouble()) - ScreenUtil().setWidth(36)),
           indicatorPaint);
 
 //      canvas.drawCircle(Offset(value * size.width, size.height / 2),
@@ -671,7 +671,7 @@ class _SeekBarState extends State<SeekBar> {
     return widget._buildSemanticsWrapper(
       context: context,
       child: Container(
-        // height: totalHeight,
+         height: totalHeight,
         //下面的可以设置约束
         constraints: const BoxConstraints(
           minWidth: double.infinity,

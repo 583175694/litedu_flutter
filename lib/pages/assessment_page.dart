@@ -111,7 +111,10 @@ class _AssessmentPageState extends State<AssessmentPage> {
     await mainModel.getStudentEvaluation(result.schoolCourseScheduleId);
     studentEvaluation = mainModel.studentEvaluation;
 
-    section.setSectionExpanded(!section.isSectionExpanded());
+    sectionList.forEach((e) {
+      e.setSectionExpanded(!e.isSectionExpanded());
+    });
+
     setState(() {});
   }
 
@@ -166,126 +169,133 @@ class _AssessmentPageState extends State<AssessmentPage> {
         ),
         elevation: 0.0,
       ),
-      body: Column(
-        children: <Widget>[
-          Container(
-            height: ScreenUtil().setWidth(112),
-            width: MediaQuery.of(context).size.width,
-            child: Container(
-              color: Color.fromRGBO(41, 217, 214, 0.2),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text('${date.year}年${date.month}月${date.day}日 ', style: selectFont),
-                  Container(
-                      width: ScreenUtil().setWidth(200),
-                      child: Text(_courseName ?? '', style: selectFont, overflow: TextOverflow.ellipsis,))
-                ],
+      body: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          // 触摸收起键盘
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: ScreenUtil().setWidth(112),
+              width: MediaQuery.of(context).size.width,
+              child: Container(
+                color: Color.fromRGBO(41, 217, 214, 0.2),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('${date.year}年${date.month}月${date.day}日 ', style: selectFont),
+                    Container(
+                        width: ScreenUtil().setWidth(200),
+                        child: Text(_courseName ?? '', style: selectFont, overflow: TextOverflow.ellipsis,))
+                  ],
+                ),
+                padding: EdgeInsets.only(left: ScreenUtil().setWidth(64), right: ScreenUtil().setWidth(64)),
               ),
-              padding: EdgeInsets.only(left: ScreenUtil().setWidth(64), right: ScreenUtil().setWidth(64)),
             ),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height - ScreenUtil().setWidth(268),
-            child: CustomScrollView(
-              slivers: <Widget>[
-                SliverExpandableList(
-                  builder: SliverExpandableChildDelegate<String, ListSection>(
-                    sectionList: sectionList,
-                    headerBuilder: _buildHeader,  //  头部
-                    itemBuilder: (context, sectionIndex, itemIndex, index) {
-                      //  问题content
-                      String item = sectionList[sectionIndex].items[itemIndex];
-                      ListSection section = sectionList[sectionIndex];
+            Container(
+              height: MediaQuery.of(context).size.height - ScreenUtil().setWidth(268),
+              child: CustomScrollView(
+                slivers: <Widget>[
+                  SliverExpandableList(
+                    builder: SliverExpandableChildDelegate<String, ListSection>(
+                      sectionList: sectionList,
+                      headerBuilder: _buildHeader,  //  头部
+                      itemBuilder: (context, sectionIndex, itemIndex, index) {
+                        //  问题content
+                        String item = sectionList[sectionIndex].items[itemIndex];
+                        ListSection section = sectionList[sectionIndex];
 
-                      // 所有学生评价数据
-                      Results result = studentEvaluation.results[sectionIndex];
+                        // 所有学生评价数据
+                        Results result = studentEvaluation.results[sectionIndex];
 
-                      return Container(
-                        width: MediaQuery.of(context).size.width,
-                        color: index % 2 == 0 ? Color(0xffF7F8F9) : Colors.white,
-                        padding: EdgeInsets.only(top: ScreenUtil().setWidth(48), bottom: ScreenUtil().setWidth(20)),
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                                width: ScreenUtil().setWidth(590),
-                                child: Text(item, style: textFont,)
-                            ),
-                            //  六边形、七边形评估
-                            result.evaluationType == 'six' ? SeekbarSix(result.questions[itemIndex]) : SeekbarSeven(result.questions[itemIndex]),
-                            //  最后一个增加确认按钮
-                            Offstage(
-                              offstage: itemIndex != sectionList[sectionIndex].items.length - 1,
-                              child: Container(
-                                child: Center(
-                                  child: Container(
-                                    width: ScreenUtil().setWidth(658),
-                                    height: ScreenUtil().setWidth(224),
-                                    decoration: BoxDecoration(
-                                      color: Color(0xffF8F8FA),
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(4),
+                        return Container(
+                          width: MediaQuery.of(context).size.width,
+                          color: index % 2 == 0 ? Color(0xffF7F8F9) : Colors.white,
+                          padding: EdgeInsets.only(top: ScreenUtil().setWidth(38), bottom: ScreenUtil().setWidth(20)),
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                  width: ScreenUtil().setWidth(590),
+                                  child: Text(item, style: textFont,)
+                              ),
+                              //  六边形、七边形评估
+                              result.evaluationType == 'six' ? SeekbarSix(result.questions[itemIndex]) : SeekbarSeven(result.questions[itemIndex]),
+                              //  最后一个增加确认按钮
+                              Offstage(
+                                offstage: itemIndex != sectionList[sectionIndex].items.length - 1,
+                                child: Container(
+                                  child: Center(
+                                    child: Container(
+                                      width: ScreenUtil().setWidth(658),
+                                      height: ScreenUtil().setWidth(224),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xffF8F8FA),
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(4),
+                                        ),
+                                      ),
+                                      child: Padding(
+                                          padding: EdgeInsets.all(ScreenUtil().setWidth(8.0)),
+                                          child: MyTextField(item: result)
                                       ),
                                     ),
-                                    child: Padding(
-                                        padding: EdgeInsets.all(ScreenUtil().setWidth(8.0)),
-                                        child: MyTextField(item: result)
-                                    ),
                                   ),
-                                ),
-                                margin: EdgeInsets.only(top: ScreenUtil().setWidth(28), bottom: ScreenUtil().setWidth(48)),
-                              ),  //  评语,
-                            ),
-                            Offstage(
-                              offstage: itemIndex != sectionList[sectionIndex].items.length - 1,
-                              child: Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                      child: Container(
+                                  margin: EdgeInsets.only(top: ScreenUtil().setWidth(28), bottom: ScreenUtil().setWidth(48)),
+                                ),  //  评语,
+                              ),
+                              Offstage(
+                                offstage: itemIndex != sectionList[sectionIndex].items.length - 1,
+                                child: Container(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      GestureDetector(
+                                        child: Container(
+                                          width: ScreenUtil().setWidth(304),
+                                          height: ScreenUtil().setWidth(112),
+                                          child: Center(
+                                            child: Text('提交', style: btnFont),
+                                          ),
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(Radius.circular(112)),
+                                              color: Color(0xff29D9D6)
+                                          ),
+                                          margin: EdgeInsets.only(right: ScreenUtil().setWidth(46)),
+                                        ),
+//                                      onTap: () => onConfirm(result),
+                                        onTap: () => showCupertinoDialog(result, section),
+                                      ),
+                                      Container(
                                         width: ScreenUtil().setWidth(304),
                                         height: ScreenUtil().setWidth(112),
                                         child: Center(
-                                          child: Text('提交', style: btnFont),
+                                          child: Text('保存', style: saveFont,),
                                         ),
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.all(Radius.circular(112)),
-                                            color: Color(0xff29D9D6)
+                                            color: Color(0xffffffff),
+                                            border: Border.all(color: Color(0xff29D9D6), width: 2)
                                         ),
-                                        margin: EdgeInsets.only(right: ScreenUtil().setWidth(46)),
                                       ),
-//                                      onTap: () => onConfirm(result),
-                                      onTap: () => showCupertinoDialog(result, section),
-                                    ),
-                                    Container(
-                                      width: ScreenUtil().setWidth(304),
-                                      height: ScreenUtil().setWidth(112),
-                                      child: Center(
-                                        child: Text('保存', style: saveFont,),
-                                      ),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(Radius.circular(112)),
-                                          color: Color(0xffffffff),
-                                          border: Border.all(color: Color(0xff29D9D6), width: 2)
-                                      ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
+                                  margin: EdgeInsets.only(bottom: ScreenUtil().setWidth(80)),
                                 ),
-                                margin: EdgeInsets.only(bottom: ScreenUtil().setWidth(80)),
-                              ),
-                            )
-                          ],
-                        ),
-                      );
-                    },
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -384,7 +394,7 @@ class _AssessmentPageState extends State<AssessmentPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-                margin: EdgeInsets.fromLTRB(ScreenUtil().setWidth(40), ScreenUtil().setWidth(40), ScreenUtil().setWidth(40), ScreenUtil().setWidth(40)),
+                margin: EdgeInsets.fromLTRB(ScreenUtil().setWidth(40), ScreenUtil().setWidth(40), ScreenUtil().setWidth(40), ScreenUtil().setWidth(10)),
                 width: ScreenUtil().setWidth(476),
                 child: SeekBar(
                   progressHeight: ScreenUtil().setWidth(32),
