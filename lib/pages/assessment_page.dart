@@ -7,7 +7,6 @@ import 'package:flutter_module/entity/student_evaluation.dart';
 import 'package:flutter_module/plugins/calendar_plugin/model/date_model.dart';
 import 'package:flutter_module/plugins/seekbar_plugin.dart';
 import 'package:sticky_and_expandable_list/sticky_and_expandable_list.dart';
-import 'package:giffy_dialog/giffy_dialog.dart';
 
 import 'dart:ui' as ui;
 
@@ -72,7 +71,7 @@ class _AssessmentPageState extends State<AssessmentPage> {
   }
 
   //  确认提交
-  void showCupertinoDialog(Results result) {
+  void showCupertinoDialog(Results result, ListSection section) {
     var dialog = CupertinoAlertDialog(
       content: Text(
         "确认提交评价",
@@ -88,7 +87,7 @@ class _AssessmentPageState extends State<AssessmentPage> {
         CupertinoButton(
           child: Text("确定"),
           onPressed: () {
-            onConfirm(result);
+            onConfirm(result, section);
             Navigator.pop(context);
           },
         ),
@@ -99,7 +98,7 @@ class _AssessmentPageState extends State<AssessmentPage> {
   }
 
   //  提交
-  void onConfirm(Results result) async {
+  void onConfirm(Results result, ListSection section) async {
 
     List<int> list = new List();
     result.questions.forEach((Questions res) {
@@ -109,7 +108,10 @@ class _AssessmentPageState extends State<AssessmentPage> {
     //  请求提交评价接口
     await mainModel.submitStudentEvaluation(result.id, result.content, list, new List());
     //  重新请求评价列表接口
-    await mainModel.getStudentEvaluation(mainModel.studentId);
+    await mainModel.getStudentEvaluation(result.schoolCourseScheduleId);
+    studentEvaluation = mainModel.studentEvaluation;
+
+    section.setSectionExpanded(!section.isSectionExpanded());
     setState(() {});
   }
 
@@ -195,6 +197,7 @@ class _AssessmentPageState extends State<AssessmentPage> {
                     itemBuilder: (context, sectionIndex, itemIndex, index) {
                       //  问题content
                       String item = sectionList[sectionIndex].items[itemIndex];
+                      ListSection section = sectionList[sectionIndex];
 
                       // 所有学生评价数据
                       Results result = studentEvaluation.results[sectionIndex];
@@ -254,7 +257,7 @@ class _AssessmentPageState extends State<AssessmentPage> {
                                         margin: EdgeInsets.only(right: ScreenUtil().setWidth(46)),
                                       ),
 //                                      onTap: () => onConfirm(result),
-                                      onTap: () => showCupertinoDialog(result),
+                                      onTap: () => showCupertinoDialog(result, section),
                                     ),
                                     Container(
                                       width: ScreenUtil().setWidth(304),
