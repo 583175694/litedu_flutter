@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +8,8 @@ import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/entity/student_evaluation.dart';
 import 'package:flutter_module/plugins/calendar_plugin/model/date_model.dart';
 import 'package:flutter_module/plugins/seekbar_plugin.dart';
+import 'package:localstorage/localstorage.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:sticky_and_expandable_list/sticky_and_expandable_list.dart';
 
 import 'dart:ui' as ui;
@@ -42,6 +46,8 @@ class _AssessmentPageState extends State<AssessmentPage> {
 
   List<ListSection> sectionList = new List();
 
+  //  本地存储
+  final LocalStorage storage = new LocalStorage('evaluation');
   @override
   void initState() {
     super.initState();
@@ -112,8 +118,24 @@ class _AssessmentPageState extends State<AssessmentPage> {
     studentEvaluation = mainModel.studentEvaluation;
 
     sectionList.forEach((e) {
-      e.setSectionExpanded(!e.isSectionExpanded());
+      e.setSectionExpanded(false);
     });
+
+    setState(() {});
+  }
+
+  //  保存
+  saveResult(Results result) {
+    if (result.evaluateDatetime == null) {
+      storage.setItem('evaluation', {result.id.toString(): result});
+      showToast('保存成功');
+
+      sectionList.forEach((e) {
+        e.setSectionExpanded(false);
+      });
+    } else {
+      showToast('您已评价过了，无法保存~');
+    }
 
     setState(() {});
   }
@@ -145,6 +167,25 @@ class _AssessmentPageState extends State<AssessmentPage> {
     //  获取学生评价数据
     if (studentEvaluation == null && mainModel.studentEvaluation != null) {
       studentEvaluation = mainModel.studentEvaluation;
+
+      //  这里查找本地缓存有没有临时保存的评价
+      studentEvaluation.results = studentEvaluation.results.map((result) {
+        String key = result.id.toString();
+
+        /// 所有学生评价数据，判断未提交过，
+        /// storage不为NULL
+        /// storage有对应的评价id，取保存的值
+        if (result.evaluateDatetime == null &&
+            storage.getItem('evaluation') != null &&
+            storage.getItem('evaluation').containsKey(key)) {
+          Results data = Results.fromJson(storage.getItem('evaluation')[key]);
+
+          result = data;
+        }
+
+        return result;
+      }).toList();
+
       sectionList = getExampleSections(studentEvaluation.results);
     }
 
@@ -156,7 +197,9 @@ class _AssessmentPageState extends State<AssessmentPage> {
             GestureDetector(
               child: Container(
                 child: Icon(
-                  Icons.keyboard_arrow_left, color: Color(0xff6D7993),
+                  Icons.keyboard_arrow_left,
+                  color: Color(0xff6D7993),
+                  size: ScreenUtil().setWidth(80),
                 ),
                 margin: EdgeInsets.only(right: ScreenUtil().setWidth(120)),
               ),
@@ -206,9 +249,9 @@ class _AssessmentPageState extends State<AssessmentPage> {
                       itemBuilder: (context, sectionIndex, itemIndex, index) {
                         //  问题content
                         String item = sectionList[sectionIndex].items[itemIndex];
+                        //  每一位学生
                         ListSection section = sectionList[sectionIndex];
-
-                        // 所有学生评价数据
+                        //  每一位学生的评价数据
                         Results result = studentEvaluation.results[sectionIndex];
 
                         return Container(
@@ -265,20 +308,22 @@ class _AssessmentPageState extends State<AssessmentPage> {
                                           ),
                                           margin: EdgeInsets.only(right: ScreenUtil().setWidth(46)),
                                         ),
-//                                      onTap: () => onConfirm(result),
                                         onTap: () => showCupertinoDialog(result, section),
                                       ),
-                                      Container(
-                                        width: ScreenUtil().setWidth(304),
-                                        height: ScreenUtil().setWidth(112),
-                                        child: Center(
-                                          child: Text('保存', style: saveFont,),
+                                      GestureDetector(
+                                        child: Container(
+                                          width: ScreenUtil().setWidth(304),
+                                          height: ScreenUtil().setWidth(112),
+                                          child: Center(
+                                            child: Text('保存', style: saveFont,),
+                                          ),
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(Radius.circular(112)),
+                                              color: Color(0xffffffff),
+                                              border: Border.all(color: Color(0xff29D9D6), width: 2)
+                                          ),
                                         ),
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(Radius.circular(112)),
-                                            color: Color(0xffffffff),
-                                            border: Border.all(color: Color(0xff29D9D6), width: 2)
-                                        ),
+                                        onTap: () => saveResult(result),
                                       ),
                                     ],
                                   ),
