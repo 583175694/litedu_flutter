@@ -38,7 +38,8 @@ class _MyAppState extends State<MyApp> {
       'archivePage': (String pageName, Map<dynamic, dynamic> params, String _) =>
           ArchivePage(),
       'calendarPage': (String pageName, Map<dynamic, dynamic> params, String _) =>
-          CalendarPage(),
+//          CalendarPage(),
+        CalendarDemo(),
       'evaluationReportPage': (String pageName, Map<dynamic, dynamic> params, String _) =>
           EvaluationReportPage(schoolId: params['schoolId'], studentId: params['studentId']),
       'evaluationPage': (String pageName, Map<dynamic, dynamic> params, String _) =>
@@ -57,7 +58,7 @@ class _MyAppState extends State<MyApp> {
         child: MaterialApp(
           title: '',
           builder: FlutterBoost.init(postPush: _onRoutePushed),
-          home: CalendarPage(), //  SlideUpPanelDemo
+          home: CalendarDemo(), //  SlideUpPanelDemo
           routes: {
             "calendar_page": (context) => CalendarPage(),
             "evaluation_page": (context) => EvaluationPage(),

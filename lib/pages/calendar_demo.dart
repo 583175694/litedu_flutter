@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_module/components/calendar_month.dart';
 import 'package:flutter_module/components/calendar_week.dart';
 import 'package:flutter_module/components/custom_style.dart';
+import 'package:flutter_module/components/schedule_calendar_demo.dart';
 import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/plugins/calendar_plugin/constants/constants.dart';
 import 'package:flutter_module/plugins/calendar_plugin/controller.dart';
@@ -10,14 +11,16 @@ import 'package:flutter_module/plugins/calendar_plugin/widget/calendar_view.dart
 import 'package:flutter_module/plugins/panel.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class SlideUpPanelDemo extends StatefulWidget {
-  SlideUpPanelDemo({Key key}) : super(key: key);
+import '../main.dart';
+
+class CalendarDemo extends StatefulWidget {
+  CalendarDemo({Key key}) : super(key: key);
 
   @override
-  _SlideUpPanelDemoState createState() => _SlideUpPanelDemoState();
+  _CalendarDemoState createState() => _CalendarDemoState();
 }
 
-class _SlideUpPanelDemoState extends State<SlideUpPanelDemo> with TickerProviderStateMixin{
+class _CalendarDemoState extends State<CalendarDemo> with TickerProviderStateMixin{
   bool showCollapsed = false; //是否显示折叠时的内容
   double maxHeight = 368; //最大展开高度
   double minHeight = 152; //最小收缩高度
@@ -29,14 +32,14 @@ class _SlideUpPanelDemoState extends State<SlideUpPanelDemo> with TickerProvider
   bool slideDirectionReverse = true; //拖动方向
   //  日历控制
   CalendarController _calendarController;
-  //  滚动控制
-  ScrollController _scrollController;
   //  切换周、月视图
   String currentView = 'week';
   //  初始日期
   ValueNotifier<String> text;
   //  选择日期
   ValueNotifier<String> selectText;
+  //  编辑状态
+  bool isEdit = false;
 
   @override
   void initState() {
@@ -61,6 +64,12 @@ class _SlideUpPanelDemoState extends State<SlideUpPanelDemo> with TickerProvider
 
     text = new ValueNotifier("${DateTime.now().year}年${DateTime.now().month}月");
     selectText = new ValueNotifier("${now.year}年 ${now.month}月${now.day}日");
+
+    //  请求班级
+    mainModel.getClassTeam().then((res) {
+      //  初始化请求
+      mainModel.initializeRequest();
+    });
   }
 
   @override
@@ -69,139 +78,65 @@ class _SlideUpPanelDemoState extends State<SlideUpPanelDemo> with TickerProvider
 			..init(context);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("slide_up_panel"),
-        elevation: 0,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            GestureDetector(
+              child: Container(
+                width: ScreenUtil().setWidth(64),
+                height: ScreenUtil().setWidth(48),
+                child: mainModel.isEdit ? Text('取消', style: TextStyle(fontSize: ScreenUtil().setSp(28), color: Color(0xff6D7993))) : Image.asset('lib/assets/icon_list.png', width: ScreenUtil().setWidth(48),),
+              ),
+              onTap: () {
+                currentView = 'month';
+                isEdit = !isEdit;
+                mainModel.isEdit = isEdit;
+                setState(() { });
+              },
+            ),
+            Text('课程安排', style: TextStyle(color: Color(0xff6D7993), fontSize: 20),),
+            Container()
+          ],
+        ),
+        backgroundColor: Colors.white,
+        elevation: mainModel.isEdit ? 0.3 : 0.0,
       ),
-      body: SlidingUpPanel(
+      body: !mainModel.isEdit ? SlidingUpPanel(
           collapsed: Container(
             child: CalendarWeek(),
           ),
           panel: Container(
-            child: CalendarMonth(),
-          ),
-          body: Container(
-            padding: EdgeInsets.all(10),
-            child: Column(
+            child: Stack(
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Text("是否显示折叠时的组件"),
-                    new Switch(
-                      value: this.showCollapsed,
-                      activeColor: Colors.blue,
-                      onChanged: (bool val) {
-                        this.setState(() {
-                          this.showCollapsed = !this.showCollapsed;
-                        });
-                      },
-                    )
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Text("最大展开高度:" + maxHeight.toInt().toString()),
-                    new Slider(
-                      value: this.maxHeight,
-                      max: MediaQuery.of(context).size.height - 44,
-                      min: 20.0,
-                      activeColor: Colors.blue,
-                      onChanged: (double val) {
-                        this.setState(() {
-                          this.maxHeight = val;
-                        });
-                      },
+                CalendarMonth(),
+                Positioned(
+                  bottom: 10,
+                  left: 163,
+                  child: Container(
+                    width: 49,
+                    height: 6,
+                    decoration: BoxDecoration(
+                        color: Color(0xffD3D6DE),
+                        borderRadius: BorderRadius.all(Radius.circular(3.0))
                     ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Text("是否显示边框border"),
-                    new Switch(
-                      value: this.showBorder,
-                      activeColor: Colors.blue,
-                      onChanged: (bool val) {
-                        this.setState(() {
-                          this.showBorder = !this.showBorder;
-                        });
-                      },
-                    )
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Text("是否启用圆角"),
-                    new Switch(
-                      value: this.borderRadius,
-                      activeColor: Colors.blue,
-                      onChanged: (bool val) {
-                        this.setState(() {
-                          this.borderRadius = !this.borderRadius;
-                        });
-                      },
-                    )
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Text("是否背景半透明化"),
-                    new Switch(
-                      value: this.backdropEnabled,
-                      activeColor: Colors.blue,
-                      onChanged: (bool val) {
-                        this.setState(() {
-                          this.backdropEnabled = !this.backdropEnabled;
-                        });
-                      },
-                    )
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Text("开启视差滚动"),
-                    new Switch(
-                      value: this.parallaxEnabled,
-                      activeColor: Colors.blue,
-                      onChanged: (bool val) {
-                        this.setState(() {
-                          this.parallaxEnabled = !this.parallaxEnabled;
-                        });
-                      },
-                    )
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Text("视差滚动阀值:" + parallaxOffset.toStringAsFixed(2)),
-                    new Slider(
-                      value: this.parallaxOffset,
-                      max: 1.0,
-                      min: 0.0,
-                      activeColor: Colors.blue,
-                      onChanged: (double val) {
-                        this.setState(() {
-                          this.parallaxOffset = val;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Text("从上往下"),
-                    new Switch(
-                      value: this.slideDirectionReverse,
-                      activeColor: Colors.blue,
-                      onChanged: (bool val) {
-                        this.setState(() {
-                          this.slideDirectionReverse = !this.slideDirectionReverse;
-                        });
-                      },
-                    )
-                  ],
-                ),
+                  ),
+                )
               ],
-            ),
+            )
+          ),
+          body: Stack(
+            children: <Widget>[
+              Positioned(
+                top: 144,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height - 220,
+                  child: ScheduleCalendarDemo(selectText: selectText),
+                ),
+              )
+            ],
           ),
           maxHeight: maxHeight, //  maxHeight
           minHeight: minHeight,
@@ -220,7 +155,7 @@ class _SlideUpPanelDemoState extends State<SlideUpPanelDemo> with TickerProvider
           backdropEnabled: backdropEnabled,
           parallaxEnabled: parallaxEnabled,
           parallaxOffset: parallaxOffset,
-          slideDirection: slideDirectionReverse ? SlideDirection.DOWN : SlideDirection.UP),
+          slideDirection: slideDirectionReverse ? SlideDirection.DOWN : SlideDirection.UP) : ScheduleList(selectText: selectText),
     );
   }
 
