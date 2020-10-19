@@ -13,6 +13,7 @@ import 'package:flutter_module/plugins/calendar_plugin/model/date_model.dart';
 import 'package:flutter_module/plugins/common.dart';
 import 'package:scoped_model/scoped_model.dart';
 
+//  日历状态
 class ScheduleCalendarDemo extends StatefulWidget {
   ScheduleCalendarDemo({Key key, this.selectText}) : super(key: key);
   final ValueNotifier<String> selectText;
@@ -174,14 +175,11 @@ class ScheduleCalendarDemoState extends State<ScheduleCalendarDemo> {
                       margin: EdgeInsets.only(bottom: i == 5 ? 0 : ScreenUtil().setWidth(16)),
                       child: i == 6 ? Container() : Column(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                child: Text(i == 5 ? "午餐和午休" : "无课程", style: courseFont),
-                                margin: EdgeInsets.only(left: 12, right: 6),
-                              ),
-                            ],
+                          Container(
+                            child: Text(i == 5 ? "午餐和午休" : "无课程", style: courseFont),
+                            margin: EdgeInsets.only(left: 12, right: 6),
                           ),
                         ],
                       ),
@@ -490,29 +488,24 @@ class ScheduleListState extends State<ScheduleList> {
                 Row(
                   children: <Widget>[
                     Container(
-                      child: Text(timeItems[i]["class"], style: courseFont),
-                      margin: EdgeInsets.only(left: 12, right: 6),
+                      constraints: BoxConstraints(maxWidth: ScreenUtil().setWidth(380)),
+//                      child: Text(titleItems[i] == null ? '' : "-  ${titleItems[i]['name']}", style: courseFont, softWrap: false, overflow: TextOverflow.ellipsis,)
+                      child: Text("${titleItems[i]['name']}", style: courseFont, softWrap: false, overflow: TextOverflow.ellipsis,),
+                      margin: EdgeInsets.only(left: ScreenUtil().setWidth(24), right: ScreenUtil().setWidth(6)),
                     ),
                     Container(
-                        width: ScreenUtil().setWidth(320),
-                        child: Text(titleItems[i] == null ? '' : "-  ${titleItems[i]['name']}", style: courseFont, softWrap: false, overflow: TextOverflow.ellipsis,)
+                      width: ScreenUtil().setWidth(38),
+                      height: ScreenUtil().setWidth(38),
+                      child: Center(
+                          child: Text("${titleItems[i]['no']}", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(28)))
+                      ),
+                      decoration: BoxDecoration(
+                          color: Color(0xfff2ad5b),
+                          borderRadius: BorderRadius.circular(54)
+                      ),
                     ),
                   ],
                 ),
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                Container(
-                  width: 4,
-                  height: 4,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      color: colorItems[i]["circle"]
-                  ),
-                  margin: EdgeInsets.only(left: 12, right: 6),
-                ),
-                Text(timeItems[i]["interval"], style: courseFont,),
               ],
             ),
           ],
@@ -546,29 +539,11 @@ class ScheduleListState extends State<ScheduleList> {
               padding: EdgeInsets.only(top: i == 5 ? 20 : 0),
               child: i == 6 ? Container() : Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        child: Text(timeItems[i]["class"], style: courseFont),
-                        margin: EdgeInsets.only(left: 12, right: 6),
-                      ),
-                      Text("无课程", style: courseFont),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        width: 4,
-                        height: 4,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(4)),
-                            color: Color(0xffB6BCC9)
-                        ),
-                        margin: EdgeInsets.only(left: 12, right: 6),
-                      ),
-                      Text(timeItems[i]["interval"], style: courseFont),
-                    ],
+                  Container(
+                    child: Text(i == 5 ? "午餐和午休" : "无课程", style: courseFont),
+                    margin: EdgeInsets.only(left: 12, right: 6),
                   ),
                 ],
               ),
@@ -606,29 +581,11 @@ class ScheduleListState extends State<ScheduleList> {
                   margin: EdgeInsets.only(bottom: i == 5 ? 0 : ScreenUtil().setWidth(16)),
                   child: i == 6 ? Container() : Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Container(
-                            child: Text(timeItems[i]["class"], style: courseFont),
-                            margin: EdgeInsets.only(left: 12, right: 6),
-                          ),
-                          Text("无课程", style: courseFont),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Container(
-                            width: 4,
-                            height: 4,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(4)),
-                                color: Color(0xffB6BCC9)
-                            ),
-                            margin: EdgeInsets.only(left: 12, right: 6),
-                          ),
-                          Text(timeItems[i]["interval"], style: courseFont),
-                        ],
+                      Container(
+                        child: Text(i == 5 ? "午餐和午休" : "无课程", style: courseFont),
+                        margin: EdgeInsets.only(left: 12, right: 6),
                       ),
                     ],
                   ),
