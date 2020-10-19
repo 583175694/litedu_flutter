@@ -9,6 +9,8 @@ import 'package:flutter_module/plugins/calendar_plugin/constants/constants.dart'
 import 'package:flutter_module/plugins/calendar_plugin/controller.dart';
 import 'package:flutter_module/plugins/calendar_plugin/widget/calendar_view.dart';
 
+import '../main.dart';
+
 class CalendarMonth extends StatefulWidget {
   @override
   CalendarMonthState createState() => CalendarMonthState();
@@ -40,6 +42,7 @@ class CalendarMonthState extends State<CalendarMonth> {
 
     _calendarController.addMonthChangeListener((year, month) {
       text.value = "$year年$month月";
+      mainModel.currentMonth = text.value;
     });
 
     _calendarController.addOnCalendarSelectListener((dateModel) {

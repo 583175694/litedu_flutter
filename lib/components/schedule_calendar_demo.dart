@@ -171,31 +171,16 @@ class ScheduleCalendarDemoState extends State<ScheduleCalendarDemo> {
                       width: ScreenUtil().setWidth(626),
                       height: ScreenUtil().setWidth(138),
                       padding: EdgeInsets.only(top: i == 5 ? 20 : 0),
-                      margin: EdgeInsets.only(bottom: i == 4 ? 0 : ScreenUtil().setWidth(16)),
+                      margin: EdgeInsets.only(bottom: i == 5 ? 0 : ScreenUtil().setWidth(16)),
                       child: i == 6 ? Container() : Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Row(
                             children: <Widget>[
                               Container(
-                                child: Text(timeItems[i]["class"], style: courseFont),
+                                child: Text(i == 5 ? "午餐和午休" : "无课程", style: courseFont),
                                 margin: EdgeInsets.only(left: 12, right: 6),
                               ),
-                              Text("无课程", style: courseFont),
-                            ],
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                width: 4,
-                                height: 4,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                                    color: Color(0xffB6BCC9)
-                                ),
-                                margin: EdgeInsets.only(left: 12, right: 6),
-                              ),
-                              Text(timeItems[i]["interval"], style: courseFont),
                             ],
                           ),
                         ],
@@ -241,13 +226,26 @@ class ScheduleCalendarDemoState extends State<ScheduleCalendarDemo> {
             children: <Widget>[
               Row(
                 children: <Widget>[
+//                  Container(
+//                    child: Text(timeItems[i]["class"], style: courseFont),
+//                    margin: EdgeInsets.only(left: 12, right: 6),
+//                  ),
                   Container(
-                    child: Text(timeItems[i]["class"], style: courseFont),
-                    margin: EdgeInsets.only(left: 12, right: 6),
+                    constraints: BoxConstraints(maxWidth: ScreenUtil().setWidth(380)),
+//                      child: Text(titleItems[i] == null ? '' : "-  ${titleItems[i]['name']}", style: courseFont, softWrap: false, overflow: TextOverflow.ellipsis,)
+                    child: Text("${titleItems[i]['name']}", style: courseFont, softWrap: false, overflow: TextOverflow.ellipsis,),
+                    margin: EdgeInsets.only(left: ScreenUtil().setWidth(24), right: ScreenUtil().setWidth(6)),
                   ),
                   Container(
-                      width: ScreenUtil().setWidth(320),
-                      child: Text(titleItems[i] == null ? '' : "-  ${titleItems[i]['name']}", style: courseFont, softWrap: false, overflow: TextOverflow.ellipsis,)
+                    width: ScreenUtil().setWidth(38),
+                    height: ScreenUtil().setWidth(38),
+                    child: Center(
+                      child: Text("${titleItems[i]['no']}", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(28)))
+                    ),
+                    decoration: BoxDecoration(
+                      color: Color(0xfff2ad5b),
+                      borderRadius: BorderRadius.circular(54)
+                    ),
                   ),
                 ],
               ),
@@ -269,20 +267,20 @@ class ScheduleCalendarDemoState extends State<ScheduleCalendarDemo> {
               )
             ],
           ),
-          Row(
-            children: <Widget>[
-              Container(
-                width: 4,
-                height: 4,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                    color: colorItems[i]["circle"]
-                ),
-                margin: EdgeInsets.only(left: 12, right: 6),
-              ),
-              Text(timeItems[i]["interval"], style: courseFont,),
-            ],
-          ),
+//          Row(
+//            children: <Widget>[
+//              Container(
+//                width: 4,
+//                height: 4,
+//                decoration: BoxDecoration(
+//                    borderRadius: BorderRadius.all(Radius.circular(4)),
+//                    color: colorItems[i]["circle"]
+//                ),
+//                margin: EdgeInsets.only(left: 12, right: 6),
+//              ),
+//              Text(timeItems[i]["interval"], style: courseFont,),
+//            ],
+//          ),
         ],
       ),
       decoration: BoxDecoration(
@@ -446,6 +444,7 @@ class ScheduleListState extends State<ScheduleList> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                     ),
+                    margin: EdgeInsets.only(bottom: i == 5 ? 0 : ScreenUtil().setWidth(16)),
                   );
                 },
                 onWillAccept: (data) {
@@ -522,7 +521,6 @@ class ScheduleListState extends State<ScheduleList> {
             color: colorItems[i]["background"],
             borderRadius: BorderRadius.only(topLeft: Radius.circular(i == 6 ? 0 : 10), bottomLeft: Radius.circular(i == 5 ? 0 :10))
         ),
-        margin: EdgeInsets.only(bottom: i == 4 ? 0 : ScreenUtil().setWidth(16.0)),
       ),
     );
   }
@@ -584,7 +582,7 @@ class ScheduleListState extends State<ScheduleList> {
         decoration: BoxDecoration(
           color: Colors.white,
         ),
-        margin: EdgeInsets.only(top: i == 5 ? 6 : 0, bottom: i == 5 ? 0 : ScreenUtil().setWidth(16)),
+        margin: EdgeInsets.only(bottom: i == 5 ? 0 : ScreenUtil().setWidth(16)),
       );
     } else {
       return DragTarget(  //  可放置的地方
@@ -605,7 +603,7 @@ class ScheduleListState extends State<ScheduleList> {
                   width: ScreenUtil().setWidth(626),
                   height: ScreenUtil().setWidth(138),
                   padding: EdgeInsets.only(top: i == 5 ? 20 : 0),
-                  margin: EdgeInsets.only(bottom: i == 4 ? 0 : ScreenUtil().setWidth(16)),
+                  margin: EdgeInsets.only(bottom: i == 5 ? 0 : ScreenUtil().setWidth(16)),
                   child: i == 6 ? Container() : Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[

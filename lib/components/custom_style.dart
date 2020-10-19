@@ -51,7 +51,7 @@ class CustomStyleWeekBarItem extends BaseWeekBar {
   @override
   Widget getWeekBarItem(int index) {
     return new Container(
-      margin: EdgeInsets.only(top: 10, bottom: 10),
+      margin: EdgeInsets.only(top: 6, bottom: 0),
       child: Column(
         children: <Widget>[
           new Center(
