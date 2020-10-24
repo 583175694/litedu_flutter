@@ -238,7 +238,7 @@ class ScheduleCalendarDemoState extends State<ScheduleCalendarDemo> {
                     width: ScreenUtil().setWidth(38),
                     height: ScreenUtil().setWidth(38),
                     child: Center(
-                      child: Text("${titleItems[i]['no']}", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(28)))
+                      child: Text(titleItems[i]['no'] < 10 ? "0${titleItems[i]['no']}" : "${titleItems[i]['no']}", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(28)))
                     ),
                     decoration: BoxDecoration(
                       color: Color(0xfff2ad5b),
