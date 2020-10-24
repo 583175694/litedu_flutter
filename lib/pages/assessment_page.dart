@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,9 +6,9 @@ import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/entity/student_evaluation.dart';
 import 'package:flutter_module/plugins/calendar_plugin/model/date_model.dart';
 import 'package:flutter_module/plugins/seekbar_plugin.dart';
+import 'package:flutter_module/plugins/expandable_plugin/sliver_expandable_list.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:sticky_and_expandable_list/sticky_and_expandable_list.dart';
 
 import 'dart:ui' as ui;
 
@@ -148,7 +146,7 @@ class _AssessmentPageState extends State<AssessmentPage> {
       var section = ListSection()
         ..header = item.studentName
         ..items = List.generate(item.questions.length, (index) => item.questions[index].content)
-        ..expanded = true;
+        ..expanded = false;
       sections.add(section);
     }
     return sections;
@@ -382,6 +380,8 @@ class _AssessmentPageState extends State<AssessmentPage> {
         ),
         onTap: () {
           //toggle section expand state
+          mainModel.listHeight = sectionIndex;
+
           setState(() {
             section.setSectionExpanded(!section.isSectionExpanded());
           });
