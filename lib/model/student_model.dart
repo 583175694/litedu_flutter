@@ -28,9 +28,10 @@ class StudentModel extends Model {
   Qis _studentEvaluationQis;
   //  当前选中七边形索引
   int _currentQis = 0;
-
   //  学生id
   int _studentId;
+  //  学生评价列表高度
+  int _listHeight;
 
   StudentArchive get studentArchive => _studentArchive;
 
@@ -78,6 +79,13 @@ class StudentModel extends Model {
 
   set studentId(int value) {
     _studentId = value;
+    notifyListeners();
+  }
+
+  int get listHeight => _listHeight;
+
+  set listHeight(int value) {
+    _listHeight = value;
     notifyListeners();
   }
 }

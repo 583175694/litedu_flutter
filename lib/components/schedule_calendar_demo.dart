@@ -215,7 +215,7 @@ class ScheduleCalendarDemoState extends State<ScheduleCalendarDemo> {
   Widget courseItem(int i) {
     return Container(
       width: ScreenUtil().setWidth(626),
-      height: ScreenUtil().setWidth(128),
+      height: ScreenUtil().setWidth(138),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -224,13 +224,8 @@ class ScheduleCalendarDemoState extends State<ScheduleCalendarDemo> {
             children: <Widget>[
               Row(
                 children: <Widget>[
-//                  Container(
-//                    child: Text(timeItems[i]["class"], style: courseFont),
-//                    margin: EdgeInsets.only(left: 12, right: 6),
-//                  ),
                   Container(
                     constraints: BoxConstraints(maxWidth: ScreenUtil().setWidth(380)),
-//                      child: Text(titleItems[i] == null ? '' : "-  ${titleItems[i]['name']}", style: courseFont, softWrap: false, overflow: TextOverflow.ellipsis,)
                     child: Text("${titleItems[i]['name']}", style: courseFont, softWrap: false, overflow: TextOverflow.ellipsis,),
                     margin: EdgeInsets.only(left: ScreenUtil().setWidth(24), right: ScreenUtil().setWidth(6)),
                   ),
@@ -265,20 +260,6 @@ class ScheduleCalendarDemoState extends State<ScheduleCalendarDemo> {
               )
             ],
           ),
-//          Row(
-//            children: <Widget>[
-//              Container(
-//                width: 4,
-//                height: 4,
-//                decoration: BoxDecoration(
-//                    borderRadius: BorderRadius.all(Radius.circular(4)),
-//                    color: colorItems[i]["circle"]
-//                ),
-//                margin: EdgeInsets.only(left: 12, right: 6),
-//              ),
-//              Text(timeItems[i]["interval"], style: courseFont,),
-//            ],
-//          ),
         ],
       ),
       decoration: BoxDecoration(
