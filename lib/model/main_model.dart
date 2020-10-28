@@ -29,16 +29,18 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
   //  学生档案详情
   getStudentArchive(String studentId, [String strDate, String endDate]) async {
     mainModel.loading = true;
-
     try {
+      var requestData = {
+        "student_id": studentId
+      };
+      if (strDate != null && endDate != null) {
+        requestData['str_date'] = strDate;
+        requestData['end_date'] = endDate;
+      }
       var response = await HttpUtils.request(
         '/papi/api/frontend/student_archive/',
         method: HttpUtils.POST,
-        data: {
-          "student_id": studentId,
-          "str_date": strDate,
-          "end_date": endDate
-        }
+        data: requestData
       );
       if (response["msg"] != '成功') showToast(response["msg"]);
 
@@ -178,11 +180,15 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
   //  学期课程列表
   getSchoolCourse() async {
     try {
+      int id = mainModel.studentId;
       String endDate = mainModel.currentSemester.endDate;
       String startDate = mainModel.currentSemester.strDate;
-      int id = mainModel.studentId;
+      var url = '/papi/api/frontend/semester/school_course/?student_id=${id}';
+      if (startDate != null && endDate != null) {
+        url = '${url}&end_date=${endDate}&str_date=${startDate}';
+      }
       var response = await HttpUtils.request(
-          '/papi/api/frontend/semester/school_course?end_date=${endDate}&student_id=${id}&str_date=${startDate}',
+          url,
           method: HttpUtils.GET,
       );
 
@@ -226,8 +232,12 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       int sid = mainModel.studentId;
       String endDate = mainModel.currentSemester.endDate;
       String startDate = mainModel.currentSemester.strDate;
+      var url = '/papi/api/frontend/student_evaluation/${sid}/stages/';
+      if (startDate != null && endDate != null) {
+        url = '${url}?end_date=${endDate}&str_date=${startDate}';
+      }
       var response = await HttpUtils.request(
-          '/papi/api/frontend/student_evaluation/${sid}/stages?end_date=${endDate}&str_date=${startDate}',
+          url,
           method: HttpUtils.GET,
       );
 
@@ -246,8 +256,12 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
   //  学生阶段评价详情(七边形)
   getQis(String studentId, [String strDate, String endDate]) async {
     try {
+      var url = '/papi/api/frontend/student_evaluation/${studentId}/qis/';
+      if (strDate != null && endDate != null) {
+        url = '${url}?end_date=${endDate}&str_date=${strDate}';
+      }
       var response = await HttpUtils.request(
-          '/papi/api/frontend/student_evaluation/${studentId}/qis?end_date=${endDate}&str_date=${strDate}',
+          url,
           method: HttpUtils.GET,
       );
 
