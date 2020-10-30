@@ -13,6 +13,7 @@ import 'package:flutter_module/model/school_model.dart';
 import 'package:flutter_module/model/student_model.dart';
 import 'package:flutter_module/plugins/common.dart';
 import 'package:flutter_module/plugins/http.dart';
+import 'package:oktoast/oktoast.dart';
 
 /**
  * @ClassName main_model
@@ -31,20 +32,23 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
 
     try {
       var response = await HttpUtils.request(
-          '/papi/api/frontend/student_archive/',
-          method: HttpUtils.POST,
-          data: {
-            "student_id": studentId,
-            "str_date": strDate,
-            "end_date": endDate
-          });
+        '/papi/api/frontend/student_archive/',
+        method: HttpUtils.POST,
+        data: {
+          "student_id": studentId,
+          "str_date": strDate,
+          "end_date": endDate
+        }
+      );
+      if (response["msg"] != '成功') showToast(response["msg"]);
+
       StudentArchive data = StudentArchive.fromJson(response["data"]);
 
       mainModel.studentArchive = data;
       mainModel.loading = false;
     } catch (err) {
       mainModel.loading = false;
-      print(err);
+      showToast('请求失败');
     }
   }
 
@@ -57,13 +61,16 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
         '/papi/api/frontend/student_evaluation/?school_course_schedule_id=$id',
         method: HttpUtils.GET,
       );
+
+      if (response["msg"] != '成功') showToast(response["msg"]);
+
       StudentEvaluation data = StudentEvaluation.fromJson(response["data"]);
 
       mainModel.studentEvaluation = data;
       mainModel.loading = false;
     } catch (err) {
       mainModel.loading = false;
-      print(err);
+      showToast('请求失败');
     }
   }
 
@@ -82,10 +89,16 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
             "question_scores": questionScores
           }
       );
+      if (response["msg"] == '成功') {
+        showToast('评价成功');
+      } else {
+        showToast(response["msg"]);
+      };
+
       mainModel.loading = false;
     } catch (err) {
       mainModel.loading = false;
-      print(err);
+      showToast('请求失败');
     }
   }
 
@@ -99,6 +112,8 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
           method: HttpUtils.GET,
       );
 
+      if (response["msg"] != '成功') showToast(response["msg"]);
+
       ClassTeam data = ClassTeam.fromJson(response);
 
       mainModel.classTeam = data.data;
@@ -107,7 +122,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       return data;
     } catch (err) {
       mainModel.loading = false;
-      print(err);
+      showToast('请求失败');
     }
   }
 
@@ -124,11 +139,15 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
           method: HttpUtils.GET,
       );
 
+      print(response);
+
+      if (response["msg"] != '成功') showToast(response["msg"]);
+
       mainModel.schoolCourseSchedules = response["data"];
       mainModel.loading = false;
     } catch (err) {
       mainModel.loading = false;
-      print(err);
+      showToast('请求失败');
     }
   }
 
@@ -152,7 +171,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       mainModel.loading = false;
     } catch (err) {
       mainModel.loading = false;
-      print(err);
+      showToast('请求失败');
     }
   }
 
@@ -167,13 +186,15 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
           method: HttpUtils.GET,
       );
 
+      if (response["msg"] != '成功') showToast(response["msg"]);
+
       SchoolCourse data = SchoolCourse.fromJson(response);
 
       mainModel.schoolCourse = data;
       mainModel.loading = false;
     } catch (err) {
       mainModel.loading = false;
-      print(err);
+      showToast('请求失败');
     }
   }
 
@@ -186,6 +207,8 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
           method: HttpUtils.GET,
       );
 
+      if (response["msg"] != '成功') showToast(response["msg"]);
+
       Semester data = Semester.fromJson(response["data"]);
 
       mainModel.semester = data;
@@ -193,7 +216,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       mainModel.loading = false;
     } catch (err) {
       mainModel.loading = false;
-      print(err);
+      showToast('请求失败');
     }
   }
 
@@ -208,13 +231,15 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
           method: HttpUtils.GET,
       );
 
+      if (response["msg"] != '成功') showToast(response["msg"]);
+
       StudentEvaluationStages data = StudentEvaluationStages.fromJson(response["data"]);
 
       mainModel.studentEvaluationStages = data;
       mainModel.loading = false;
     } catch (err) {
       mainModel.loading = false;
-      print(err);
+      showToast('请求失败');
     }
   }
 
@@ -226,19 +251,22 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
           method: HttpUtils.GET,
       );
 
+      if (response["msg"] != '成功') showToast(response["msg"]);
+
       Qis data = Qis.fromJson(response["data"]);
 
       mainModel.studentEvaluationQis = data;
       mainModel.loading = false;
     } catch (err) {
       mainModel.loading = false;
-      print(err);
+      showToast('请求失败');
     }
   }
 
 
   //  初始化请求
   void initializeRequest() async {
+
     Common common = new Common();
     //  请求课程
     await mainModel.getSchoolCourseSchedules();

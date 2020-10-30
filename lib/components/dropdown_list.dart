@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +7,8 @@ import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/entity/student_evaluation.dart';
 import 'package:flutter_module/plugins/seekbar_plugin.dart';
 import 'dart:ui' as ui;
+import 'package:localstorage/localstorage.dart';
+import 'package:oktoast/oktoast.dart';
 
 import '../main.dart';
 
@@ -31,6 +34,8 @@ class _DropdownListState extends State<DropdownList> {
   ui.Image _bubble4;
   List<ui.Image> _imageBubbles;
   String assessment;  //  前期评估
+  //  本地存储
+  final LocalStorage storage = new LocalStorage('evaluation');
 
   StudentEvaluation studentEvaluation;
   List<ExpandState> expandStateList;    //开展开的状态列表， ExpandStateBean是自定义的类
@@ -104,6 +109,19 @@ class _DropdownListState extends State<DropdownList> {
     setState(() {});
   }
 
+  //  保存
+  saveResult(Results result) {
+    if (result.evaluateDatetime == null) {
+      storage.setItem('evaluation', {result.id.toString(): result});
+      showToast('保存成功');
+    } else {
+      showToast('您已评价过了，无法保存~');
+    }
+
+    setState(() {});
+  }
+
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1624)
@@ -113,6 +131,24 @@ class _DropdownListState extends State<DropdownList> {
 
     if (studentEvaluation == null && mainModel.studentEvaluation != null) {
       studentEvaluation = mainModel.studentEvaluation;
+      //  这里查找本地缓存有没有临时保存的评价
+      studentEvaluation.results = studentEvaluation.results.map((result) {
+        String key = result.id.toString();
+
+        /// 所有学生评价数据，判断未提交过，
+        /// storage不为NULL
+        /// storage有对应的评价id，取保存的值
+        if (result.evaluateDatetime == null &&
+            storage.getItem('evaluation') != null &&
+            storage.getItem('evaluation').containsKey(key)) {
+          Results data = Results.fromJson(storage.getItem('evaluation')[key]);
+
+          result = data;
+        }
+
+        return result;
+      }).toList();
+
       List<ExpandState> list = new List();
       for (int i = 0; i < studentEvaluation.results.length; i++) {
         list.add(ExpandState(false, i));

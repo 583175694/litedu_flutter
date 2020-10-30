@@ -37,6 +37,7 @@ class LoadingState extends State<Loading> {
                   color: Colors.black12,
                   borderRadius: BorderRadius.all(Radius.circular(20))
               ),
+              margin: EdgeInsets.only(bottom: 120),
             ),
           )
       ),

@@ -438,7 +438,7 @@ class _SeekBarPainter extends CustomPainter {
         ..color = indicatorColor;
 
       if (image != null) canvas.drawImage(image,
-          Offset(value * size.width - ScreenUtil().setWidth(image.width.toDouble()), size.height - ScreenUtil().setWidth(image.height.toDouble()) - ScreenUtil().setWidth(10)),
+          Offset(value * size.width - ScreenUtil().setWidth(image.width.toDouble()), size.height - ScreenUtil().setWidth(image.height.toDouble()) - ScreenUtil().setWidth(36)),
           indicatorPaint);
 
 //      canvas.drawCircle(Offset(value * size.width, size.height / 2),
@@ -607,7 +607,7 @@ class _SeekBarState extends State<SeekBar> {
   bool _afterDragShowSectionText;
 
   ///高度
-  double progresseight;
+  double progressHeight;
 
   ///��高度
   double totalHeight;
@@ -645,8 +645,8 @@ class _SeekBarState extends State<SeekBar> {
   void initState() {
     super.initState();
     _value = (widget.value - widget.min) / (widget.max - widget.min);
-    progresseight = widget.progresseight ?? 5.0;
-    indicatorRadius = widget.indicatorRadius ?? progresseight + 2;
+    progressHeight = widget.progresseight ?? 5.0;
+    indicatorRadius = widget.indicatorRadius ?? progressHeight + 2;
     sectionCount = widget.sectionCount ?? 1;
     sectionRadius = widget.sectionRadius ?? 0.0;
     bubbleHeight = widget.bubbleHeight ?? widget.bubbleRadius * 3;
@@ -658,10 +658,10 @@ class _SeekBarState extends State<SeekBar> {
       end = 0.0;
     }
 
-    if (indicatorRadius >= progresseight) {
+    if (indicatorRadius >= progressHeight) {
       totalHeight = indicatorRadius * 2;
     } else {
-      totalHeight = progresseight;
+      totalHeight = progressHeight;
     }
     length = (widget.max - widget.min); //总���小
   }
@@ -671,7 +671,7 @@ class _SeekBarState extends State<SeekBar> {
     return widget._buildSemanticsWrapper(
       context: context,
       child: Container(
-        // height: totalHeight,
+         height: totalHeight,
         //下面的可以设置约束
         constraints: const BoxConstraints(
           minWidth: double.infinity,
@@ -685,8 +685,8 @@ class _SeekBarState extends State<SeekBar> {
             min: min,
             max: max,
             indicatorRadius: indicatorRadius,
-            progresseight: progresseight,
-            radius: widget.isRound ? progresseight / 2 : 0.0,
+            progresseight: progressHeight,
+            radius: widget.isRound ? progressHeight / 2 : 0.0,
             indicatorColor:
             widget.indicatorColor ?? widget._getProgressColor(context),
             sectionCount: sectionCount,

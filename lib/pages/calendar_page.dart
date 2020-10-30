@@ -156,11 +156,11 @@ class CalendarPageState extends State<CalendarPage> {
   SliverAppBar buildSliverAppBar() {
     return SliverAppBar(
       bottom: PreferredSize(
-          preferredSize: Size(200, ScreenUtil().setWidth(164.0)),
+          preferredSize: Size(200, ScreenUtil().setWidth(110.0)),
           child: Container()
       ),
       backgroundColor: Colors.white,
-      expandedHeight: ScreenUtil().setWidth(706.0),
+      expandedHeight: ScreenUtil().setWidth(660.0),
       flexibleSpace: Stack(
         overflow: Overflow.clip,
         children: <Widget>[

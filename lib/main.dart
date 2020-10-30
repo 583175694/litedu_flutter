@@ -6,6 +6,7 @@ import 'package:flutter_module/pages/calendar_page.dart';
 import 'package:flutter_module/pages/archive_page.dart';
 import 'package:flutter_module/pages/evaluation_page.dart';
 import 'package:flutter_module/pages/evaluation_report_page.dart';
+import 'package:oktoast/oktoast.dart';
 import 'test.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -37,7 +38,8 @@ class _MyAppState extends State<MyApp> {
       'archivePage': (String pageName, Map<dynamic, dynamic> params, String _) =>
           ArchivePage(),
       'calendarPage': (String pageName, Map<dynamic, dynamic> params, String _) =>
-          CalendarPage(),
+//          CalendarPage(),
+        CalendarDemo(),
       'evaluationReportPage': (String pageName, Map<dynamic, dynamic> params, String _) =>
           EvaluationReportPage(schoolId: params['schoolId'], studentId: params['studentId']),
       'evaluationPage': (String pageName, Map<dynamic, dynamic> params, String _) =>
@@ -52,19 +54,21 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return ScopedModel<MainModel>(
       model: mainModel,
-      child: MaterialApp(
-        title: '',
-        builder: FlutterBoost.init(postPush: _onRoutePushed),
-        home: ArchivePage(), //  SlideUpPanelDemo
-        routes: {
-          "calendar_page": (context) => CalendarPage(),
-          "evaluation_page": (context) => EvaluationPage(),
-          // "evaluation_report_page": (context) => EvaluationReportPage(),
-          // "assessment_page": (context) => AssessmentPage(),
-          "archive_page": (context) => ArchivePage(),
-        },
-        theme: ThemeData(
-          primaryColor: Colors.white,
+      child: OKToast(
+        child: MaterialApp(
+          title: '',
+          builder: FlutterBoost.init(postPush: _onRoutePushed),
+          home: CalendarDemo(), //  SlideUpPanelDemo
+          routes: {
+            "calendar_page": (context) => CalendarPage(),
+            "evaluation_page": (context) => EvaluationPage(),
+            // "evaluation_report_page": (context) => EvaluationReportPage(),
+             "assessment_page": (context) => AssessmentPage(),
+            "archive_page": (context) => ArchivePage(),
+          },
+          theme: ThemeData(
+            primaryColor: Colors.white,
+          ),
         ),
       ),
     );
