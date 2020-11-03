@@ -89,6 +89,7 @@ class ArchivePageState extends State<ArchivePage> {
               return true;
             },
             child: ListView(
+              shrinkWrap: true,
               children: <Widget>[
                 //  学生数据
                 GestureDetector(
