@@ -11,6 +11,8 @@ import 'package:flutter_module/plugins/calendar_plugin/widget/default_combine_da
 import 'package:flutter_module/plugins/calendar_plugin/widget/default_custom_day_view.dart';
 import 'package:flutter_module/plugins/calendar_plugin/widget/default_week_bar.dart';
 
+import '../../main.dart';
+
 /**
  * 利用controller来控制视图
  */
@@ -174,7 +176,7 @@ class CalendarController {
           temp++;
         }
       }
-      initialWeekPage = temp;
+      initialWeekPage = temp - 1;
       LogUtil.log(
           TAG: this.runtimeType,
           message:
@@ -334,7 +336,7 @@ class CalendarController {
       {bool needAnimation = false,
       Duration duration = const Duration(milliseconds: 500),
       Curve curve = Curves.ease}) {
-    if (calendarProvider.expandStatus.value == true) {
+    if (mainModel.currentView == 'week') {
       DateModel dateModel = DateModel.fromDateTime(DateTime(year, month, 1));
       //计算目标索引
       int targetPage = monthList.indexOf(dateModel);
@@ -353,7 +355,8 @@ class CalendarController {
             .jumpToPage(targetPage);
       }
     } else {
-      DateModel dateModel = DateModel.fromDateTime(DateTime(year, month, 1));
+      DateModel dateModel = DateModel.fromDateTime(DateTime(year, month, day));
+
       //计算目标索引
       int targetPage = 0;
       for (int i = 0; i < weekList.length - 1; i++) {
@@ -361,13 +364,14 @@ class CalendarController {
         DateModel next = weekList[i + 1];
         if (!first.isAfter(dateModel) && next.isAfter(dateModel)) {
           targetPage = i;
-          return;
+          break;
         }
       }
       if (calendarProvider.calendarConfiguration.weekController.hasClients ==
           false) {
         return;
       }
+      print(targetPage);
       if (needAnimation) {
         calendarProvider.calendarConfiguration.weekController
             .animateToPage(targetPage, duration: duration, curve: curve);

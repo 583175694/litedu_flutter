@@ -200,6 +200,7 @@ class ScheduleCalendarDemoState extends State<ScheduleCalendarDemo> {
 
       //  底部留白
       tiles.add(Container(
+        height: ScreenUtil().setHeight(160),
         color: Colors.white,
       ));
 
