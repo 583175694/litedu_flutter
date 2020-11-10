@@ -29,6 +29,7 @@ class _CalendarDemoState extends State<CalendarDemo> with TickerProviderStateMix
   double parallaxOffset = 0.1; //时差滚动阀值 0.0-1.0
   bool slideDirectionReverse = true; //拖动方向
   ValueNotifier<String> selectText; //  选择日期
+  CalendarController _calendarController = new CalendarController();
 
   @override
   void initState() {
@@ -44,8 +45,9 @@ class _CalendarDemoState extends State<CalendarDemo> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
-		ScreenUtil.instance = ScreenUtil(width: 750, height: 1624)
+    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)
 			..init(context);
+
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -105,15 +107,17 @@ class _CalendarDemoState extends State<CalendarDemo> with TickerProviderStateMix
                 ),
                 Positioned(
                   bottom: 10,
-                  left: 163,
-                  child: Container(
-                    width: 49,
-                    height: 6,
-                    decoration: BoxDecoration(
-                        color: Color(0xffD3D6DE),
-                        borderRadius: BorderRadius.all(Radius.circular(3.0))
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                    child: Container(
+                      width: 49,
+                      height: 6,
+                      decoration: BoxDecoration(
+                          color: Color(0xffD3D6DE),
+                          borderRadius: BorderRadius.all(Radius.circular(3.0))
+                      ),
                     ),
-                  ),
+                  )
                 )
               ],
             )
@@ -130,8 +134,8 @@ class _CalendarDemoState extends State<CalendarDemo> with TickerProviderStateMix
               )
             ],
           ),
-          maxHeight: maxHeight,
-          minHeight: minHeight,
+          maxHeight: ScreenUtil().setWidth(820),
+          minHeight: ScreenUtil().setWidth(206),
           border: showBorder
               ? Border(
                   top: BorderSide(
@@ -147,8 +151,14 @@ class _CalendarDemoState extends State<CalendarDemo> with TickerProviderStateMix
           backdropEnabled: backdropEnabled,
           parallaxEnabled: parallaxEnabled,
           parallaxOffset: parallaxOffset,
-          slideDirection: slideDirectionReverse ? SlideDirection.DOWN : SlideDirection.UP) :
-
+          slideDirection: slideDirectionReverse ? SlideDirection.DOWN : SlideDirection.UP,
+          onPanelOpened: () {
+            mainModel.currentView = 'month';
+          },
+          onPanelClosed: () {
+            mainModel.currentView = 'week';
+          },
+      ) :
       //  编辑状态
       ScheduleList(selectText: selectText),
     );

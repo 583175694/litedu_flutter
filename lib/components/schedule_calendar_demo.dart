@@ -200,6 +200,7 @@ class ScheduleCalendarDemoState extends State<ScheduleCalendarDemo> {
 
       //  底部留白
       tiles.add(Container(
+        height: ScreenUtil().setHeight(160),
         color: Colors.white,
       ));
 
@@ -233,7 +234,7 @@ class ScheduleCalendarDemoState extends State<ScheduleCalendarDemo> {
                     width: ScreenUtil().setWidth(38),
                     height: ScreenUtil().setWidth(38),
                     child: Center(
-                      child: Text("${titleItems[i]['no']}", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(28)))
+                        child: Text(titleItems[i]['no'] < 10 ? "0${titleItems[i]['no']}" : "${titleItems[i]['no']}", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(28)))
                     ),
                     decoration: BoxDecoration(
                       color: Color(0xfff2ad5b),
@@ -272,8 +273,8 @@ class ScheduleCalendarDemoState extends State<ScheduleCalendarDemo> {
   //  跳转到评价列表
   void toEvaluation(int id, String name) async {
     await mainModel.getStudentEvaluation(id);
-     Navigator.pushNamed(context, "assessment_page", arguments: name);
-//    FlutterBoost.singleton.channel.invokeMethod('archivePage/routeAssessment', {'courseName': name});
+//     Navigator.pushNamed(context, "assessment_page", arguments: name);
+    FlutterBoost.singleton.channel.invokeMethod('archivePage/routeAssessment', {'courseName': name});
   }
 }
 

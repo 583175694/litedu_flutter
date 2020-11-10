@@ -5,9 +5,13 @@
  **/
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/custom_style.dart';
+import 'package:flutter_module/model/main_model.dart';
 import 'package:flutter_module/plugins/calendar_plugin/constants/constants.dart';
 import 'package:flutter_module/plugins/calendar_plugin/controller.dart';
 import 'package:flutter_module/plugins/calendar_plugin/widget/calendar_view.dart';
+import 'package:scoped_model/scoped_model.dart';
+
+import '../main.dart';
 
 import '../main.dart';
 
@@ -33,12 +37,15 @@ class CalendarMonthState extends State<CalendarMonth> {
   void initState() {
     super.initState();
     DateTime now = DateTime.now();
+
     _calendarController = new CalendarController(
         minYear: now.year - 1,
         minYearMonth: 1,
         maxYear: now.year + 1,
         maxYearMonth: 12,
         showMode: CalendarConstants.MODE_SHOW_ONLY_MONTH);
+
+        mainModel.monthController = _calendarController;
 
     _calendarController.addMonthChangeListener((year, month) {
       text.value = "$year年$month月";
@@ -48,6 +55,8 @@ class CalendarMonthState extends State<CalendarMonth> {
     _calendarController.addOnCalendarSelectListener((dateModel) {
       //刷新选择的时间
       selectText.value = "${dateModel.year}年${dateModel.month}月${dateModel.day}日";
+      mainModel.weekController.moveToCalendar(dateModel.year, dateModel.month, dateModel.day);
+
       setState(() { });
     });
 
@@ -57,6 +66,7 @@ class CalendarMonthState extends State<CalendarMonth> {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       child: new Stack(
         children: <Widget>[
