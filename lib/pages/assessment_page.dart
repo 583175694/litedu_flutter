@@ -190,21 +190,21 @@ class _AssessmentPageState extends State<AssessmentPage> {
     return Scaffold(
       appBar: AppBar(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            GestureDetector(
-              child: Container(
-                child: Icon(
-                  Icons.keyboard_arrow_left,
-                  color: Color(0xff6D7993),
-                  size: ScreenUtil().setWidth(80),
-                ),
-                margin: EdgeInsets.only(right: ScreenUtil().setWidth(120)),
-              ),
-              onTap: () => {
-                FlutterBoost.singleton.channel.invokeMethod('app/navBack')
-              },
-            ),
+            // GestureDetector(
+            //   child: Container(
+            //     child: Icon(
+            //       Icons.keyboard_arrow_left,
+            //       color: Color(0xff6D7993),
+            //       size: ScreenUtil().setWidth(80),
+            //     ),
+            //     margin: EdgeInsets.only(right: ScreenUtil().setWidth(120)),
+            //   ),
+            //   onTap: () => {
+            //     FlutterBoost.singleton.channel.invokeMethod('app/navBack')
+            //   },
+            // ),
             Text('课堂表现', style: TextStyle(fontSize: ScreenUtil().setSp(40), color: Color(0xff6D7993))),
           ],
         ),
