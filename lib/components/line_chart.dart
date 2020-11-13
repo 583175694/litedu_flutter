@@ -171,7 +171,7 @@ class MyPainter extends CustomPainter {
           colors: [Colors.white, Color(0xff29D9D6)])
           .createShader(Rect.fromLTRB(
           point(index).dx,
-          point(index).dy + ScreenUtil().setWidth(30),
+          point(index).dy + ScreenUtil().setWidth(10),
           point(index).dx,
           size.height)
       );
@@ -181,7 +181,7 @@ class MyPainter extends CustomPainter {
     for (int i = 0; i <= _results.length - 1; ++i) {
       canvas.drawLine(
         Offset(point(i).dx, size.height),
-        Offset(point(i).dx, point(i).dy + ScreenUtil().setWidth(30)),
+        Offset(point(i).dx, point(i).dy + ScreenUtil().setWidth(10)),
         paint
           ..style = PaintingStyle.fill
           ..strokeWidth = ScreenUtil().setWidth(16)

@@ -9,6 +9,9 @@ import 'package:flutter_module/components/bar_chart.dart';
 import 'package:flutter_module/components/line_chart.dart';
 import 'package:flutter_module/components/loading.dart';
 import 'package:flutter_module/components/screen_fit.dart';
+import 'package:flutter_module/main.dart';
+import 'package:flutter_module/model/main_model.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class EvaluationPage extends StatefulWidget {
   @override
@@ -16,10 +19,14 @@ class EvaluationPage extends StatefulWidget {
 }
 
 class EvaluationPageState extends State<EvaluationPage> {
+  List<String> skills = ["自主力", "共感力", "探索力", "内驱力", "折腾力", "耐挫力", "创造力"];
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1624)
       ..init(context);
+
+    final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
 
     return Scaffold(
       backgroundColor: Color(0xffF0F1F4),
@@ -68,7 +75,7 @@ class EvaluationPageState extends State<EvaluationPage> {
                 height: ScreenUtil().setWidth(600),
                 child: Stack(
                   children: <Widget>[
-                    title('data4'),
+                    title(skills[mainModel.currentQis]),
                     subtitle('本学期data4变化趋势'),
                     Positioned(
                       width: MediaQuery.of(context).size.width,

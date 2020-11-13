@@ -50,6 +50,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       mainModel.loading = false;
     } catch (err) {
       mainModel.loading = false;
+      print('/papi/api/frontend/student_archive/ 请求失败： $err');
       showToast('请求失败');
     }
   }
@@ -72,6 +73,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       mainModel.loading = false;
     } catch (err) {
       mainModel.loading = false;
+      print('/papi/api/frontend/student_evaluation/?school_course_schedule_id= 请求失败： $err');
       showToast('请求失败');
     }
   }
@@ -100,6 +102,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       mainModel.loading = false;
     } catch (err) {
       mainModel.loading = false;
+      print('/papi/api/frontend/student_evaluation/ 请求失败： $err');
       showToast('请求失败');
     }
   }
@@ -124,6 +127,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       return data;
     } catch (err) {
       mainModel.loading = false;
+      print('/api/frontend/classTeam/index/ 请求失败： $err');
       showToast('请求失败');
     }
   }
@@ -141,14 +145,13 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
           method: HttpUtils.GET,
       );
 
-      print(response);
-
       if (response["msg"] != '成功') showToast(response["msg"]);
 
       mainModel.schoolCourseSchedules = response["data"];
       mainModel.loading = false;
     } catch (err) {
       mainModel.loading = false;
+      print('/api/frontend/classTeam/schoolCourseSchedules/ 请求失败： $err');
       showToast('请求失败');
     }
   }
@@ -173,6 +176,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       mainModel.loading = false;
     } catch (err) {
       mainModel.loading = false;
+      print('/api/frontend/schoolCourseSchedule/reschedule/ 请求失败： $err');
       showToast('请求失败');
     }
   }
@@ -200,6 +204,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       mainModel.loading = false;
     } catch (err) {
       mainModel.loading = false;
+      print('/papi/api/frontend/semester/school_course/ 请求失败： $err');
       showToast('请求失败');
     }
   }
@@ -222,6 +227,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       mainModel.loading = false;
     } catch (err) {
       mainModel.loading = false;
+      print('/papi/api/frontend/semester?school_id/ 请求失败： $err');
       showToast('请求失败');
     }
   }
@@ -249,6 +255,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       mainModel.loading = false;
     } catch (err) {
       mainModel.loading = false;
+      print('/papi/api/frontend/student_evaluation/stages/ 请求失败： $err');
       showToast('请求失败');
     }
   }
@@ -273,6 +280,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       mainModel.loading = false;
     } catch (err) {
       mainModel.loading = false;
+      print('/papi/api/frontend/student_evaluation/qis/ 请求失败： $err');
       showToast('请求失败');
     }
   }

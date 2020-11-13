@@ -158,19 +158,25 @@ class ArchivePageState extends State<ArchivePage> {
                   },
                 ),
                 //  学生考勤
-                Container(
-                  height: ScreenUtil().setWidth(496),
-                  child: Stack(
-                    children: <Widget>[
-                      title('考勤统计'),
-                      Container(
-                        child: StudentAttendance(),
-                        margin: EdgeInsets.only(top: ScreenUtil().setWidth(118)),
-                      ),
-                    ],
+                GestureDetector(
+                  child: Container(
+                    height: ScreenUtil().setWidth(496),
+                    child: Stack(
+                      children: <Widget>[
+                        title('考勤统计'),
+                        Container(
+                          child: StudentAttendance(),
+                          margin: EdgeInsets.only(top: ScreenUtil().setWidth(118)),
+                        ),
+                      ],
+                    ),
+                    color: Colors.white,
+                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
                   ),
-                  color: Colors.white,
-                  margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
+                  onTap: () {
+                    // 考勤统计跳转 TODO
+                    // FlutterBoost.singleton.channel.invokeMethod();
+                  },
                 ),
                 //  注意事项
                 GestureDetector(
