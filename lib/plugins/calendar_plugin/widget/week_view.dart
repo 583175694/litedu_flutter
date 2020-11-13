@@ -45,19 +45,19 @@ class _WeekViewState extends State<WeekView> {
 
     //第一帧后,添加监听，generation发生变化后，需要刷新整个日历
     WidgetsBinding.instance.addPostFrameCallback((callback) {
-      if (context == null) return;
-
-      Provider.of<CalendarProvider>(context, listen: false)
-          .generation
-          .addListener(() async {
-        items = DateUtil.initCalendarForWeekView(
-            widget.year, widget.month, widget.firstDayOfWeek.getDateTime(), 0,
-            minSelectDate: widget.configuration.minSelectDate,
-            maxSelectDate: widget.configuration.maxSelectDate,
-            extraDataMap: extraDataMap,
-            offset: widget.configuration.offset);
-        setState(() {});
-      });
+      if (context != null) {
+        Provider.of<CalendarProvider>(context, listen: false)
+            .generation
+            .addListener(() async {
+          items = DateUtil.initCalendarForWeekView(
+              widget.year, widget.month, widget.firstDayOfWeek.getDateTime(), 0,
+              minSelectDate: widget.configuration.minSelectDate,
+              maxSelectDate: widget.configuration.maxSelectDate,
+              extraDataMap: extraDataMap,
+              offset: widget.configuration.offset);
+          setState(() {});
+        });
+      }
     });
   }
 

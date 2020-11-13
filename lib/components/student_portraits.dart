@@ -239,8 +239,8 @@ class SpiderView extends CustomPainter {
     double radius = mCenterX > mCenterY ? mCenterX : mCenterY;
     //  描述
     for (int i = 0; i < mEdgeSize; i++) {
-      double x = mCenterX + radius * 1.32 * cos(degToRad(angle * i)) - ScreenUtil().setWidth(42);
-      double y = mCenterY + radius * 1.32 * sin(degToRad(angle * i)) - ScreenUtil().setWidth(16);
+      double x = mCenterX + radius * 1.48 * cos(degToRad(angle * i)) - ScreenUtil().setWidth(42);
+      double y = mCenterY + radius * 1.22 * sin(degToRad(angle * i)) - ScreenUtil().setWidth(16);
 
       ParagraphBuilder pb = ParagraphBuilder(ParagraphStyle(
         textAlign: TextAlign.center,
@@ -252,7 +252,7 @@ class SpiderView extends CustomPainter {
       Paragraph paragraph = pb.build()..layout(pc);
 
       canvas.drawCircle(
-          Offset(x - ScreenUtil().setWidth(18), y + ScreenUtil().setWidth(18)),
+          Offset(x - ScreenUtil().setWidth(14), y + ScreenUtil().setWidth(16)),
           ScreenUtil().setWidth(6),
           mPaint
             ..color = Color(0xffFFA938)

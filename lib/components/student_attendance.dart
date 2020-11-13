@@ -71,9 +71,9 @@ class StudentAttendanceState extends State<StudentAttendance> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              attendanceValue(0, attendances.total == 0 ? '0%' : "${attendances.presence / attendances.total}%", '考勤正常'),
-              attendanceValue(1, attendances.total == 0 ? '0%' : "${attendances.leave / attendances.total}%", '请假'),
-              attendanceValue(2, attendances.total == 0 ? '0%' : "${attendances.absence / attendances.total}%", '考勤异常'),
+              attendanceValue(0, attendances.total == 0 ? '0%' : "${(attendances.presence * 100 / attendances.total).toStringAsFixed(2)}%", '考勤正常'),
+              attendanceValue(1, attendances.total == 0 ? '0%' : "${(attendances.leave * 100 / attendances.total).toStringAsFixed(2)}%", '请假'),
+              attendanceValue(2, attendances.total == 0 ? '0%' : "${(attendances.absence * 100 / attendances.total).toStringAsFixed(2)}%", '考勤异常'),
             ],
           ),
           margin: EdgeInsets.only(left: ScreenUtil().setWidth(16)),

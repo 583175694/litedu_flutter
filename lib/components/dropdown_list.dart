@@ -187,10 +187,12 @@ class _DropdownListState extends State<DropdownList> {
                     ),
                     margin: EdgeInsets.only(left: ScreenUtil().setWidth(48), right: ScreenUtil().setWidth(48)),
                   ),
-                  Text(item.studentName, style: nameFont),
+                  Container(
+                      width: ScreenUtil().setWidth(348),
+                      child: Text(item.studentName, style: nameFont),
+                  ),
                   Container(
                     child: Text(item.evaluateDatetime == null ? '' : '已提交', style: selectFont),
-                      margin: EdgeInsets.only(left: ScreenUtil().setWidth(268)),
                     )
                 ],
               ),

@@ -61,14 +61,14 @@ class _MonthViewState extends State<MonthView>
 
     //第一帧后,添加监听，generation发生变化后，需要刷新整个日历
     WidgetsBinding.instance.addPostFrameCallback((callback) {
-      if (context == null) return;
-
-      Provider.of<CalendarProvider>(context, listen: false)
-          .generation
-          .addListener(() async {
-        extraDataMap = widget.configuration.extraDataMap;
-        await getItems();
-      });
+      if (context != null) {
+        Provider.of<CalendarProvider>(context, listen: false)
+            .generation
+            .addListener(() async {
+          extraDataMap = widget.configuration.extraDataMap;
+          await getItems();
+        });
+      }
     });
   }
 
