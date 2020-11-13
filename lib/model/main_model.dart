@@ -33,7 +33,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       var requestData = {
         "student_id": studentId
       };
-      if (strDate != null && endDate != null) {
+      if (strDate != null && endDate != null && strDate != "" && endDate != "") {
         requestData['str_date'] = strDate;
         requestData['end_date'] = endDate;
       }
@@ -188,7 +188,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       String endDate = mainModel.currentSemester.endDate;
       String startDate = mainModel.currentSemester.strDate;
       var url = '/papi/api/frontend/semester/school_course/?student_id=${id}';
-      if (startDate != null && endDate != null) {
+      if (startDate != null && endDate != null && startDate != "" && endDate != "") {
         url = '${url}&end_date=${endDate}&str_date=${startDate}';
       }
       var response = await HttpUtils.request(
@@ -239,7 +239,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
       String endDate = mainModel.currentSemester.endDate;
       String startDate = mainModel.currentSemester.strDate;
       var url = '/papi/api/frontend/student_evaluation/${sid}/stages/';
-      if (startDate != null && endDate != null) {
+      if (startDate != null && endDate != null && startDate != "" && endDate != "") {
         url = '${url}?end_date=${endDate}&str_date=${startDate}';
       }
       var response = await HttpUtils.request(
@@ -264,7 +264,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
   getQis(String studentId, [String strDate, String endDate]) async {
     try {
       var url = '/papi/api/frontend/student_evaluation/${studentId}/qis/';
-      if (strDate != null && endDate != null) {
+      if (strDate != null && endDate != null && strDate != "" && endDate != "") {
         url = '${url}?end_date=${endDate}&str_date=${strDate}';
       }
       var response = await HttpUtils.request(
