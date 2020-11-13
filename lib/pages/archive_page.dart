@@ -174,8 +174,7 @@ class ArchivePageState extends State<ArchivePage> {
                     margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
                   ),
                   onTap: () {
-                    // 考勤统计跳转 TODO
-                    // FlutterBoost.singleton.channel.invokeMethod();
+                    FlutterBoost.singleton.channel.invokeMethod('archivePage/routeAttendanceData');
                   },
                 ),
                 //  注意事项
