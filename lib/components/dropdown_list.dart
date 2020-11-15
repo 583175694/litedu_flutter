@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/entity/student_evaluation.dart';
+import 'package:flutter_module/model/main_model.dart';
 import 'package:flutter_module/plugins/seekbar_plugin.dart';
 import 'dart:ui' as ui;
 import 'package:localstorage/localstorage.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 import '../main.dart';
 
@@ -102,7 +104,7 @@ class _DropdownListState extends State<DropdownList> {
     });
 
     await mainModel.submitStudentEvaluation(item.id, item.content, list, new List());
-    await mainModel.getStudentEvaluation(mainModel.studentId);
+    await mainModel.getStudentEvaluation(item.schoolCourseScheduleId);
     expandStateList.forEach((res) {
       res.isOpen = false;
     });
@@ -124,6 +126,7 @@ class _DropdownListState extends State<DropdownList> {
 
   @override
   Widget build(BuildContext context) {
+    final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1624)
       ..init(context);
 
@@ -284,18 +287,21 @@ class _DropdownListState extends State<DropdownList> {
                   ),
                   onTap: () => onConfirm(item),
                 ),
-                Container(
-                  width: ScreenUtil().setWidth(304),
-                  height: ScreenUtil().setWidth(112),
-                  child: Center(
-                    child: Text('保存', style: saveFont,),
+                GestureDetector(
+                  child: Container(
+                    width: ScreenUtil().setWidth(304),
+                    height: ScreenUtil().setWidth(112),
+                    child: Center(
+                      child: Text('保存', style: saveFont,),
+                    ),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(112)),
+                        color: Color(0xffffffff),
+                        border: Border.all(color: Color(0xff29D9D6), width: 2)
+                    ),
                   ),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(112)),
-                      color: Color(0xffffffff),
-                      border: Border.all(color: Color(0xff29D9D6), width: 2)
-                  ),
-                ),
+                  onTap: () => saveResult(item),
+                )
               ],
             ),
             margin: EdgeInsets.only(top: ScreenUtil().setWidth(0), bottom: ScreenUtil().setWidth(80)),

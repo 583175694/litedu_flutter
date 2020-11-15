@@ -43,6 +43,7 @@ class CalendarWeekState extends State<CalendarWeek> {
         showMode: CalendarConstants.MODE_SHOW_ONLY_WEEK);
 
     mainModel.weekController = _calendarController;
+    _calendarController.moveToCalendar(now.year, now.month, now.day);
 
     _calendarController.addMonthChangeListener((year, month) {
       text.value = "$year年$month月";
