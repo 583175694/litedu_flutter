@@ -60,10 +60,10 @@ class _MyAppState extends State<MyApp> {
           builder: FlutterBoost.init(postPush: _onRoutePushed),
           home: CalendarDemo(), //  SlideUpPanelDemo
           routes: {
-            "calendar_page": (context) => CalendarPage(),
+            "calendar_page": (context) => CalendarDemo(),
             "evaluation_page": (context) => EvaluationPage(),
             // "evaluation_report_page": (context) => EvaluationReportPage(),
-             "assessment_page": (context) => AssessmentPage(),
+            "assessment_page": (context) => AssessmentPage(),
             "archive_page": (context) => ArchivePage(),
           },
           theme: ThemeData(

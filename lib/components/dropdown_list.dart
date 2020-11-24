@@ -191,7 +191,7 @@ class _DropdownListState extends State<DropdownList> {
                     margin: EdgeInsets.only(left: ScreenUtil().setWidth(48), right: ScreenUtil().setWidth(48)),
                   ),
                   Container(
-                      width: ScreenUtil().setWidth(348),
+                      width: ScreenUtil().setWidth(308),
                       child: Text(item.studentName, style: nameFont),
                   ),
                   Container(
@@ -574,5 +574,13 @@ class MyTextFieldState extends State<MyTextField> {
         });
       },
     );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+    mainModel.studentEvaluation = null;
   }
 }

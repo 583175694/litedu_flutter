@@ -124,9 +124,10 @@ class _CalendarDemoState extends State<CalendarDemo> with TickerProviderStateMix
             children: <Widget>[
               Positioned(
                 top: 106,
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
                 child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height - 184,
+                  padding: EdgeInsets.only(bottom: ScreenUtil().setWidth(184)),
                   child: ScheduleCalendarDemo(selectText: selectText),
                 ),
               )
