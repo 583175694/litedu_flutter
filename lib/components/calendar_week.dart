@@ -5,10 +5,12 @@
  **/
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/custom_style.dart';
+import 'package:flutter_module/dto/dateDto.dart';
 import 'package:flutter_module/main.dart';
 import 'package:flutter_module/model/main_model.dart';
 import 'package:flutter_module/plugins/calendar_plugin/constants/constants.dart';
 import 'package:flutter_module/plugins/calendar_plugin/controller.dart';
+import 'package:flutter_module/plugins/calendar_plugin/model/date_model.dart';
 import 'package:flutter_module/plugins/calendar_plugin/widget/calendar_view.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -28,22 +30,25 @@ class CalendarWeekState extends State<CalendarWeek> {
   ValueNotifier<String> text;
   //  选择日期
   ValueNotifier<String> selectText;
+  //  dateDto
+  DateDto dateDto = new DateDto();
 
 
   @override
   void initState() {
     super.initState();
     DateTime now = DateTime.now();
+    DateModel selectDateModel = dateDto.toDateModel(now);
 
     _calendarController = new CalendarController(
         minYear: now.year - 1,
         minYearMonth: 1,
         maxYear: now.year + 1,
         maxYearMonth: 12,
+        selectDateModel: selectDateModel,
         showMode: CalendarConstants.MODE_SHOW_ONLY_WEEK);
 
     mainModel.weekController = _calendarController;
-    _calendarController.moveToCalendar(now.year, now.month, now.day);
 
     _calendarController.addMonthChangeListener((year, month) {
       text.value = "$year年$month月";
