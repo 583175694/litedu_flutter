@@ -438,7 +438,7 @@ class _SeekBarPainter extends CustomPainter {
         ..color = indicatorColor;
 
       if (image != null) canvas.drawImage(image,
-          Offset(value * size.width - ScreenUtil().setWidth(image.width.toDouble()), size.height - ScreenUtil().setWidth(image.height.toDouble()) - ScreenUtil().setWidth(36)),
+          Offset(value * size.width - ScreenUtil().setWidth(image.width.toDouble()), ScreenUtil().setWidth(-image.height.toDouble() / 2)),
           indicatorPaint);
 
 //      canvas.drawCircle(Offset(value * size.width, size.height / 2),

@@ -393,8 +393,8 @@ class _DropdownListState extends State<DropdownList> {
                   child: Text(item.content, style: textFont,)
               ),
               result.evaluationType == 'six' ?
-              SeekbarSix(item) :
-              SeekbarSeven(item)
+              SeekbarSix(item, result) :
+              SeekbarSeven(item, result)
             ],
           ),
         )
@@ -407,7 +407,7 @@ class _DropdownListState extends State<DropdownList> {
   }
 
   //  前期评估
-  Container SeekbarSix(Questions item) {
+  Container SeekbarSix(Questions item, Results results) {
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -416,10 +416,9 @@ class _DropdownListState extends State<DropdownList> {
               margin: EdgeInsets.fromLTRB(ScreenUtil().setWidth(40), ScreenUtil().setWidth(40), ScreenUtil().setWidth(40), ScreenUtil().setWidth(40)),
               width: ScreenUtil().setWidth(528),
               child: SeekBar(
+                isCanTouch: results.evaluateDatetime == null ? true : false,
                 progressHeight: ScreenUtil().setWidth(32),
                 value: item.score == -1 ? 0 : ((item.score - 2) / 8 * 100).toDouble(), //  换算成 0~100
-//                sectionCount: 4,
-//                sectionRadius: ScreenUtil().setWidth(16),
                 isRound: true,
                 showSectionText: false,
                 progressColor: Color(0xff29D9D6),
@@ -451,7 +450,7 @@ class _DropdownListState extends State<DropdownList> {
   }
 
   //  中期评估
-  Widget SeekbarSeven(Questions item) {
+  Widget SeekbarSeven(Questions item, Results results) {
     return Column(
       children: <Widget>[
         Row(
@@ -461,10 +460,9 @@ class _DropdownListState extends State<DropdownList> {
                 margin: EdgeInsets.fromLTRB(ScreenUtil().setWidth(40), ScreenUtil().setWidth(40), ScreenUtil().setWidth(40), ScreenUtil().setWidth(40)),
                 width: ScreenUtil().setWidth(476),
                 child: SeekBar(
+                  isCanTouch: results.evaluateDatetime == null ? true : false,
                   progressHeight: ScreenUtil().setWidth(32),
                   value: item.score == -1 ? 0 : ((item.score - 2) / 8 * 100).toDouble(), //  换算成 0~100
-//                  sectionCount: 3,
-//                  sectionRadius: ScreenUtil().setWidth(16),
                   isRound: true,
                   showSectionText: false,
                   progressColor: Color(0xffFFAB3B),
