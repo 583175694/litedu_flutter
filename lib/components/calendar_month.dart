@@ -43,7 +43,7 @@ class CalendarMonthState extends State<CalendarMonth> {
         maxYearMonth: 12,
         showMode: CalendarConstants.MODE_SHOW_ONLY_MONTH);
 
-        mainModel.monthController = _calendarController;
+    mainModel.monthController = _calendarController;
 
     _calendarController.addMonthChangeListener((year, month) {
       text.value = "$year年$month月";
