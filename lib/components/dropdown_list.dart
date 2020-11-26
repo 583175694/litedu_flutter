@@ -1,6 +1,3 @@
-import 'dart:ffi';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_module/components/screen_fit.dart';
@@ -186,7 +183,7 @@ class _DropdownListState extends State<DropdownList> {
                     height: ScreenUtil().setWidth(96),
                     child: CircleAvatar(
                         radius: ScreenUtil().setWidth(96),
-                        backgroundImage: NetworkImage(item.studentLogo)
+                        backgroundImage: AssetImage('lib/assets/default_avatar.png')
                     ),
                     margin: EdgeInsets.only(left: ScreenUtil().setWidth(48), right: ScreenUtil().setWidth(48)),
                   ),
