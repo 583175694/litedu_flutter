@@ -176,7 +176,7 @@ class CalendarController {
           temp++;
         }
       }
-      initialWeekPage = temp + 1;
+      initialWeekPage = temp + 2;
       LogUtil.log(
           TAG: this.runtimeType,
           message:
