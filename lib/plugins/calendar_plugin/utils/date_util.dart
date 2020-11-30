@@ -197,7 +197,8 @@ class DateUtil {
         message:
             "getMonthViewLineCount:$year年$month月:有$lineCount行");
 
-    return lineCount;
+//    return lineCount;
+    return 6;  //  🐶固定6行
   }
 
   /**

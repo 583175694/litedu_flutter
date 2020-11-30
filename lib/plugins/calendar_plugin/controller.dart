@@ -171,7 +171,6 @@ class CalendarController {
         weekList.add(dateModel);
 
         if (nowTime.isAfter(dateTime)) {
-          print('${nowTime}---${dateTime}');
           temp++;
         }
       }
