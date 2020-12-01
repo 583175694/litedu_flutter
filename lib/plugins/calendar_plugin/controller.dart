@@ -102,16 +102,6 @@ class CalendarController {
         calendarConfiguration.maxSelectMonth,
         calendarConfiguration.maxSelectDay));
 
-    LogUtil.log(
-        TAG: this.runtimeType,
-        message: "start:${DateModel.fromDateTime(DateTime(
-          minYear,
-          minYearMonth,
-        ))},end:${DateModel.fromDateTime(DateTime(
-          maxYear,
-          maxYearMonth,
-        ))}");
-
     if (showMode != CalendarConstants.MODE_SHOW_ONLY_WEEK) {
       //初始化pageController,initialPage默认是当前时间对于的页面
       int initialPage = 0;
@@ -138,11 +128,6 @@ class CalendarController {
       }
       this.monthController =
           new PageController(initialPage: initialPage, keepPage: true);
-
-      LogUtil.log(
-          TAG: this.runtimeType,
-          message:
-              "初始化月份视图的信息:一共有${monthList.length}个月，initialPage为$nowMonthIndex");
     }
 
     if (showMode != CalendarConstants.MODE_SHOW_ONLY_MONTH) {
@@ -175,7 +160,6 @@ class CalendarController {
         }
       }
       initialWeekPage = temp - 1;
-      print("初始化星期视图的信息:一共有${weekList.length}个星期，initialPage为$initialWeekPage");
       this.weekController = new PageController(initialPage: initialWeekPage);
     }
 
