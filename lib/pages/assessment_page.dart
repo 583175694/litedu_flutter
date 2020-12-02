@@ -94,7 +94,7 @@ class AssessmentPageState extends State<AssessmentPage> {
                   padding: EdgeInsets.only(left: ScreenUtil().setWidth(64), right: ScreenUtil().setWidth(64)),
                 ),
               ),
-              mainModel.studentEvaluation != null ? DropdownListDemo() : Container()
+              DropdownListDemo()
             ],
           ),
           Loading()
