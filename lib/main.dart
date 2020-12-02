@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'package:flutter_module/pages/assessment_page.dart';
 import 'package:flutter_module/pages/calendar_demo.dart';
-import 'package:flutter_module/pages/calendar_page.dart';
 import 'package:flutter_module/pages/archive_page.dart';
 import 'package:flutter_module/pages/evaluation_page.dart';
 import 'package:flutter_module/pages/evaluation_report_page.dart';
@@ -38,8 +37,7 @@ class _MyAppState extends State<MyApp> {
       'archivePage': (String pageName, Map<dynamic, dynamic> params, String _) =>
           ArchivePage(),
       'calendarPage': (String pageName, Map<dynamic, dynamic> params, String _) =>
-//          CalendarPage(),
-        CalendarDemo(),
+        CalendarPage(),
       'evaluationReportPage': (String pageName, Map<dynamic, dynamic> params, String _) =>
           EvaluationReportPage(schoolId: params['schoolId'], studentId: params['studentId']),
       'evaluationPage': (String pageName, Map<dynamic, dynamic> params, String _) =>
@@ -58,12 +56,12 @@ class _MyAppState extends State<MyApp> {
         child: MaterialApp(
           title: '',
           builder: FlutterBoost.init(postPush: _onRoutePushed),
-          home: CalendarDemo(), //  SlideUpPanelDemo
+          home: Container(),
           routes: {
-            "calendar_page": (context) => CalendarDemo(),
+            "calendar_page": (context) => CalendarPage(),
             "evaluation_page": (context) => EvaluationPage(),
             // "evaluation_report_page": (context) => EvaluationReportPage(),
-            "assessment_page": (context) => AssessmentPage(),
+            "assessment_page": (context) => AssessmentPage(courseName: 'Test'),
             "archive_page": (context) => ArchivePage(),
           },
           theme: ThemeData(

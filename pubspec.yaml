@@ -41,6 +41,9 @@ dependencies:
   connectivity: 0.4.4
   json_serializable: 3.3.0
   localstorage: ^3.0.0
+  extended_image: 0.7.2
+  extended_image_library: 0.2.1
+  sticky_headers:
 
 dev_dependencies:
   flutter_test:

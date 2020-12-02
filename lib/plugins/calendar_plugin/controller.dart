@@ -102,16 +102,6 @@ class CalendarController {
         calendarConfiguration.maxSelectMonth,
         calendarConfiguration.maxSelectDay));
 
-    LogUtil.log(
-        TAG: this.runtimeType,
-        message: "start:${DateModel.fromDateTime(DateTime(
-          minYear,
-          minYearMonth,
-        ))},end:${DateModel.fromDateTime(DateTime(
-          maxYear,
-          maxYearMonth,
-        ))}");
-
     if (showMode != CalendarConstants.MODE_SHOW_ONLY_WEEK) {
       //初始化pageController,initialPage默认是当前时间对于的页面
       int initialPage = 0;
@@ -138,11 +128,6 @@ class CalendarController {
       }
       this.monthController =
           new PageController(initialPage: initialPage, keepPage: true);
-
-      LogUtil.log(
-          TAG: this.runtimeType,
-          message:
-              "初始化月份视图的信息:一共有${monthList.length}个月，initialPage为$nowMonthIndex");
     }
 
     if (showMode != CalendarConstants.MODE_SHOW_ONLY_MONTH) {
@@ -155,7 +140,7 @@ class CalendarController {
         nowYear = DateTime.now().year;
         nowMonth = DateTime.now().month;
       }
-      DateTime nowTime = new DateTime(nowYear, nowMonth, 15);
+      DateTime nowTime = new DateTime.now();
       DateTime firstDayOfMonth = DateTime(minYear, minYearMonth, 1);
       //计算第一个星期的第一天的日期
       DateTime firstWeekDate =
@@ -163,24 +148,18 @@ class CalendarController {
 
       DateTime lastDay = DateTime(maxYear, maxYearMonth,
           DateUtil.getMonthDaysCount(maxYear, maxYearMonth));
-      int temp = -1;
+      int temp = 0;
       for (DateTime dateTime = firstWeekDate;
           !dateTime.isAfter(lastDay);
           dateTime = dateTime.add(Duration(days: 7))) {
         DateModel dateModel = DateModel.fromDateTime(dateTime);
         weekList.add(dateModel);
-//        print("nowTime.isBefore(dateTime)");
-//        print("$nowTime,,,,$dateTime");
 
         if (nowTime.isAfter(dateTime)) {
           temp++;
         }
       }
-      initialWeekPage = temp + 2;
-      LogUtil.log(
-          TAG: this.runtimeType,
-          message:
-              "初始化星期视图的信息:一共有${weekList.length}个星期，initialPage为$initialWeekPage");
+      initialWeekPage = temp - 1;
       this.weekController = new PageController(initialPage: initialWeekPage);
     }
 

@@ -11,14 +11,14 @@ import 'package:scoped_model/scoped_model.dart';
 
 import '../main.dart';
 
-class CalendarDemo extends StatefulWidget {
-  CalendarDemo({Key key}) : super(key: key);
+class CalendarPage extends StatefulWidget {
+  CalendarPage({Key key}) : super(key: key);
 
   @override
-  _CalendarDemoState createState() => _CalendarDemoState();
+  _CalendarPageState createState() => _CalendarPageState();
 }
 
-class _CalendarDemoState extends State<CalendarDemo> with TickerProviderStateMixin{
+class _CalendarPageState extends State<CalendarPage> with TickerProviderStateMixin{
   bool showCollapsed = false; //是否显示折叠时的内容
   bool showBorder = false; //是否显示边框
   bool borderRadius = true; //启用圆角
