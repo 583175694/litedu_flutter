@@ -227,7 +227,7 @@ class ScheduleCalendarDemoState extends State<ScheduleCalendarDemo> {
                 children: <Widget>[
                   Container(
                     constraints: BoxConstraints(maxWidth: ScreenUtil().setWidth(380)),
-                    child: Text("${titleItems[i]['name']}", style: courseFont, softWrap: false, overflow: TextOverflow.ellipsis,),
+                    child: Text("${titleItems[i]['school_course_schedule_name']}", style: courseFont, softWrap: false, overflow: TextOverflow.ellipsis,),
                     margin: EdgeInsets.only(left: ScreenUtil().setWidth(24), right: ScreenUtil().setWidth(6)),
                   ),
                   Container(
