@@ -80,14 +80,14 @@ class ArchivePageState extends State<ArchivePage> {
       body: Stack(
         children: <Widget>[
           NotificationListener<ScrollNotification>(
-            onNotification: (Notification scrollNotification) {
-              if (scrollNotification is ScrollStartNotification) {
-                FlutterBoost.singleton.channel.invokeMethod('archivePage/onScrollStart');
-              } else if (scrollNotification is ScrollEndNotification) {
-                FlutterBoost.singleton.channel.invokeMethod('archivePage/onScrollEnd');
-              }
-              return true;
-            },
+            // onNotification: (Notification scrollNotification) {
+            //   if (scrollNotification is ScrollStartNotification) {
+            //     FlutterBoost.singleton.channel.invokeMethod('archivePage/onScrollStart');
+            //   } else if (scrollNotification is ScrollEndNotification) {
+            //     FlutterBoost.singleton.channel.invokeMethod('archivePage/onScrollEnd');
+            //   }
+            //   return true;
+            // },
             child: ListView(
               shrinkWrap: true,
               children: <Widget>[
