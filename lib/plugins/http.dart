@@ -75,6 +75,9 @@ class HttpUtils {
       Response response = await dio.request(url, data: data, options: new Options(method: method, headers: _headers));
       result = response.data;
 
+      if (result["code"] == 401) {
+        FlutterBoost.singleton.channel.invokeMethod('app/authExpired');
+      }
       print('响应数据：' + response.toString());
     } on DioError catch (e) {
       print('请求出错：' + e.toString());
