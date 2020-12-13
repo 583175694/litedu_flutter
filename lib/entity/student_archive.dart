@@ -9,6 +9,9 @@ class StudentArchive extends Object {
   @JsonKey(name: 'student_id')
   int studentId;
 
+  @JsonKey(name: 'student_name')
+  String studentName;
+
   @JsonKey(name: 'basics')
   Basics basics;
 
@@ -21,7 +24,7 @@ class StudentArchive extends Object {
   @JsonKey(name: 'attendances')
   Attendances attendances;
 
-  StudentArchive(this.studentId,this.basics,this.sixSkills,this.qiSkills,this.attendances,);
+  StudentArchive(this.studentId,this.studentName,this.basics,this.sixSkills,this.qiSkills,this.attendances,);
 
   factory StudentArchive.fromJson(Map<String, dynamic> srcJson) => _$StudentArchiveFromJson(srcJson);
 

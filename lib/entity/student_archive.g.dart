@@ -9,6 +9,7 @@ part of 'student_archive.dart';
 StudentArchive _$StudentArchiveFromJson(Map<String, dynamic> json) {
   return StudentArchive(
     json['student_id'] as int,
+    json['student_name'] as String,
     json['basics'] == null
         ? null
         : Basics.fromJson(json['basics'] as Map<String, dynamic>),
@@ -27,6 +28,7 @@ StudentArchive _$StudentArchiveFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$StudentArchiveToJson(StudentArchive instance) =>
     <String, dynamic>{
       'student_id': instance.studentId,
+      'student_name': instance.studentName,
       'basics': instance.basics,
       'six_skills': instance.sixSkills,
       'qi_skills': instance.qiSkills,

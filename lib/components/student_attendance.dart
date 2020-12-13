@@ -30,7 +30,7 @@ class StudentAttendanceState extends State<StudentAttendance> {
   @override
   Widget build(BuildContext context) {
     final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
-
+    String studentName = mainModel.studentArchive == null ? '' : mainModel.studentArchive.studentName;
     attendances = mainModel.studentArchive == null ? Attendances(0, 0, 0, 0) : mainModel.studentArchive.attendances;
 
     return Row(
@@ -51,7 +51,7 @@ class StudentAttendanceState extends State<StudentAttendance> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text('丁丁上学', style: fontDefault),
+                  Text('${studentName}上学', style: fontDefault),
                   Text.rich(
                     TextSpan(
                       text: '${attendances.total}',
