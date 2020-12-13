@@ -41,22 +41,31 @@ class ArchivePageState extends State<ArchivePage> {
   @override
   void initState() {
     super.initState();
-    FlutterBoost.singleton.channel.addMethodHandler((handler) {
-      if (handler.method == 'archivePage/reloadData') {
-        setState(() {
-          this.studentId = handler.arguments['studentId'];
-          this.strDate = handler.arguments['strDate'];
-          this.endDate = handler.arguments['endDate'];
-        });
-        //  请求学生档案
-        mainModel.getStudentArchive(handler.arguments['studentId'], handler.arguments['strDate'], handler.arguments['endDate']);
-        //  请求七边形
-        mainModel.getQis(handler.arguments['studentId'], handler.arguments['strDate'], handler.arguments['endDate']);
+  }
 
-        mainModel.studentId = handler.arguments['studentId'];
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    FlutterBoost.singleton.channel.addMethodHandler((handler) {
+      var method = handler.method;
+      if (method == 'archivePage/reloadData') {
+        var studentId = handler.arguments['studentId'];
+        var strDate = handler.arguments['strDate'];
+        var endDate = handler.arguments['endDate'];
+        //  请求学生档案
+        mainModel.getStudentArchive(studentId, strDate, endDate);
+        //  请求七边形
+        mainModel.getQis(studentId, strDate, endDate);
+
+        mainModel.studentId = studentId;
         mainModel.currentSemester
-          ..endDate = handler.arguments['endDate']
-          ..strDate = handler.arguments['strDate'];
+          ..strDate = strDate
+          ..endDate = endDate;
+        setState(() {
+          this.studentId = studentId;
+          this.strDate = strDate;
+          this.endDate = endDate;
+        });
       }
       return Future.value('done');
     });
@@ -194,7 +203,7 @@ class ArchivePageState extends State<ArchivePage> {
                       ],
                     ),
                     color: Colors.white,
-                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(20), bottom: ScreenUtil().setHeight(120)),
+                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(20), bottom: ScreenUtil().setHeight(180)),
                   ),
                   onTap: () {
                     FlutterBoost.singleton.channel.invokeMethod('archivePage/routeStudentAttentions');
