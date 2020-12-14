@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_module/main.dart';
+import 'package:flutter_module/plugins/common.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter_module/model/main_model.dart';
 import 'package:flutter_module/plugins/calendar_plugin/cache_data.dart';
@@ -174,6 +175,20 @@ class ItemContainerState extends State<ItemContainer> {
       //  🐶点击整个item都会触发事件，切换日期
       behavior: HitTestBehavior.opaque,
       onTap: () {
+        int currentMonth = mainModel.currentMonth.month;
+        int currentYear = mainModel.currentMonth.year;
+
+        //  如果不是当前月历，跳转到相应位置
+        if (dateModel.year > currentYear) {
+          mainModel.monthController.nextPage();
+        } else if (dateModel.year < currentYear){
+          mainModel.monthController.previousPage();
+        } else if (dateModel.month > currentMonth) {
+          mainModel.monthController.nextPage();
+        } else if (dateModel.month < currentMonth) {
+          mainModel.monthController.previousPage();
+        }
+
         mainModel.currentDateModel = dateModel;
         mainModel.initializeRequest();  //  请求课程列表
 

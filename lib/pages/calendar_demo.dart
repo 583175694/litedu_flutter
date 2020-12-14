@@ -96,7 +96,7 @@ class _CalendarPageState extends State<CalendarPage> with TickerProviderStateMix
                       ),
                       margin: EdgeInsets.only(right: 16.0),
                     ),
-                    Text(mainModel.currentMonth, style: TextStyle(fontSize: ScreenUtil().setWidth(28), color: Color(0xff6D7993)),),
+                    Text('${mainModel.currentMonth.year}年${mainModel.currentMonth.month}月', style: TextStyle(fontSize: ScreenUtil().setWidth(28), color: Color(0xff6D7993)),),
                   ],
                 ),
                 Positioned(

@@ -14,7 +14,7 @@ class CalendarModel extends Model{
   //  当前选中日期，默认当前日期
   DateModel _currentDateModel = DateDto().toDateModel(DateTime.now());
   //  当前月份
-  String _currentMonth = "${DateTime.now().year}年${DateTime.now().month}月";
+  DateTime _currentMonth = new DateTime.now();
   //  当前视图
   String _currentView = "week";
   //  月视图控制器
@@ -25,7 +25,7 @@ class CalendarModel extends Model{
 
   bool get isEdit => _isEdit;
   DateModel get currentDateModel => _currentDateModel;
-  String get currentMonth => _currentMonth;
+  DateTime get currentMonth => _currentMonth;
   String get currentView => _currentView;
   CalendarController get monthController => _monthController;
   CalendarController get weekController => _weekController;
@@ -40,7 +40,7 @@ class CalendarModel extends Model{
     notifyListeners();
   }
 
-  set currentMonth(String value) {
+  set currentMonth(DateTime value) {
     _currentMonth = value;
     notifyListeners();
   }

@@ -157,7 +157,7 @@ class _DropdownListDemoState extends State<DropdownListDemo> {
     }
 
     return Container(
-      height: ScreenUtil().setHeight(1330),
+      height: ScreenUtil().setHeight(1182),
       child: new ListView.builder(
         itemBuilder: (context, i) => ExpansionTile(
           title: header(i),
