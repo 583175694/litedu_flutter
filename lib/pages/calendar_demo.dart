@@ -32,7 +32,6 @@ class _CalendarPageState extends State<CalendarPage> with TickerProviderStateMix
   @override
   void initState() {
     super.initState();
-
     //  请求班级
     mainModel.getClassTeam().then((res) {
       //  初始化请求
@@ -41,12 +40,19 @@ class _CalendarPageState extends State<CalendarPage> with TickerProviderStateMix
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
 		ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)
 			..init(context);
 
-
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
