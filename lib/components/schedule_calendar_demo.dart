@@ -117,7 +117,7 @@ class ScheduleCalendarDemoState extends State<ScheduleCalendarDemo> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text('${date.year}年${date.month}月${date.day}日', style: TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(44)))
+              Text('${date.year}年${date.month}月${date.day}日', style: TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(40)))
             ],
           ),
           margin: EdgeInsets.only(left: ScreenUtil().setWidth(30.0), top: ScreenUtil().setWidth(58.0), bottom: ScreenUtil().setWidth(80.0)),
@@ -472,7 +472,7 @@ class ScheduleListState extends State<ScheduleList> {
                     Container(
                       constraints: BoxConstraints(maxWidth: ScreenUtil().setWidth(380)),
 //                      child: Text(titleItems[i] == null ? '' : "-  ${titleItems[i]['name']}", style: courseFont, softWrap: false, overflow: TextOverflow.ellipsis,)
-                      child: Text("${titleItems[i]['name']}", style: courseFont, softWrap: false, overflow: TextOverflow.ellipsis,),
+                      child: Text("${titleItems[i]['school_course_schedule_name']}", style: courseFont, softWrap: false, overflow: TextOverflow.ellipsis,),
                       margin: EdgeInsets.only(left: ScreenUtil().setWidth(24), right: ScreenUtil().setWidth(6)),
                     ),
                     Container(
