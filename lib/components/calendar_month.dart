@@ -47,7 +47,7 @@ class CalendarMonthState extends State<CalendarMonth> {
 
     _calendarController.addMonthChangeListener((year, month) {
       text.value = "$year年$month月";
-      mainModel.currentMonth = text.value;
+      mainModel.currentMonth = DateTime(year, month);
     });
 
     _calendarController.addOnCalendarSelectListener((dateModel) {
