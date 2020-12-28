@@ -18,9 +18,20 @@ class LineChart extends StatefulWidget {
 
 class LineChartState extends State<LineChart> {
   TextStyle fontItem = TextStyle(fontSize: ScreenUtil().setSp(22), color: Color(0xffD3D6DE));
-  List<String> months = ['一月', '二月', '三月', '四月', '五月'];
+  List<String> months = new List();
 
   Qis studentEvaluationQis;
+
+  @override
+  void initState() {
+    super.initState();
+
+    DateTime date = new DateTime.now();
+
+    for (int i = 4; i >= 0; i--) {
+      months.add('${date.month - i}月');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +98,6 @@ class LineChartState extends State<LineChart> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     for ( String item in months) Container(
-                      width: 0,
                       child: Text(item, style: fontItem),
                     )
                   ],

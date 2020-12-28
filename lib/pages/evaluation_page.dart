@@ -76,7 +76,7 @@ class EvaluationPageState extends State<EvaluationPage> {
                 child: Stack(
                   children: <Widget>[
                     title(skills[mainModel.currentQis]),
-                    subtitle('本学期data4变化趋势'),
+                    subtitle('本学期${skills[mainModel.currentQis]}变化趋势'),
                     Positioned(
                       width: MediaQuery.of(context).size.width,
                       child: LineChart(),
