@@ -64,7 +64,7 @@ class AssessmentPageState extends State<AssessmentPage> {
     final mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
     DateModel date = mainModel.currentDateModel;
     TextStyle selectFont = TextStyle(color: Color(0xff29D9D6), fontSize: ScreenUtil().setSp(32));
-    String _courseName = this.courseName;
+    String _courseName = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -87,8 +87,8 @@ class AssessmentPageState extends State<AssessmentPage> {
                     children: <Widget>[
                       Text('${date.year}年${date.month}月${date.day}日 ', style: selectFont),
                       Container(
-                        width: ScreenUtil().setWidth(200),
-                          child: Text(_courseName ?? '', style: selectFont, overflow: TextOverflow.ellipsis,))
+                        width: ScreenUtil().setWidth(300),
+                          child: Text(_courseName ?? '', style: selectFont, overflow: TextOverflow.ellipsis), alignment: Alignment.centerRight,)
                     ],
                   ),
                   padding: EdgeInsets.only(left: ScreenUtil().setWidth(64), right: ScreenUtil().setWidth(64)),

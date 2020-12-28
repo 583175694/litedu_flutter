@@ -129,7 +129,7 @@ class _DropdownListDemoState extends State<DropdownListDemo> {
 
     _imageBubbles = [_bubble1, _bubble2, _bubble3, _bubble4];
 
-    if (studentEvaluation == null && mainModel.studentEvaluation != null) {
+    if (mainModel.studentEvaluation != null && mainModel.studentEvaluation != studentEvaluation) {
       studentEvaluation = mainModel.studentEvaluation;
       //  这里查找本地缓存有没有临时保存的评价
       studentEvaluation.results = studentEvaluation.results.map((result) {
@@ -162,6 +162,7 @@ class _DropdownListDemoState extends State<DropdownListDemo> {
         itemBuilder: (context, i) => ExpansionTile(
           title: header(i),
           children: questions(i),
+          initiallyExpanded: false,  //默认打开关闭
         ),
         itemCount: studentEvaluation.results.length,
       ),
@@ -543,7 +544,7 @@ class MyTextFieldState extends State<MyTextField> {
       onChanged: (value) {
         setState(() {
           widget.item.content = value;
-          _textController.text = value;
+//          _textController.text = value;
         });
       },
     );

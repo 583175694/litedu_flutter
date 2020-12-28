@@ -257,7 +257,7 @@ class ScheduleCalendarDemoState extends State<ScheduleCalendarDemo> {
                   ),
                   margin: EdgeInsets.only(right: 8),
                 ),
-                onTap: () => toEvaluation(titleItems[i]["id"], titleItems[i]['name']),
+                onTap: () => toEvaluation(titleItems[i]["id"], titleItems[i]['school_course_schedule_name']),
               )
             ],
           ),
