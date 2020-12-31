@@ -7,6 +7,7 @@ import 'package:flutter_module/entity/semester.dart';
 import 'package:flutter_module/entity/student_archive.dart';
 import 'package:flutter_module/entity/student_evaluation.dart';
 import 'package:flutter_module/entity/student_evaluation_stages.dart';
+import 'package:flutter_module/entity/student_evaluation_trends.dart';
 import 'package:flutter_module/main.dart';
 import 'package:flutter_module/model/home_model.dart';
 import 'package:flutter_module/model/school_model.dart';
@@ -285,6 +286,28 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
     }
   }
 
+  //  学生评价趋势（七边形）
+  getQisTrends() async {
+    try {
+      int studentId = mainModel.studentId;
+      var url = '/papi/api/frontend/student_evaluation/${studentId}/qis/trends/';
+      var response = await HttpUtils.request(
+        url,
+        method: HttpUtils.GET,
+      );
+
+      if (response["msg"] != '成功') showToast(response["msg"]);
+
+      StudentEvaluationTrends data = StudentEvaluationTrends.fromJson(response);
+
+      mainModel.studentEvaluationQisTrends = data.data;
+      mainModel.loading = false;
+    } catch (err) {
+      mainModel.loading = false;
+      print('/papi/api/frontend/student_evaluation/qis/trends/ 请求失败： $err');
+      showToast('请求失败');
+    }
+  }
 
   //  初始化请求
   void initializeRequest() async {

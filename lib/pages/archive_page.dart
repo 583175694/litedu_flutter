@@ -142,8 +142,10 @@ class ArchivePageState extends State<ArchivePage> {
                     margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
                   ),
                   onTap: () {
+                    //  请求七边形趋势
+                    mainModel.getQisTrends();
                     FlutterBoost.singleton.channel.invokeMethod('archivePage/routeEvaluation');
-                    // Navigator.pushNamed(context, 'evaluation_page');
+//                     Navigator.pushNamed(context, 'evaluation_page');
                   },
                 ),
                 //  学生画像

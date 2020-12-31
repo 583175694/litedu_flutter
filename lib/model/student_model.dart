@@ -8,6 +8,7 @@ import 'package:flutter_module/entity/student_archive.dart';
  **/
 import 'package:flutter_module/entity/student_evaluation.dart';
 import 'package:flutter_module/entity/student_evaluation_stages.dart';
+import 'package:flutter_module/entity/student_evaluation_trends.dart';
 /**
  * @ClassName calendar_model
  * @Author wushaohang
@@ -32,6 +33,8 @@ class StudentModel extends Model {
   int _studentId;
   //  学生评价列表高度
   int _listHeight;
+  //  七边形趋势
+  List<Trends> _studentEvaluationQisTrends;
 
   StudentArchive get studentArchive => _studentArchive;
 
@@ -86,6 +89,13 @@ class StudentModel extends Model {
 
   set listHeight(int value) {
     _listHeight = value;
+    notifyListeners();
+  }
+
+  List<Trends> get studentEvaluationQisTrends => _studentEvaluationQisTrends;
+
+  set studentEvaluationQisTrends(List<Trends> value) {
+    _studentEvaluationQisTrends = value;
     notifyListeners();
   }
 }

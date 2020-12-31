@@ -5,6 +5,7 @@
  **/
 import 'package:flutter/material.dart';
 import 'package:flutter_module/entity/qis.dart';
+import 'package:flutter_module/entity/student_evaluation_trends.dart';
 import 'package:flutter_module/model/main_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -19,7 +20,7 @@ class LineChart extends StatefulWidget {
 class LineChartState extends State<LineChart> {
   TextStyle fontItem = TextStyle(fontSize: ScreenUtil().setSp(22), color: Color(0xffD3D6DE));
   List<String> months = new List();
-
+  List<Trends> trends = new List();
   Qis studentEvaluationQis;
 
   @override
@@ -37,34 +38,35 @@ class LineChartState extends State<LineChart> {
   Widget build(BuildContext context) {
     mainModel = ScopedModel.of<MainModel>(context, rebuildOnChange: true);
 
-    studentEvaluationQis = mainModel.studentEvaluationQis;
-    List<int> results = new List();
+    //  获取七边形趋势数据
+    trends = mainModel.studentEvaluationQisTrends;
+    List<double> results = new List();
 
-    studentEvaluationQis.results.forEach((Results res) {
+    trends.forEach((Trends res) {
       switch (mainModel.currentQis) {
         case 0 :
-          results.add(res.abilityTest1Score);
+          results.add(res.sumAbilityTest1Score);
           break;
         case 1 :
-          results.add(res.abilityTest2Score);
+          results.add(res.sumAbilityTest2Score);
           break;
         case 2 :
-          results.add(res.abilityTest3Score);
+          results.add(res.sumAbilityTest3Score);
           break;
         case 3 :
-          results.add(res.abilityTest4Score);
+          results.add(res.sumAbilityTest4Score);
           break;
         case 4 :
-          results.add(res.abilityTest5Score);
+          results.add(res.sumAbilityTest5Score);
           break;
         case 5 :
-          results.add(res.abilityTest6Score);
+          results.add(res.sumAbilityTest6Score);
           break;
         case 6 :
-          results.add(res.abilityTest7Score);
+          results.add(res.sumAbilityTest7Score);
           break;
         default:
-          results.add(res.abilityTest1Score);
+          results.add(res.sumAbilityTest1Score);
       }
       setState(() {});
     });
@@ -113,12 +115,12 @@ class LineChartState extends State<LineChart> {
 }
 
 class MyPainter extends CustomPainter {
-  MyPainter(Qis studentEvaluationQis, List<int> results)
+  MyPainter(Qis studentEvaluationQis, List<double> results)
       : _studentEvaluationQis = studentEvaluationQis,
         _results = results
   ;
   Qis _studentEvaluationQis;
-  List<int> _results = new List();
+  List<double> _results = new List();
 
 
   @override
@@ -147,15 +149,14 @@ class MyPainter extends CustomPainter {
     }
 
     Offset point (int index) {
-      if (_results[index] > 10) {
-        _results[index] = 10;
+      if (_results[index] > 100) {
+        _results[index] = 100;
       }
-      return Offset(eWidth * index, size.height - (_results[index] / 10) * ScreenUtil().setWidth(288));
+      return Offset(eWidth * index, size.height - (_results[index] / 100) * ScreenUtil().setWidth(288));
     }
 
     //  画线
     for (int i = 0; i < _results.length - 1; ++i) {
-      print(point(i));
       canvas.drawLine(point(i), point(i + 1), paint
         ..strokeWidth = ScreenUtil().setWidth(6)
         ..color = Color(0xff29D9D6));
@@ -181,7 +182,7 @@ class MyPainter extends CustomPainter {
           colors: [Colors.white, Color(0xff29D9D6)])
           .createShader(Rect.fromLTRB(
           point(index).dx,
-          point(index).dy + ScreenUtil().setWidth(10),
+          point(index).dy + ScreenUtil().setWidth(8),
           point(index).dx,
           size.height)
       );
@@ -189,9 +190,10 @@ class MyPainter extends CustomPainter {
 
     //  画柱状图
     for (int i = 0; i <= _results.length - 1; ++i) {
+      if (_results[i] <= 0) { continue; }
       canvas.drawLine(
         Offset(point(i).dx, size.height),
-        Offset(point(i).dx, point(i).dy + ScreenUtil().setWidth(10)),
+        Offset(point(i).dx, point(i).dy + ScreenUtil().setWidth(8)),
         paint
           ..style = PaintingStyle.fill
           ..strokeWidth = ScreenUtil().setWidth(16)
