@@ -11,14 +11,6 @@ import 'package:scoped_model/scoped_model.dart';
 
 import '../main.dart';
 
-/// 用于管理状态
-class ExpandState {
-  bool isOpen;
-  var index;
-
-  ExpandState(this.isOpen, this.index);
-}
-
 class DropdownListDemo extends StatefulWidget {
   @override
   _DropdownListDemoState createState() => _DropdownListDemoState();
@@ -37,7 +29,6 @@ class _DropdownListDemoState extends State<DropdownListDemo> {
   final LocalStorage storage = new LocalStorage('evaluation');
 
   StudentEvaluation studentEvaluation;
-  List<ExpandState> expandStateList;    //开展开的状态列表， ExpandStateBean是自定义的类
 
   TextStyle nameFont = TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(32));
   TextStyle textFont = TextStyle(color: Color(0xff6D7993), fontSize: ScreenUtil().setSp(28));
@@ -80,19 +71,6 @@ class _DropdownListDemoState extends State<DropdownListDemo> {
     return info.image;
   }
 
-  /// 修改列表项展开与闭合的方法
-  _setExpandOpenOrClose(int index, isExpand) {
-    setState(() {
-      /// 遍历可展开状态列表
-      expandStateList.forEach((item){
-        if(item.index==index){
-          /// 取反
-          item.isOpen = !isExpand;
-        }
-      });
-    });
-  }
-
   ///  提交
   void onConfirm(Results item) async {
     List<int> list = new List();
@@ -102,9 +80,6 @@ class _DropdownListDemoState extends State<DropdownListDemo> {
 
     await mainModel.submitStudentEvaluation(item.id, item.content, list, new List());
     await mainModel.getStudentEvaluation(item.schoolCourseScheduleId);
-    expandStateList.forEach((res) {
-      res.isOpen = false;
-    });
     setState(() {});
   }
 
@@ -127,7 +102,9 @@ class _DropdownListDemoState extends State<DropdownListDemo> {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1624)
       ..init(context);
 
-    _imageBubbles = [_bubble1, _bubble2, _bubble3, _bubble4];
+    setState(() {
+      _imageBubbles = [_bubble1, _bubble2, _bubble3, _bubble4];
+    });
 
     if (mainModel.studentEvaluation != null && mainModel.studentEvaluation != studentEvaluation) {
       studentEvaluation = mainModel.studentEvaluation;
@@ -148,12 +125,6 @@ class _DropdownListDemoState extends State<DropdownListDemo> {
 
         return result;
       }).toList();
-
-      List<ExpandState> list = new List();
-      for (int i = 0; i < studentEvaluation.results.length; i++) {
-        list.add(ExpandState(false, i));
-      }
-      expandStateList = list;
     }
 
     return Container(
@@ -187,12 +158,10 @@ class _DropdownListDemoState extends State<DropdownListDemo> {
               margin: EdgeInsets.only(left: ScreenUtil().setWidth(28), right: ScreenUtil().setWidth(48)),
             ),
             Container(
-              width: ScreenUtil().setWidth(308),
+              width: ScreenUtil().setWidth(288),
               child: Text(item.studentName, style: nameFont),
             ),
-            Container(
-              child: Text(item.evaluateDatetime == null ? '' : '已提交', style: selectFont),
-            )
+            Text(item.evaluateDatetime == null ? '' : '已提交', style: selectFont, textAlign: TextAlign.right,)
           ],
         ),
     );
@@ -251,7 +220,7 @@ class _DropdownListDemoState extends State<DropdownListDemo> {
         ),
         margin: EdgeInsets.only(bottom: ScreenUtil().setWidth(48)),
       ),  //  评语
-      item.evaluateDatetime == null ? Container(
+      item.evaluateDatetime == null && item.questions.length != 0 ? Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -313,7 +282,7 @@ class _DropdownListDemoState extends State<DropdownListDemo> {
         ),
       ),
       questionList(item),
-      item.evaluateDatetime == null ? Container(
+      item.evaluateDatetime == null && item.questions.length != 0 ? Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

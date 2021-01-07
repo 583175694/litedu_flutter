@@ -30,7 +30,7 @@ class StudentModel extends Model {
   //  当前选中七边形索引
   int _currentQis = 0;
   //  学生id
-  int _studentId;
+  String _studentId;
   //  学生评价列表高度
   int _listHeight;
   //  七边形趋势
@@ -78,9 +78,9 @@ class StudentModel extends Model {
     notifyListeners();
   }
 
-  int get studentId => _studentId;
+  String get studentId => _studentId;
 
-  set studentId(int value) {
+  set studentId(String value) {
     _studentId = value;
     notifyListeners();
   }

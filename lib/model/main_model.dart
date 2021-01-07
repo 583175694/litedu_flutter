@@ -185,7 +185,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
   //  学期课程列表
   getSchoolCourse() async {
     try {
-      int id = mainModel.studentId;
+      String id = mainModel.studentId;
       String endDate = mainModel.currentSemester.endDate;
       String startDate = mainModel.currentSemester.strDate;
       var url = '/papi/api/frontend/semester/school_course/?student_id=${id}';
@@ -236,7 +236,7 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
   //  学生阶段评价详情(六边形)
   getStages() async {
     try {
-      int sid = mainModel.studentId;
+      String sid = mainModel.studentId;
       String endDate = mainModel.currentSemester.endDate;
       String startDate = mainModel.currentSemester.strDate;
       var url = '/papi/api/frontend/student_evaluation/${sid}/stages/';
@@ -287,9 +287,8 @@ class MainModel extends Model with HomeModel, CalendarModel, StudentModel, Schoo
   }
 
   //  学生评价趋势（七边形）
-  getQisTrends() async {
+  getQisTrends(String studentId) async {
     try {
-      int studentId = mainModel.studentId;
       var url = '/papi/api/frontend/student_evaluation/${studentId}/qis/trends/';
       var response = await HttpUtils.request(
         url,

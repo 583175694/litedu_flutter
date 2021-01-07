@@ -19,19 +19,12 @@ class LineChart extends StatefulWidget {
 
 class LineChartState extends State<LineChart> {
   TextStyle fontItem = TextStyle(fontSize: ScreenUtil().setSp(22), color: Color(0xffD3D6DE));
-  List<String> months = new List();
   List<Trends> trends = new List();
   Qis studentEvaluationQis;
 
   @override
   void initState() {
     super.initState();
-
-    DateTime date = new DateTime.now();
-
-    for (int i = 4; i >= 0; i--) {
-      months.add('${date.month - i}月');
-    }
   }
 
   @override
@@ -41,6 +34,7 @@ class LineChartState extends State<LineChart> {
     //  获取七边形趋势数据
     trends = mainModel.studentEvaluationQisTrends;
     List<double> results = new List();
+    List<String> months = new List();
 
     trends.forEach((Trends res) {
       switch (mainModel.currentQis) {
@@ -68,6 +62,9 @@ class LineChartState extends State<LineChart> {
         default:
           results.add(res.sumAbilityTest1Score);
       }
+
+      months.add(res.dateName);
+
       setState(() {});
     });
 
@@ -122,11 +119,10 @@ class MyPainter extends CustomPainter {
   Qis _studentEvaluationQis;
   List<double> _results = new List();
 
-
   @override
   void paint(Canvas canvas, Size size) {
 
-    double eWidth = size.width / 4;
+    double eWidth = size.width / 5;
     double eHeight = size.height / 5;
 
     //画棋盘背景
@@ -143,7 +139,7 @@ class MyPainter extends CustomPainter {
       canvas.drawLine(Offset(0, dy), Offset(size.width, dy), paint);
     }
 
-    for (int i = 0; i <= 4; ++i) {
+    for (int i = 0; i <= _results.length - 1; ++i) {
       double dx = eWidth * i;
       canvas.drawLine(Offset(dx, 0), Offset(dx, size.height), paint);
     }

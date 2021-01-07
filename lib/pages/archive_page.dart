@@ -41,39 +41,35 @@ class ArchivePageState extends State<ArchivePage> {
   @override
   void initState() {
     super.initState();
-  }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    FlutterBoost.singleton.channel.addMethodHandler((handler) {
+    FlutterBoost.singleton.channel.addMethodHandler((handler) async {
       var method = handler.method;
+
       if (method == 'archivePage/reloadData') {
         var studentId = handler.arguments['studentId'];
         var strDate = handler.arguments['strDate'];
         var endDate = handler.arguments['endDate'];
         //  请求学生档案
-        mainModel.getStudentArchive(studentId, strDate, endDate);
+        await mainModel.getStudentArchive(studentId, strDate, endDate);
         //  请求七边形
-        mainModel.getQis(studentId, strDate, endDate);
+        await mainModel.getQis(studentId, strDate, endDate);
+        //  请求七边形趋势
+        await mainModel.getQisTrends(studentId);
 
         mainModel.studentId = studentId;
         mainModel.currentSemester
           ..strDate = strDate
           ..endDate = endDate;
-        setState(() {
-          this.studentId = studentId;
-          this.strDate = strDate;
-          this.endDate = endDate;
-        });
       }
       return Future.value('done');
     });
+  }
 
-//    //  请求学生档案
-//    mainModel.getStudentArchive('70', '2020-01-01', '2020-12-31');//  请求七边形
-//    //  请求七边形
-//    mainModel.getQis('70', '2020-01-01', '2020-12-31');
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+//    print('qiAbility1: ${mainModel.studentArchive.qiSkills.qiAbility1}');
   }
 
   @override
@@ -143,7 +139,6 @@ class ArchivePageState extends State<ArchivePage> {
                   ),
                   onTap: () {
                     //  请求七边形趋势
-                    mainModel.getQisTrends();
                     FlutterBoost.singleton.channel.invokeMethod('archivePage/routeEvaluation');
 //                     Navigator.pushNamed(context, 'evaluation_page');
                   },

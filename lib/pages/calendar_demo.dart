@@ -51,8 +51,6 @@ class _CalendarPageState extends State<CalendarPage> with TickerProviderStateMix
 		ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)
 			..init(context);
 
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

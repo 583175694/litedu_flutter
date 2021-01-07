@@ -59,7 +59,7 @@ class EvaluationReportPageState extends State<EvaluationReportPage> {
     super.initState();
 
     mainModel.schoolId = int.parse(this.schoolId);
-    mainModel.studentId = int.parse(this.studentId);
+    mainModel.studentId = this.studentId;
     initializeRequest();
   }
 
