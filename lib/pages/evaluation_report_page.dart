@@ -88,27 +88,34 @@ class EvaluationReportPageState extends State<EvaluationReportPage> {
       appBar: AppBar(
         title: GestureDetector(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               GestureDetector(
                 child: Container(
                   child: Icon(
                     Icons.keyboard_arrow_left, color: Colors.white,
                   ),
-                  margin: EdgeInsets.only(right: ScreenUtil().setWidth(220)),
                 ),
                 onTap: () => {
                   FlutterBoost.singleton.channel.invokeMethod('app/navBack')
                 },
               ),
-              Text(mainModel.currentSemester?.name ?? '', style: fontTitle),
+              Row(
+                children: [
+                  Text(mainModel.currentSemester?.name ?? '', style: fontTitle),
+                  Container(
+                    child: Image.asset('lib/assets/icon_updown.png',
+                      width: ScreenUtil().setWidth(16),
+                      height: ScreenUtil().setWidth(32),
+                      fit: BoxFit.contain,
+                    ),
+                    margin: EdgeInsets.only(left: ScreenUtil().setWidth(26)),
+                  ),
+                ],
+              ),
               Container(
-                child: Image.asset('lib/assets/icon_updown.png',
-                  width: ScreenUtil().setWidth(16),
-                  height: ScreenUtil().setWidth(32),
-                  fit: BoxFit.contain,
-                ),
-                margin: EdgeInsets.only(left: ScreenUtil().setWidth(26)),
+                width: ScreenUtil().setWidth(32),
+                height: ScreenUtil().setWidth(32),
               )
             ],
           ),
