@@ -74,28 +74,29 @@ class AssessmentPageState extends State<AssessmentPage> {
       ),
       body: Stack(
         children: <Widget>[
-          ListView(
-            children: <Widget>[
-              Container(
-                height: ScreenUtil().setWidth(112),
-                width: MediaQuery.of(context).size.width,
-                child: Container(
-                  color: Color.fromRGBO(41, 217, 214, 0.2),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text('${date.year}年${date.month}月${date.day}日 ', style: selectFont),
-                      Container(
-                        width: ScreenUtil().setWidth(300),
-                          child: Text(_courseName ?? '', style: selectFont, overflow: TextOverflow.ellipsis), alignment: Alignment.centerRight,)
-                    ],
-                  ),
-                  padding: EdgeInsets.only(left: ScreenUtil().setWidth(64), right: ScreenUtil().setWidth(64)),
-                ),
+          Positioned(
+              height: ScreenUtil().setWidth(112),
+              width: MediaQuery.of(context).size.width,
+            child: Container(
+              color: Color.fromRGBO(41, 217, 214, 0.2),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text('${date.year}年${date.month}月${date.day}日 ', style: selectFont),
+                  Container(
+                    width: ScreenUtil().setWidth(300),
+                    child: Text(_courseName ?? '', style: selectFont, overflow: TextOverflow.ellipsis), alignment: Alignment.centerRight,)
+                ],
               ),
-              DropdownListDemo()
-            ],
+              padding: EdgeInsets.only(left: ScreenUtil().setWidth(64), right: ScreenUtil().setWidth(64)),
+            ),
+          ),
+          Positioned(
+            top: ScreenUtil().setWidth(112),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height - ScreenUtil().setWidth(212),
+            child: DropdownListDemo(),
           ),
           Loading()
         ],

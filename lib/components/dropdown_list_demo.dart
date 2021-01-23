@@ -127,16 +127,13 @@ class _DropdownListDemoState extends State<DropdownListDemo> {
       }).toList();
     }
 
-    return Container(
-      height: ScreenUtil().setHeight(1182),
-      child: new ListView.builder(
-        itemBuilder: (context, i) => ExpansionTile(
-          title: header(i),
-          children: questions(i),
-          initiallyExpanded: false,  //默认打开关闭
-        ),
-        itemCount: studentEvaluation.results.length,
+    return new ListView.builder(
+      itemBuilder: (context, i) => ExpansionTile(
+        title: header(i),
+        children: questions(i),
+        initiallyExpanded: false,  //默认打开关闭
       ),
+      itemCount: studentEvaluation.results.length,
     );
   }
 
