@@ -75,7 +75,7 @@ class _DropdownListDemoState extends State<DropdownListDemo> {
   void onConfirm(Results item) async {
     List<int> list = new List();
     item.questions.forEach((Questions res) {
-      list.add(res.score);
+      list.add(res.score == -1 ? 0 : res.score);
     });
 
     await mainModel.submitStudentEvaluation(item.id, item.content, list, new List());
