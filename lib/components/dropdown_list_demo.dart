@@ -298,17 +298,20 @@ class _DropdownListDemoState extends State<DropdownListDemo> {
               ),
               onTap: () => onConfirm(item),
             ),
-            Container(
-              width: ScreenUtil().setWidth(304),
-              height: ScreenUtil().setWidth(112),
-              child: Center(
-                child: Text('保存', style: saveFont,),
+            GestureDetector(
+              child: Container(
+                width: ScreenUtil().setWidth(304),
+                height: ScreenUtil().setWidth(112),
+                child: Center(
+                  child: Text('保存', style: saveFont,),
+                ),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(112)),
+                    color: Color(0xffffffff),
+                    border: Border.all(color: Color(0xff29D9D6), width: 2)
+                ),
               ),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(112)),
-                  color: Color(0xffffffff),
-                  border: Border.all(color: Color(0xff29D9D6), width: 2)
-              ),
+              onTap: () => saveResult(item),
             ),
           ],
         ),

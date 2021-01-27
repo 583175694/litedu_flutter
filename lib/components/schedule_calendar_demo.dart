@@ -243,7 +243,7 @@ class ScheduleCalendarDemoState extends State<ScheduleCalendarDemo> {
                   ),
                 ],
               ),
-              i == 5 ? Container() : GestureDetector(
+              i == 5 || titleItems[i]["questions"] == "[]" ? Container() : GestureDetector(
                 child: Container(
                   width: ScreenUtil().setWidth(128),
                   height: ScreenUtil().setWidth(56),
