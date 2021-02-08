@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_module/components/calendar_month.dart';
 import 'package:flutter_module/components/calendar_week.dart';
-import 'package:flutter_module/components/schedule_calendar_demo.dart';
+import 'package:flutter_module/components/schedule_calendar.dart';
 import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/model/main_model.dart';
 import 'package:flutter_module/plugins/calendar_plugin/controller.dart';
@@ -132,7 +132,7 @@ class _CalendarPageState extends State<CalendarPage> with TickerProviderStateMix
                 height: MediaQuery.of(context).size.height,
                 child: Container(
                   padding: EdgeInsets.only(bottom: ScreenUtil().setWidth(184)),
-                  child: ScheduleCalendarDemo(selectText: selectText),
+                  child: ScheduleCalendar(selectText: selectText),
                 ),
               )
             ],

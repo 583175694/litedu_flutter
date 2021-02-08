@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'package:flutter_module/components/dropdown_list.dart';
-import 'package:flutter_module/components/dropdown_list_demo.dart';
 import 'package:flutter_module/components/loading.dart';
 import 'package:flutter_module/components/screen_fit.dart';
 import 'package:flutter_module/model/main_model.dart';
