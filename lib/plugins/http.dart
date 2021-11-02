@@ -44,13 +44,13 @@ class HttpUtils {
       String url,
       { data, method, headers }) async {
     
-   var _headers = await FlutterBoost.singleton.channel.invokeMethod("app/getRequestHeader");
-   _headers = new Map<String, dynamic>.from(_headers);
+   // var _headers = await FlutterBoost.singleton.channel.invokeMethod("app/getRequestHeader");
+   // _headers = new Map<String, dynamic>.from(_headers);
 
-    // var _headers = {
-    //   "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImV4cCI6MTYyNjEwODg4MywiaWF0IjoxNTk0NTcyODgzLCJuYmYiOjE1OTQ1NzI4ODMsImp0aSI6IjYyMjUzZDM0LWM0NjAtMTFlYS05ODUwLTAyNDJhYzE0MDAwNCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJpc3MiOiJodHRwczovL2FwaS1kZXYubGl0LWVkdS5jb20vYXBpL2Zyb250ZW5kL2F1dGgvbG9naW4ifQ.GS-kairdnvZLFUAEiZljG2Z0IW3G7L1IEm4pjpBuAuI"
-    // };
-    // print(_headers);
+    var _headers = {
+      "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImV4cCI6MTY0NDI4OTUyNSwiaWF0IjoxNjEyNzUzNTI1LCJuYmYiOjE2MTI3NTM1MjUsImp0aSI6IjdkYWRhNWQyLTY5YmEtMTFlYi05ODJiLTAyNDJhYzE0MDAwNiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJpc3MiOiJodHRwczovL2FwaS1kZXYubGl0LWVkdS5jb20vYXBpL2Zyb250ZW5kL2F1dGgvbG9naW4ifQ.Dwo9PR0Tfiv5lxBcdF8pbweJrTKuGHhihsi7JWTy0Cs"
+    };
+
     data = data ?? {};
     method = method ?? 'GET';
     headers = headers ?? {};
